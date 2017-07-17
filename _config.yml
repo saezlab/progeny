@@ -13,8 +13,8 @@ permalink:        pretty
 
 # Setup
 title:            PROGENy
-tagline:          Footprints in gene expression
-description:      "A R package to infer pathway activity from gene expression data."
+tagline:          Signaling footprints in gene expression
+description:      "An R package to infer pathway activity from gene expression data."
 #url:              https://github.com/christianholland/PROGENy
 baseurl:          /PROGENy/
 toollogo:         /PROGENy/tool_logo.png
