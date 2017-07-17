@@ -12,15 +12,15 @@ kramdown:
 permalink:        pretty
 
 # Setup
-title:            Tool-Name
+title:            PROGENy
 tagline:          Tagline for website
 description:      "Short description of the tool, for the sidebar"
-#url:              https://github.com/saezlab/projectDocumentationTemplate
-baseurl:          /projectDocumentationTemplate/
-toollogo:         /projectDocumentationTemplate/tool_logo.png
+#url:              https://github.com/christianholland/PROGENy
+baseurl:          /PROGENy/
+toollogo:         /PROGENy/tool_logo.png
 
 author:
-  name:           'Author Name'
+  name:           'Michael Schubert'
 
 paginate:         5
 
@@ -28,4 +28,4 @@ paginate:         5
 version:          1.0.1
 
 github:
-  repo:           https://github.com/saezlab/projectDocumentationTemplate
+  repo:           https://github.com/christianholland/PROGENy
