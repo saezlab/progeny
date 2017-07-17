@@ -3,7 +3,7 @@ layout: default
 title: Home
 ---
 
-# \<Tool's name\>
+# \<PROGENy\>
 
 ## Overview
 Short description in a few paragraphs
