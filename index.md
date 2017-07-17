@@ -15,7 +15,7 @@ Please use this reference to cite PROGENy:
 ```
 @article{schubert2017perturbation-response,
   title={Perturbation-response genes reveal signaling in cancer gene expression},
-  author={Schubert, Michael and Klinger, Bertram and Klünemann, Martina and Garnett, Mathew J and Blüthgen Nils, Thomas and Saez-Rodriguez, Julio},
+  author={Schubert, Michael and Klinger, Bertram and Klünemann, Martina and Garnett, Mathew J and Blüthgen, Nils and Saez-Rodriguez, Julio},
   journal={},
   volume={},
   number={},
@@ -27,6 +27,9 @@ Please use this reference to cite PROGENy:
 
 ### Applications of PROGENy
 > Infers pathway activity from gene expression.
+
 > Recover the effect of known driver mutations.
+
 > Provide or improve strong markers for drug indications.
+
 > Distinguish between oncogenic and tumor suppressor pathways for patient survival.
