@@ -3,7 +3,7 @@ layout: default
 title: Home
 ---
 
-# \<PROGENy\>
+# \PROGENy\
 
 ## Overview
 Short description in a few paragraphs
