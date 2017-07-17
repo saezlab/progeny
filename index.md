@@ -10,18 +10,18 @@ Short description in a few paragraphs
 
 ## Reference
 Please use this reference to cite \<tool's name\>:
->  Pacini, C., Iorio, F., Gonçalves, E., Iskar, M., Klabunde, T., Bork, P., Saez-Rodriguez, J. (2013). [DvD: An R/Cytoscape pipeline for drug repurposing using public repositories of gene expression data.](https://doi.org/10.1093/bioinformatics/bts656) _Bioinformatics (Oxford, England)_. **29**:1, p.132-134
+>  Schubert, M., Klinger, B., Klünemann, M., Garnett, MJ., Blüthgen, N., Saez-Rodriguez, J. (2017). [Perturbation-response genes reveal signaling in cancer gene expression](http://www.biorxiv.org/content/early/2016/08/28/065672)
 
 ```
-@article{pacini2013dvd,
-  title={DvD: An R/Cytoscape pipeline for drug repurposing using public repositories of gene expression data},
-  author={Pacini, Clare and Iorio, Francesco and Gon{\c{c}}alves, Emanuel and Iskar, Murat and Klabunde, Thomas and Bork, Peer and Saez-Rodriguez, Julio},
-  journal={Bioinformatics},
-  volume={29},
-  number={1},
-  pages={132--134},
-  year={2013},
-  publisher={Oxford Univ Press}
+@article{schubert2017perturbation-response,
+  title={Perturbation-response genes reveal signaling in cancer gene expression},
+  author={Schubert, Michael and Klinger, Bertram and Klünemann, Martina and Garnett, Mathew J and Blüthgen Nils, Thomas and Saez-Rodriguez, Julio},
+  journal={},
+  volume={},
+  number={},
+  pages={},
+  year={},
+  publisher={}
 }
 ```
 
