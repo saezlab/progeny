@@ -9,7 +9,7 @@ title: Home
 Short description in a few paragraphs
 
 ## Reference
-Please use this reference to cite \<tool's name\>:
+Please use this reference to cite PROGENy:
 >  Schubert, M., Klinger, B., Klünemann, M., Garnett, MJ., Blüthgen, N., Saez-Rodriguez, J. (2017). [Perturbation-response genes reveal signaling in cancer gene expression](http://www.biorxiv.org/content/early/2016/08/28/065672)
 
 ```
@@ -25,5 +25,8 @@ Please use this reference to cite \<tool's name\>:
 }
 ```
 
-### Applications of \<tool's name\>
-> further related references. Bibtex format not necessary.  
+### Applications of PROGENy
+> Infers pathway activity from gene expression.
+> Recover the effect of known driver mutations.
+> Provide or improve strong markers for drug indications.
+> Distinguish between oncogenic and tumor suppressor pathways for patient survival.
