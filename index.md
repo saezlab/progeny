@@ -29,12 +29,3 @@ Please use this reference to cite PROGENy:
   publisher={}
 }
 ```
-
-### Applications of PROGENy
-> Infers pathway activity from gene expression.
-
-> Recover the effect of known driver mutations.
-
-> Provide or improve strong markers for drug indications.
-
-> Distinguish between oncogenic and tumor suppressor pathways for patient survival.
