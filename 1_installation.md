@@ -3,4 +3,4 @@ layout: page
 title: Installation
 ---
 
-Please provide an installation guide.	
+The R package is currently under development. More detail are coming soon...	
