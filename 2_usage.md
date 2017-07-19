@@ -3,4 +3,4 @@ layout: page
 title: Usage
 ---
 
-Please describe here how to use the tool.
+The R package is currently under development. More details are coming soon...	
