@@ -30,3 +30,11 @@ the PROGENy method. It transforms a gene expression matrix with HGNC gene
 symbols in rows and sample names in columns into a pathway score matrix with
 samples and in rows and pathways in columns.
 }
+\examples{
+# use your gene expression matrix here, this is just for illustration
+gene_expression = matrix(rep(1, nrow(model)),
+    dimnames=list(rownames(model), "sample"))
+
+# calculate pathway activities
+pathways = progeny(gene_expression)
+}
