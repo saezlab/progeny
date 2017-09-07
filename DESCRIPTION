@@ -1,10 +1,12 @@
 Package: progeny
 Title: PROGENy: Pathway RespOnsive GENes for activity inference
-Version: 0.0.1
+Version: 0.99.0
 Author: Michael Schubert <mschu.dev@gmail.com>
 Maintainer: Michael Schubert <mschu.dev@gmail.com>
 Description: This package provides a function to infer pathway activity
     from gene expression using PROGENy
+URL: https://github.com/saezlab/progeny
+BugReports: https://github.com/saezlab/progeny/issues
 Depends:
     R (>= 3.0.2)
 Imports:
@@ -16,4 +18,4 @@ Suggests:
     knitr,
     testthat
 VignetteBuilder: knitr
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1
