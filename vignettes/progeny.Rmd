@@ -1,0 +1,127 @@
+---
+title: "PROGENy pathway signatures"
+author: "Michael Schubert"
+date: "`r Sys.Date()`"
+output:
+  rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{narray Usage Examples}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, echo=FALSE, results='hide', warning=FALSE, error=FALSE, message=FALSE, cache=FALSE}
+library(knitr)
+opts_chunk$set(
+  cache = FALSE,
+  echo = TRUE,
+  warning = FALSE,
+  error = FALSE,
+  message = FALSE
+)
+```
+
+PROGENy pathway signatures
+==========================
+
+This R package provides the model we inferred in the publication
+"Perturbation-response genes reveal signaling footprints in cancer gene
+expression" and a function to obtain pathway scores from a gene expression
+matrix. It is [available on
+bioRxiv](http://www.biorxiv.org/content/early/2016/08/28/065672).
+
+The code used for the analyses is [available on
+Github](https://github.com/saezlab/footprints).
+
+Below is an example on how to calculate pathway scores for cell lines in the Genomics of Drug Sensitivity in Cancer
+(GDSC) panel, and to check for associations with drug response.
+
+Getting the data
+----------------
+
+This example shows how to use the GDSC gene expression data of multiple cell
+lines together with PROGENy to calculate pathway activity and then to check for
+associations with drug sensitivity.
+
+First, we need the GDSC data for both gene expression and drug response. They
+are available on the [GDSC1000 web
+site](http://www.cancerrxgene.org/gdsc1000/GDSC1000_WebResources/Home.html):
+
+```{r}
+# gene expression
+download.file("http://www.cancerrxgene.org/gdsc1000/GDSC1000_WebResources/Data/preprocessed/Cell_line_RMA_proc_basalExp.txt.zip", "gene_expression.txt.zip")
+# drug response
+download.file("http://www.cancerrxgene.org/gdsc1000/GDSC1000_WebResources/Data/suppData/TableS4A.xlsx", "drug_response.xlsx")
+```
+
+You can also download the files manually (adjust the file names when loading):
+
+ * [Processed gene expression
+   matrix](http://www.cancerrxgene.org/gdsc1000/GDSC1000_WebResources/Data/preprocessed/Cell_line_RMA_proc_basalExp.txt.zip)
+ * [Drug
+   sensitivities](http://www.cancerrxgene.org/gdsc1000/GDSC1000_WebResources/Data/suppData/TableS4A.xlsx)
+
+Loading the data into R
+-----------------------
+
+First, we need to load the files we just downloaded into R to be able to
+perform the analysis:
+
+```{r}
+# load the downloaded files
+drug_table = readxl::read_excel("drug_response.xlsx", skip=5)
+gene_table = readr::read_tsv("gene_expression.txt.zip")
+
+# we need drug response with COSMIC IDs
+drug_response = data.matrix(drug_table[,3:ncol(drug_table)])
+rownames(drug_response) = drug_table$X__1
+
+# we need genes in rows and samples in columns
+gene_expr = data.matrix(gene_table[,3:ncol(gene_table)])
+colnames(gene_expr) = sub("DATA.", "", colnames(gene_expr), fixed=TRUE)
+rownames(gene_expr) = gene_table$GENE_SYMBOLS
+```
+
+Running PROGENy to get pathway activity scores
+----------------------------------------------
+
+Activity inference is done using a weighted sum of the model genes. We can run
+this without worrying about the order of genes in the expression matrix using:
+
+```{r}
+library(progeny)
+pathways = progeny(gene_expr)
+```
+
+We now have the pathway activity scores for the pathways defined in PROGENy:
+
+```{r}
+head(pathways)
+```
+
+Testing if MAPK activity is significantly associated with Trametinib
+--------------------------------------------------------------------
+
+Trametinib is a MEK inhibitor, so we would assume that cell lines that have a
+higher MAPK activity are more sensitive to MEK inhibition.
+
+We can test this the following way:
+
+```{r}
+cell_lines = intersect(rownames(pathways), rownames(drug_response))
+trametinib = drug_response[cell_lines, "Trametinib"]
+mapk = pathways[cell_lines, "MAPK"]
+
+associations = lm(trametinib ~ mapk)
+summary(associations)
+```
+
+And indeed we find that MAPK activity is strongly associated with sensitivity
+to Trametinib: the `Pr(>|t|)` is much smaller than the conventional threshold
+of `0.05`.
+
+The intercept is significant as well, but we're not really interested if the
+mean drug response is above or below `0` in this case.
+
+Note, however, that we tested all cell lines at once and did not adjust for the
+effect different tissues may have.
