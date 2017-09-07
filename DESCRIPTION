@@ -13,6 +13,7 @@ Depends:
     R (>= 3.4.0)
 Imports:
     Biobase
+biocViews: SystemsBiology, GeneExpression, FunctionalPrediction, GeneRegulation
 License: Apache License (== 2.0) | file LICENSE
 LazyData: true
 Encoding: UTF-8
