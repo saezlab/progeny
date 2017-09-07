@@ -11,6 +11,13 @@
 #'               pathway to have a mean of zero and standard deviation of one
 #' @return       A matrix with samples in columns and pathways in rows
 #' @export
+#' @examples
+#' # use your gene expression matrix here, this is just for illustration
+#' gene_expression = matrix(rep(1, nrow(model)),
+#'     dimnames=list(rownames(model), "sample"))
+#'
+#' # calculate pathway activities
+#' pathways = progeny(gene_expression)
 progeny = function(expr, scale=TRUE) {
     UseMethod("progeny")
 }
@@ -24,9 +31,9 @@ progeny.AnnotatedDataFrame = function(expr, scale=TRUE) {
 progeny.matrix = function(expr, scale=TRUE) {
     model = get("model", envir=.GlobalEnv)
     common_genes = intersect(rownames(expr), rownames(model))
-    re = t(expr[common_genes,]) %*% model[common_genes,]
+    re = t(expr[common_genes,,drop=FALSE]) %*% model[common_genes,,drop=FALSE]
 
-    if (scale) {
+    if (scale && nrow(re) > 1) {
         rn = rownames(re)
         re = apply(re, 2, scale)
         rownames(re) = rn
