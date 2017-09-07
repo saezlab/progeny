@@ -16,6 +16,6 @@ LazyData: true
 Encoding: UTF-8
 Suggests:
     knitr,
-    testthat
+    readxl
 VignetteBuilder: knitr
 RoxygenNote: 6.0.1
