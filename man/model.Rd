@@ -16,4 +16,3 @@ HGNC gene symbols in rows, pathways in columns. Pathway activity inference
 works by a matrix multiplication of gene expression with the model.
 }
 \keyword{datasets}
-

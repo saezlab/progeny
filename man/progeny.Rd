@@ -4,6 +4,7 @@
 \name{progeny}
 \alias{progeny}
 \alias{progeny-package}
+\alias{progeny}
 \title{Calculate PROGENy pathway scores from gene expression}
 \usage{
 progeny(expr, scale = TRUE)
@@ -29,4 +30,3 @@ the PROGENy method. It transforms a gene expression matrix with HGNC gene
 symbols in rows and sample names in columns into a pathway score matrix with
 samples and in rows and pathways in columns.
 }
-
