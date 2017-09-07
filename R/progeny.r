@@ -22,7 +22,6 @@ progeny.AnnotatedDataFrame = function(expr, scale=TRUE) {
 
 #' @export
 progeny.matrix = function(expr, scale=TRUE) {
-    data(model)
     common_genes = intersect(rownames(expr), rownames(model))
     re = t(expr[common_genes,]) %*% model[common_genes,]
 
