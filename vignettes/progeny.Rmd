@@ -49,9 +49,9 @@ site](http://www.cancerrxgene.org/gdsc1000/GDSC1000_WebResources/Home.html):
 
 ```{r}
 # gene expression
-download.file("http://www.cancerrxgene.org/gdsc1000/GDSC1000_WebResources/Data/preprocessed/Cell_line_RMA_proc_basalExp.txt.zip", "gene_expression.txt.zip")
+download.file("http://www.cancerrxgene.org/gdsc1000/GDSC1000_WebResources/Data/preprocessed/Cell_line_RMA_proc_basalExp.txt.zip", "gene_expression.txt.zip", mode="wb")
 # drug response
-download.file("http://www.cancerrxgene.org/gdsc1000/GDSC1000_WebResources/Data/suppData/TableS4A.xlsx", "drug_response.xlsx")
+download.file("http://www.cancerrxgene.org/gdsc1000/GDSC1000_WebResources/Data/suppData/TableS4A.xlsx", "drug_response.xlsx", mode="wb")
 ```
 
 You can also download the files manually (adjust the file names when loading):
