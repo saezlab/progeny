@@ -30,15 +30,79 @@ expression" and a function to obtain pathway scores from a gene expression
 matrix. It is [available on
 bioRxiv](http://www.biorxiv.org/content/early/2016/08/28/065672).
 
-The code used for the analyses is [available on
-Github](https://github.com/saezlab/footprints).
+Scoring the `airway` package data for pathway scores
+----------------------------------------------------
+
+This is to outline how to prepare expression data, in this case from the
+`airway` package for pathway activity analysis using PROGENy.
+
+### Preparing the gene expression matrix
+
+```{r}
+library(airway)
+library(DESeq2)
+data(airway)
+
+# import data to DESeq2 and variance stabilize
+dset = DESeqDataSetFromMatrix(assay(airway),
+    colData=as.data.frame(colData(airway)), design=~dex)
+dset = estimateSizeFactors(dset)
+dset = estimateDispersions(dset)
+gene_expr = getVarianceStabilizedData(dset)
+
+# annotate matrix with HGNC symbols
+library(biomaRt)
+mart = useDataset("hsapiens_gene_ensembl", useMart("ensembl"))
+genes = getBM(attributes = c("ensembl_gene_id","hgnc_symbol"),
+              values=rownames(gene_expr), mart=mart)
+matched = match(rownames(gene_expr), genes$ensembl_gene_id)
+rownames(gene_expr) = genes$hgnc_symbol[matched]
+```
+
+### Obtaining pathway scores
+
+We can then use the `progeny` function to score the expression matrix. Note
+that we are scaling the pathway scores with respect to the controls only.
+
+```{r}
+library(progeny)
+pathways = progeny(gene_expr, scale=FALSE)
+controls = airway$dex == "untrt"
+ctl_mean = apply(pathways[controls,], 2, mean)
+ctl_sd = apply(pathways[controls,], 2, sd)
+pathways = t(apply(pathways, 1, function(x) x - ctl_mean))
+pathways = apply(pathways, 1, function(x) x / ctl_sd)
+```
+
+### Checking for differences between the groups
+
+So now we might be interested how the treatment with dexamethasone affects
+signaling pathways. To do this, we check if the control is different to the
+perturbed condition using a linear model:
+
+```{r}
+library(dplyr)
+results = apply(pathways, 1, function(x) {
+    broom::tidy(lm(x ~ !controls)) %>%
+        filter(term == "!controlsTRUE") %>%
+        select(-term) %>%
+})
+```
+
+What we see is that indeed the p53/DNA damage response pathway is less active
+after treatment than before.
+
+Reproducing drug associations on the GDSC panel
+-----------------------------------------------
 
 Below is an example on how to calculate pathway scores for cell lines in the
 Genomics of Drug Sensitivity in Cancer (GDSC) panel, and to check for
 associations with drug response.
 
-Getting the data
-----------------
+The code used for the analyses is [available on
+Github](https://github.com/saezlab/footprints).
+
+### Getting the data
 
 This example shows how to use the GDSC gene expression data of multiple cell
 lines together with PROGENy to calculate pathway activity and then to check for
@@ -65,8 +129,7 @@ You can also download the files manually (adjust the file names when loading):
  * [Drug
    sensitivities](http://www.cancerrxgene.org/gdsc1000/GDSC1000_WebResources/Data/suppData/TableS4A.xlsx)
 
-Loading the data into R
------------------------
+### Creating the right objects to work with
 
 First, we need to load the files we just downloaded into R to be able to
 perform the analysis:
@@ -86,8 +149,7 @@ colnames(gene_expr) = sub("DATA.", "", colnames(gene_expr), fixed=TRUE)
 rownames(gene_expr) = gene_table$GENE_SYMBOLS
 ```
 
-Running PROGENy to get pathway activity scores
-----------------------------------------------
+### Running PROGENy to get pathway activity scores
 
 Activity inference is done using a weighted sum of the model genes. We can run
 this without worrying about the order of genes in the expression matrix using:
@@ -103,8 +165,7 @@ We now have the pathway activity scores for the pathways defined in PROGENy:
 head(pathways)
 ```
 
-Testing if MAPK activity is significantly associated with Trametinib
---------------------------------------------------------------------
+### Testing if MAPK activity is significantly associated with Trametinib
 
 Trametinib is a MEK inhibitor, so we would assume that cell lines that have a
 higher MAPK activity are more sensitive to MEK inhibition.
