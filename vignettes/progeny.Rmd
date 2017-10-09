@@ -125,3 +125,10 @@ mean drug response is above or below `0` in this case.
 
 Note, however, that we tested all cell lines at once and did not adjust for the
 effect different tissues may have.
+
+R version information
+---------------------
+
+```{r echo=FALSE}
+sessionInfo()
+```
