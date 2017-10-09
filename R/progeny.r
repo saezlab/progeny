@@ -10,7 +10,8 @@
 #'
 #' The supplied expression object has to contain HGNC symbols in rows. This
 #' will, in most cases (and how we originally used it), be either normalized
-#' gene expression of a microarray experiment or RNA-seq experiment.
+#' gene expression of a microarray experiment or log-transformed (and
+#' possible variance-stabilized) counts from an RNA-seq experiment.
 #'
 #' The model matrix itself consists of 11 pathways and 1059 genes. Its
 #' coefficients are non-zero if the gene-pathway pair corresponds to the top
@@ -39,11 +40,6 @@ progeny = function(expr, scale=TRUE) {
 
 #' @export
 progeny.ExpressionSet = function(expr, scale=TRUE) {
-    progeny(Biobase::exprs(expr), scale=scale)
-}
-
-#' @export
-progeny.SummarizedExperiment = function(expr, scale=TRUE) {
     progeny(Biobase::exprs(expr), scale=scale)
 }
 
