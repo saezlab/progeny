@@ -30,6 +30,22 @@ the PROGENy method. It transforms a gene expression matrix with HGNC gene
 symbols in rows and sample names in columns into a pathway score matrix with
 samples and in rows and pathways in columns.
 }
+\details{
+The publication of the method is available at:
+https://www.biorxiv.org/content/early/2016/08/28/065672
+
+The supplied expression object has to contain HGNC symbols in rows. This
+will, in most cases (and how we originally used it), be either normalized
+gene expression of a microarray experiment or RNA-seq experiment.
+
+The model matrix itself consists of 11 pathways and 1059 genes. Its
+coefficients are non-zero if the gene-pathway pair corresponds to the top
+100 genes that were up-regulated upon stimulation of the pathway in a wide
+range of experiments. The value corresponds to the fitted z-score across
+experiments in our model fit. Only rows with at least one non-zero
+coefficient were included, as the rest is not used to infer pathway
+activity.
+}
 \examples{
 # use your gene expression matrix here, this is just for illustration
 gene_expression = matrix(rep(1, nrow(model)),
