@@ -82,11 +82,12 @@ perturbed condition using a linear model:
 
 ```{r}
 library(dplyr)
-results = apply(pathways, 1, function(x) {
+result = apply(pathways, 1, function(x) {
     broom::tidy(lm(x ~ !controls)) %>%
         filter(term == "!controlsTRUE") %>%
         select(-term)
 })
+mutate(bind_rows(result), pathway=names(result))
 ```
 
 What we see is that indeed the p53/DNA damage response pathway is less active
