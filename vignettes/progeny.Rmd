@@ -85,7 +85,7 @@ library(dplyr)
 results = apply(pathways, 1, function(x) {
     broom::tidy(lm(x ~ !controls)) %>%
         filter(term == "!controlsTRUE") %>%
-        select(-term) %>%
+        select(-term)
 })
 ```
 

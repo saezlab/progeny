@@ -36,7 +36,8 @@ https://www.biorxiv.org/content/early/2016/08/28/065672
 
 The supplied expression object has to contain HGNC symbols in rows. This
 will, in most cases (and how we originally used it), be either normalized
-gene expression of a microarray experiment or RNA-seq experiment.
+gene expression of a microarray experiment or log-transformed (and
+possible variance-stabilized) counts from an RNA-seq experiment.
 
 The model matrix itself consists of 11 pathways and 1059 genes. Its
 coefficients are non-zero if the gene-pathway pair corresponds to the top
