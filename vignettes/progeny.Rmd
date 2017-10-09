@@ -33,8 +33,9 @@ bioRxiv](http://www.biorxiv.org/content/early/2016/08/28/065672).
 The code used for the analyses is [available on
 Github](https://github.com/saezlab/footprints).
 
-Below is an example on how to calculate pathway scores for cell lines in the Genomics of Drug Sensitivity in Cancer
-(GDSC) panel, and to check for associations with drug response.
+Below is an example on how to calculate pathway scores for cell lines in the
+Genomics of Drug Sensitivity in Cancer (GDSC) panel, and to check for
+associations with drug response.
 
 Getting the data
 ----------------
@@ -48,10 +49,13 @@ are available on the [GDSC1000 web
 site](http://www.cancerrxgene.org/gdsc1000/GDSC1000_WebResources/Home.html):
 
 ```{r}
-# gene expression
-download.file("http://www.cancerrxgene.org/gdsc1000/GDSC1000_WebResources/Data/preprocessed/Cell_line_RMA_proc_basalExp.txt.zip", "gene_expression.txt.zip", mode="wb")
-# drug response
-download.file("http://www.cancerrxgene.org/gdsc1000/GDSC1000_WebResources/Data/suppData/TableS4A.xlsx", "drug_response.xlsx", mode="wb")
+# set up a file cache so we download only once
+library(BiocFileCache)
+bfc = BiocFileCache(".")
+# gene expression and drug response
+base = "http://www.cancerrxgene.org/gdsc1000/GDSC1000_WebResources/Data/"
+paths = bfcrpath(bfc, paste0(base, c("suppData/TableS4A.xlsx",
+            "preprocessed/Cell_line_RMA_proc_basalExp.txt.zip")))
 ```
 
 You can also download the files manually (adjust the file names when loading):
@@ -69,8 +73,8 @@ perform the analysis:
 
 ```{r}
 # load the downloaded files
-drug_table = readxl::read_excel("drug_response.xlsx", skip=5)
-gene_table = readr::read_tsv("gene_expression.txt.zip")
+drug_table = readxl::read_excel(paths[1], skip=5)
+gene_table = readr::read_tsv(paths[2])
 
 # we need drug response with COSMIC IDs
 drug_response = data.matrix(drug_table[,3:ncol(drug_table)])
