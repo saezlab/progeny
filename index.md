@@ -10,7 +10,7 @@ PROGENy (Pathway RespOnsive GENes) aims to infer activity of cancer-relevant sig
 
 To infer pathway activity a simple, yet effective linear regression model is trained by perturbation experiments. The perturbed pathways serve as input (-1 indicates inhibition, 1 activation, 0 otherwise) and the corresponding (z-score normalized) gene expression values as response variable. In total the training set consists of 580 public available experiments and 2652 microarrays, making it the largest study of pathway signatures to data. PROGENy has been proven to infer upstream pathway activity in context of (i) known driver mutations in primary tumors, (ii) drugs response in cell lines, and (iii) survival in cancer patients. ([Link to publication](http://www.biorxiv.org/content/early/2016/08/28/065672))
 
-We are currently preparing an R package and a [web application](https://progeny.shinyapps.io/progeny/) to calculate PROGENy scores from gene expression data. [Drop us a line](mailto:cholland2408@gmail.com) if you are interested.
+We are currently preparing an R package and a [web application](https://progeny.shinyapps.io/progenyapp/) to calculate PROGENy scores from gene expression data. [Drop us a line](mailto:holland@combine.rwth-aachen.de) if you are interested.
 
 ## Reference
 Please use this reference to cite PROGENy:
