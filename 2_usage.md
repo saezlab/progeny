@@ -3,4 +3,4 @@ layout: page
 title: Usage
 ---
 
-The R package is currently under development. More details are coming soon...	
+The user manual of the Bioconductor package can be found [here](http://bioconductor.org/packages/release/bioc/manuals/progeny/man/progeny.pdf).
