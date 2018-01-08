@@ -18,7 +18,7 @@ We provide an easy to use [web application](https://progeny.shinyapps.io/progeny
 
 ## Reference
 Please use this reference to cite PROGENy:
->  Schubert, M., Klinger, B., Klünemann, M., Sieber, A., Uhlitz, F., Sauer, S., Garnett, MJ., Blüthgen, N., Saez-Rodriguez, J. (2018). [Perturbation-response genes reveal signaling footprints in cancer gene expression](http://rdcu.be/DTYo)
+>  Schubert M, Klinger B, Klünemann M, et al. [Perturbation-response genes reveal signaling footprints in cancer gene expression](http://rdcu.be/DTYo). Nat Commun. 2018;9(1):20. 
 
 ```
 @article{Schubert2018,
