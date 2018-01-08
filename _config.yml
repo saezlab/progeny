@@ -17,7 +17,7 @@ tagline:          PROGENy - GitHub Page
 description:      "An R package to infer pathway activity from gene expression data"
 #url:              https://github.com/saezlab/progeny
 baseurl:          /progeny/
-#toollogo:         /progeny/tool_logo.png
+toollogo:         /progeny/tool_logo.png
 
 author:
   name:           'Michael Schubert'
