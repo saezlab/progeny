@@ -1,0 +1,17 @@
+citEntry(entry="article",
+    author = c(person("Michael", "Schubert"),
+               person("Bertram", "Klinger"),
+               person("Martina", "Klünemann"),
+               person("Anja", "Sieber"),
+               person("Florian", "Uhlitz"),
+               person("Sascha", "Sauer"),
+               person(c("Mathew J"), "Garnett"),
+               person("Nils", "Blüthgen"),
+               person("Julio", "Saez-Rodriguez"),
+           person("Andrea", "Califano")),
+    title = "Perturbation-response genes reveal signaling footprints in cancer gene expression",
+    journal = "Nature communications",
+    year = 2018,
+    volume = 9,
+    number = 20
+)
