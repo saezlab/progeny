@@ -5,7 +5,7 @@ title: License
 This program is free software: you can redistribute it and/or modify
     it under the terms of the  Apache License Version 2.0.
 
-    Copyright 2018 Michael Schubert
+    Copyright 2018 EMBL
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
