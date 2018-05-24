@@ -2,4 +2,4 @@
 layout: page
 title: Contact
 ---
-Please do not hesitate to [contact us](mailto:progeny@saezlab.org) for feedback, questions or suggestions.
+If you have questions which could be also interesting for other users we highly encourage you to use the [GitHub Issue Tracker](https://github.com/saezlab/progeny/issues). But also feel free to [contact us](mailto:saezrodriguez@gmail.com) directly per mail.
