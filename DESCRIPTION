@@ -1,6 +1,6 @@
 Package: progeny
 Title: Pathway RespOnsive GENes for activity inference from gene expression
-Version: 1.5.0
+Version: 1.5.1
 Author: Michael Schubert <mschu.dev@gmail.com>
 Maintainer: Michael Schubert <mschu.dev@gmail.com>
 Description: This package provides a function to infer pathway activity
