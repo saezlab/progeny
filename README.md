@@ -16,19 +16,19 @@ show that PROGENy more accurately infers pathway activity from gene expression
 than other methods.
 
 This is an R package for using the method described in
-[bioRxiv](http://biorxiv.org/content/early/2016/07/25/065672)
-([pdf](http://biorxiv.org/content/early/2016/07/25/065672.full.pdf)).
+[Nature Communications](https://www.nature.com/articles/s41467-017-02391-6).
 
 ```
-@article {Schubert-PRGs,
-	author = {Schubert, Michael and Klinger, Bertram and Kl{\"u}nemann, Martina and 
-              Garnett, Mathew J and Bl{\"u}thgen, Nils and Saez-Rodriguez, Julio},
-	title = {Perturbation-response genes reveal signaling footprints in cancer gene expression},
-	year = {2016},
-	doi = {10.1101/065672},
-	publisher = {Cold Spring Harbor Labs Journals},
-	URL = {http://biorxiv.org/content/early/2016/08/28/065672},
-	eprint = {http://biorxiv.org/content/early/2016/08/28/065672.full.pdf},
-	journal = {bioRxiv}
+@article{Schubert2018,
+  doi = {10.1038/s41467-017-02391-6},
+  url = {https://doi.org/10.1038/s41467-017-02391-6},
+  year  = {2018},
+  month = {jan},
+  publisher = {Springer Nature},
+  volume = {9},
+  number = {1},
+  author = {Michael Schubert and Bertram Klinger and Martina Kl\"{u}nemann and Anja Sieber and Florian Uhlitz and Sascha Sauer and Mathew J. Garnett and Nils Bl\"{u}thgen and Julio Saez-Rodriguez},
+  title = {Perturbation-response genes reveal signaling footprints in cancer gene expression},
+  journal = {Nature Communications}
 }
 ```
