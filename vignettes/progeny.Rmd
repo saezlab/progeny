@@ -142,7 +142,7 @@ gene_table = readr::read_tsv(paths[2])
 
 # we need drug response with COSMIC IDs
 drug_response = data.matrix(drug_table[,3:ncol(drug_table)])
-rownames(drug_response) = drug_table$X__1
+rownames(drug_response) = drug_table$..1
 
 # we need genes in rows and samples in columns
 gene_expr = data.matrix(gene_table[,3:ncol(gene_table)])
