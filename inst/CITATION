@@ -5,13 +5,14 @@ citEntry(entry="article",
                person("Anja", "Sieber"),
                person("Florian", "Uhlitz"),
                person("Sascha", "Sauer"),
-               person(c("Mathew J"), "Garnett"),
+               person(c("Mathew", "J"), "Garnett"),
                person("Nils", "Blüthgen"),
-               person("Julio", "Saez-Rodriguez"),
-           person("Andrea", "Califano")),
+               person("Julio", "Saez-Rodriguez")),
     title = "Perturbation-response genes reveal signaling footprints in cancer gene expression",
     journal = "Nature communications",
     year = 2018,
     volume = 9,
-    number = 20
+    number = 20,
+
+    textVersion = "M Schubert, B Klinger, M Klünemann, A Sieber, F Uhlitz, S Sauer, MJ Garnett, N Blüthgen, and J Saez-Rodriguez. 2018. “Perturbation-Response Genes Reveal Signaling Footprints in Cancer Gene Expression.” Nature Communications 9 (1)"
 )
