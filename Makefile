@@ -1,10 +1,12 @@
 .PHONY: all
-all: documentation #vignettes
+all: doc #vignettes
+
+R = R --no-save --no-restore -e
 
 .PHONY: vignettes
 # Additionally build the *.md file, and copy all files
 vignettes: knit_all
-	Rscript --no-save --no-restore -e "library(knitr); library(devtools); build_vignettes()"
+	$(R) "library(knitr); library(devtools); build_vignettes()"
 
 rmd_files=$(wildcard vignettes/*.rmd)
 knit_results=$(patsubst vignettes/%.rmd,inst/doc/%.md,${rmd_files})
@@ -17,11 +19,17 @@ inst/doc:
 	mkdir -p $@
 
 inst/doc/%.md: vignettes/%.rmd
-	Rscript --no-save --no-restore -e "library(knitr); knit('$<', '$@')"
+	$(R) "library(knitr); knit('$<', '$@')"
 
-.PHONY: documentation
-documentation:
-	Rscript --no-save --no-restore -e "library(devtools); document()"
+.PHONY: doc
+doc:
+	$(R) "library(devtools); document()"
+
+.PHONY: test
+	$(R) "devtools::test()"
+
+.PHONY: check
+	$(R) "devtools::check()"
 
 cleanall:
 	${RM} -r inst/doc
