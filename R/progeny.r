@@ -13,9 +13,10 @@
 #' gene expression of a microarray experiment or log-transformed (and
 #' possible variance-stabilized) counts from an RNA-seq experiment.
 #'
-#' The model matrix itself consists of 11 pathways and 1059 genes. Its
-#' coefficients are non-zero if the gene-pathway pair corresponds to the top
-#' 100 genes that were up-regulated upon stimulation of the pathway in a wide
+#' The human model matrix itself consists of 14 pathways and 1301 genes 
+#' and the mouse model matrix - 14 and 1376 respectively). Its coefficients
+#' are non-zero if the gene-pathway pair corresponds to the top 100 genes
+#' that were up-regulated upon stimulation of the pathway in a wide
 #' range of experiments. The value corresponds to the fitted z-score across
 #' experiments in our model fit. Only rows with at least one non-zero
 #' coefficient were included, as the rest is not used to infer pathway
@@ -25,6 +26,7 @@
 #'               in columns
 #' @param scale  Logical value indicating whether to scale the scores of each
 #'               pathway to have a mean of zero and standard deviation of one
+#' @param organism Model organism - human or mouse.
 #' @return       A matrix with samples in columns and pathways in rows
 #' @export
 #' @examples
@@ -34,18 +36,24 @@
 #'
 #' # calculate pathway activities
 #' pathways = progeny(gene_expression)
-progeny = function(expr, scale=TRUE) {
+progeny = function(expr, scale=TRUE, organism="Human") {
     UseMethod("progeny")
 }
 
 #' @export
-progeny.ExpressionSet = function(expr, scale=TRUE) {
+progeny.ExpressionSet = function(expr, scale=TRUE, organism="Human") {
     progeny(Biobase::exprs(expr), scale=scale)
 }
 
 #' @export
-progeny.matrix = function(expr, scale=TRUE) {
-    model = get("model", envir=.GlobalEnv)
+progeny.matrix = function(expr, scale=TRUE, organism="Human") {
+    model = if (organism=="Human") {
+      get("human_model", envir = .GlobalEnv)
+    } else if (organism=="Mouse") {
+      get("mouse_model", envir = .GlobalEnv)
+    } else {
+      stop("Wrong model organism. Please specify 'Human' or 'Mouse'.")
+    }
     common_genes = intersect(rownames(expr), rownames(model))
     re = t(expr[common_genes,,drop=FALSE]) %*% model[common_genes,,drop=FALSE]
 
@@ -59,6 +67,6 @@ progeny.matrix = function(expr, scale=TRUE) {
 }
 
 #' @export
-progeny.default = function(expr, scale=TRUE) {
+progeny.default = function(expr, scale=TRUE, organism="Human") {
     stop("Do not know how to access the data matrix from class ", class(expr))
 }
