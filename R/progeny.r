@@ -58,12 +58,12 @@ progeny.matrix = function(expr, scale=TRUE, organism="Human", top = 100) {
     }
   
     model = model %>%
-    group_by(pathway) %>%
-    top_n(top, wt = p.value) %>%
-    ungroup(pathway) %>%
-    select(-p.value, -adj.p) %>%
-    spread(pathway, weight, fill=0) %>%
-    data.frame(row.names = 1, 
+      group_by(pathway) %>%
+      top_n(top, wt = adj.p) %>%
+      ungroup(pathway) %>%
+      select(-p.value, -adj.p) %>%
+      spread(pathway, weight, fill=0) %>%
+      data.frame(row.names = 1, 
                  check.names = F, 
                  stringsAsFactors = F)
   
