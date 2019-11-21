@@ -36,24 +36,37 @@
 #'
 #' # calculate pathway activities
 #' pathways = progeny(gene_expression)
-progeny = function(expr, scale=TRUE, organism="Human") {
+progeny = function(expr, scale=TRUE, organism="Human", top = 100) {
     UseMethod("progeny")
 }
 
 #' @export
-progeny.ExpressionSet = function(expr, scale=TRUE, organism="Human") {
+progeny.ExpressionSet = function(expr, scale=TRUE, organism="Human", top = 100) {
     progeny(Biobase::exprs(expr), scale=scale)
 }
 
+
+    
 #' @export
-progeny.matrix = function(expr, scale=TRUE, organism="Human") {
-    model = if (organism=="Human") {
-      get("human_model", envir = .GlobalEnv)
-    } else if (organism=="Mouse") {
-      get("mouse_model", envir = .GlobalEnv)
+progeny.matrix = function(expr, scale=TRUE, organism="Human", top = 100) {
+    if (organism == "Human") {
+      model = get("model_human_full", envir = .GlobalEnv)
+    } else if (organism == "Mouse") {
+      model = get("model_mouse_full", envir = .GlobalEnv)
     } else {
-      stop("Wrong model organism. Please specify 'Human' or 'Mouse'.")
+      stop("Wrong organism name. Please specify 'Human' or 'Mouse'.")
     }
+  
+    model = model %>%
+    group_by(pathway) %>%
+    top_n(top, wt = p.value) %>%
+    ungroup(pathway) %>%
+    select(-p.value, -adj.p) %>%
+    spread(pathway, weight, fill=0) %>%
+    data.frame(row.names = 1, 
+                 check.names = F, 
+                 stringsAsFactors = F)
+  
     common_genes = intersect(rownames(expr), rownames(model))
     re = t(expr[common_genes,,drop=FALSE]) %*% model[common_genes,,drop=FALSE]
 
@@ -67,6 +80,6 @@ progeny.matrix = function(expr, scale=TRUE, organism="Human") {
 }
 
 #' @export
-progeny.default = function(expr, scale=TRUE, organism="Human") {
+progeny.default = function(expr, scale=TRUE, organism="Human", top = 100) {
     stop("Do not know how to access the data matrix from class ", class(expr))
 }
