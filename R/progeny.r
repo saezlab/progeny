@@ -28,6 +28,9 @@
 #'               pathway to have a mean of zero and standard deviation of one
 #' @param organism Model organism - human or mouse.
 #' @return       A matrix with samples in columns and pathways in rows
+#' @importFrom magrittr %>%
+#' @importFrom dplyr group_by top_n ungroup select 
+#' @importFrom tidyr spread
 #' @export
 #' @examples
 #' # use your gene expression matrix here, this is just for illustration
@@ -45,8 +48,6 @@ progeny.ExpressionSet = function(expr, scale=TRUE, organism="Human", top = 100) 
     progeny(Biobase::exprs(expr), scale=scale)
 }
 
-
-    
 #' @export
 progeny.matrix = function(expr, scale=TRUE, organism="Human", top = 100) {
     if (organism == "Human") {
@@ -63,9 +64,7 @@ progeny.matrix = function(expr, scale=TRUE, organism="Human", top = 100) {
       ungroup(pathway) %>%
       select(-p.value, -adj.p) %>%
       spread(pathway, weight, fill=0) %>%
-      data.frame(row.names = 1, 
-                 check.names = F, 
-                 stringsAsFactors = F)
+      data.frame(row.names = 1, check.names = F, stringsAsFactors = F)
   
     common_genes = intersect(rownames(expr), rownames(model))
     re = t(expr[common_genes,,drop=FALSE]) %*% model[common_genes,,drop=FALSE]
