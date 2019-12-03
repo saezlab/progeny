@@ -36,7 +36,7 @@ progeny_src = function(expr, scale=TRUE, organism="Human", top = 10) {
 
 ####data preparation for human####
 
-#get human gen expression data 
+#get human gene expression data 
 test_human_ge_data = get('test_human_ge_data', envir = .GlobalEnv)
 # import data to DESeq2 and variance stabilize
 dset = DESeqDataSetFromMatrix(assay(test_human_ge_data),
@@ -48,7 +48,7 @@ gene_expr_human = getVarianceStabilizedData(dset)
 
 ####data preparation for mouse####
 
-#get mouse gen expression data 
+#get mouse gene expression data 
 test_mouse_ge_data = get('test_mouse_ge_data', envir = .GlobalEnv)
 #create matrix
 dset <- DESeqDataSetFromMatrix(countData = assay(test_mouse_ge_data),
