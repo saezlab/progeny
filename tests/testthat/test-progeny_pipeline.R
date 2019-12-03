@@ -1,10 +1,9 @@
+library(testthat)
 library(progeny)
-library(airway)
 library(DESeq2)
 library(dplyr)
 library(tidyr)
-data(airway)
-library(biomaRt)
+
 
 progeny_src = function(expr, scale=TRUE, organism="Human", top = 10) {
   if (organism == "Human") {
@@ -35,7 +34,7 @@ progeny_src = function(expr, scale=TRUE, organism="Human", top = 10) {
   re
 }
 
-#data preparation for human
+####data preparation for human####
 
 #get human gen expression data 
 test_human_ge_data = get('test_human_ge_data', envir = .GlobalEnv)
@@ -47,7 +46,7 @@ dset = estimateSizeFactors(dset)
 dset = estimateDispersions(dset)
 gene_expr_human = getVarianceStabilizedData(dset)
 
-#data preparation for mouse
+####data preparation for mouse####
 
 #get mouse gen expression data 
 test_mouse_ge_data = get('test_mouse_ge_data', envir = .GlobalEnv)
@@ -61,17 +60,24 @@ dset = estimateDispersions(dset)
 gene_expr_mouse = getVarianceStabilizedData(dset)
 
 
-###Obtaining pathway scores for human###
-result_src_matrix_human <- progeny_src(gene_expr_human, scale=TRUE, 
+####Obtaining pathway scores from actual function for human####
+result_human_actual <- progeny_src(gene_expr_human, scale=TRUE, 
                                        organism = "Human", top = 10)
 
-###Obtaining pathway scores for mouse###
-result_src_matrix_mouse <- progeny_src(gene_expr_mouse, scale=TRUE, 
+####Obtaining pathway scores from actual function for mouse####
+result_mouse_actual <- progeny_src(gene_expr_mouse, scale=TRUE, 
                                        organism = "Mouse", top = 10)
 
+###Obtaining expected result for human####
+result_human_expected <- progeny(gene_expr_human, scale=TRUE, 
+                                 organism = "Human", top = 10)
+
+####Obtaining expected result for mouse####
+result_mouse_expected <- progeny(gene_expr_mouse, scale=TRUE, 
+                                 organism = "Mouse", top = 10)
+
+####Testing####
 test_that("Comparison of the results", {
-  expect_equal(progeny(gene_expr_human, scale=TRUE, organism = "Human", top = 10),
-               result_src_matrix_human)
-  expect_equal(progeny(gene_expr_mouse, scale=TRUE, organism = "Mouse", top = 10),
-               result_src_matrix_mouse)
+  expect_equal(result_human_actual, result_human_expected)
+  expect_equal(result_mouse_actual, result_mouse_expected)
 })
