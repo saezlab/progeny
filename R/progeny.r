@@ -15,10 +15,10 @@
 #'
 #' The human model matrix itself consists of 14 pathways and 1301 genes 
 #' and the mouse model matrix - 14 and 1376 respectively). Its coefficients
-#' are non-zero if the gene-pathway pair corresponds to the top 100 genes
-#' that were up-regulated upon stimulation of the pathway in a wide
-#' range of experiments. The value corresponds to the fitted z-score across
-#' experiments in our model fit. Only rows with at least one non-zero
+#' are non-zero if the gene-pathway pair corresponds to the top N genes
+#' (100 by default) that were up-regulated upon stimulation of the pathway 
+#' in a wide range of experiments. The value corresponds to the fitted z-score 
+#' across experiments in our model fit. Only rows with at least one non-zero
 #' coefficient were included, as the rest is not used to infer pathway
 #' activity.
 #'
@@ -26,7 +26,9 @@
 #'               in columns
 #' @param scale  Logical value indicating whether to scale the scores of each
 #'               pathway to have a mean of zero and standard deviation of one
-#' @param organism Model organism - human or mouse.
+#' @param organism The model organism - human or mouse
+#' @param top    Top n genes for generating the model matrix according to adjusted
+#'               p-value
 #' @return       A matrix with samples in columns and pathways in rows
 #' @importFrom magrittr %>%
 #' @importFrom dplyr group_by top_n ungroup select 
@@ -38,27 +40,27 @@
 #'     dimnames=list(rownames(model), "sample"))
 #'
 #' # calculate pathway activities
-#' pathways = progeny(gene_expression)
+#' pathways = progeny(gene_expression, scale=TRUE, organism="Human")
 progeny = function(expr, scale=TRUE, organism="Human", top = 100) {
     UseMethod("progeny")
 }
 
 #' @export
 progeny.ExpressionSet = function(expr, scale=TRUE, organism="Human", top = 100) {
-    progeny(Biobase::exprs(expr), scale=scale)
+    progeny(Biobase::exprs(expr), scale=scale, organism=organism, top=top)
 }
 
 #' @export
-progeny.matrix = function(expr, scale=TRUE, organism="Human", top = 100) {
+progeny.model = function(expr, scale=TRUE, organism="Human", top = 100) {
     if (organism == "Human") {
-      model = get("model_human_full", envir = .GlobalEnv)
+      full_model = get("model_human_full", envir = .GlobalEnv)
     } else if (organism == "Mouse") {
-      model = get("model_mouse_full", envir = .GlobalEnv)
+      full_model = get("model_mouse_full", envir = .GlobalEnv)
     } else {
       stop("Wrong organism name. Please specify 'Human' or 'Mouse'.")
     }
   
-    model = model %>%
+    model = full_model %>%
       group_by(pathway) %>%
       top_n(top, wt = adj.p) %>%
       ungroup(pathway) %>%
@@ -67,7 +69,8 @@ progeny.matrix = function(expr, scale=TRUE, organism="Human", top = 100) {
       data.frame(row.names = 1, check.names = F, stringsAsFactors = F)
   
     common_genes = intersect(rownames(expr), rownames(model))
-    re = t(expr[common_genes,,drop=FALSE]) %*% model[common_genes,,drop=FALSE]
+    re = t(expr[common_genes,,drop=FALSE]) %*% 
+      as.matrix(model[common_genes,,drop=FALSE])
 
     if (scale && nrow(re) > 1) {
         rn = rownames(re)
