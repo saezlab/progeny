@@ -29,6 +29,7 @@ Suggests:
     dplyr,
     knitr,
     readr,
-    readxl
+    readxl,
+    testthat (>= 2.1.0)
 VignetteBuilder: knitr
-RoxygenNote: 6.0.1
+RoxygenNote: 7.0.1

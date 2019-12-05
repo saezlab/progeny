@@ -8,6 +8,7 @@ gene_expr_mouse = get("gene_expr_mouse", envir = .GlobalEnv)
 result_human_expected = get("result_human_expected", envir = .GlobalEnv)
 result_mouse_expected = get("result_mouse_expected", envir = .GlobalEnv)
 
+
 #Obtaining actual result
 result_human_actual <- progeny(gene_expr_human, scale=TRUE, 
                                  organism = "Human", top = 10)
@@ -29,6 +30,5 @@ test_that("Wrong parameters", {
                        organism = "Human", top = 0),
                "attempt to set 'rownames' on an object with no dimensions"
                )
-  
 })
 

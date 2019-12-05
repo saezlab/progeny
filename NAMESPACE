@@ -2,5 +2,11 @@
 
 S3method(progeny,ExpressionSet)
 S3method(progeny,default)
-S3method(progeny,matrix)
+S3method(progeny,model)
 export(progeny)
+importFrom(dplyr,group_by)
+importFrom(dplyr,select)
+importFrom(dplyr,top_n)
+importFrom(dplyr,ungroup)
+importFrom(magrittr,"%>%")
+importFrom(tidyr,spread)
