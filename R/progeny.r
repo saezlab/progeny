@@ -51,7 +51,7 @@ progeny.ExpressionSet = function(expr, scale=TRUE, organism="Human", top = 100) 
 }
 
 #' @export
-progeny.model = function(expr, scale=TRUE, organism="Human", top = 100) {
+progeny.matrix = function(expr, scale=TRUE, organism="Human", top = 100) {
     if (organism == "Human") {
       full_model = get("model_human_full", envir = .GlobalEnv)
     } else if (organism == "Mouse") {
