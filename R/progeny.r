@@ -35,9 +35,8 @@
 #' @importFrom tidyr spread
 #' @export
 #' @examples
-#' # use your gene expression matrix here, this is just for illustration
-#' gene_expression = matrix(rep(1, nrow(model)),
-#'     dimnames=list(rownames(model), "sample"))
+#' # use example gene expression matrix here, this is just for illustration
+#' gene_expression = get("gene_expr_human", envir = .GlobalEnv)
 #'
 #' # calculate pathway activities
 #' pathways = progeny(gene_expression, scale=TRUE, organism="Human")
