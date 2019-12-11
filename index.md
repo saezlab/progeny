@@ -28,5 +28,5 @@ Beside the original paper there is an additional publication expanding the usage
 * If you use PROGENy for your research please cite the original publication:
 >  Schubert M, Klinger B, Klünemann M, Sieber A, Uhlitz F, Sauer S, Garnett MJ, Blüthgen N, Saez-Rodriguez J. "Perturbation-response genes reveal signaling footprints in cancer gene expression." _Nature Communications._ DOI: [10.1038/s41467-017-02391-6](https://doi.org/10.1038/s41467-017-02391-6).
 
-* If you use either the mouse or expanden version (mouse and human) of PROGENy please cite additionally:
+* If you use either the mouse or expanded version (mouse and human) of PROGENy please cite additionally:
 > Holland CH, Szalai B, Saez-Rodriguez J. "Transfer of regulatory knowledge from human to mouse for functional genomics analysis." _Biochimica et Biophysica Acta (BBA) - Gene Regulatory Mechanisms._ 2019. DOI: [10.1016/j.bbagrm.2019.194431](https://doi.org/10.1016/j.bbagrm.2019.194431).
