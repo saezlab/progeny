@@ -4,33 +4,29 @@ title: Home
 ---
 
 # PROGENy
+## Introduction
+### Overview
+PROGENy (Pathway RespOnsive GENes) is a functional analysis tool that infers activity of cancer-relevant signaling pathways (originally EGFR, Hypoxia, JAK-STAT, MAPK, NFkB, PI3K, p53, TGFb, TNFa, Trail and VEGF) using transcriptomics data, as described in [Schubert et al., 2019](https://doi.org/10.1038/s41467-017-02391-6). In comparison to conventional pathway analysis methods (Class Scoring Methods, e.g. Gene Set Enrichment Analysis or Topology Based approaches, e.g. SPIA) that use the genes of the pathway members, PROGENy calculates pathway activity based on consensus gene signatures obtained from perturbation experiments, that is, the footprint of the pathway on gene expression. A more detailed description of the concept of *footprint-based* analysis is available in the review [Dugourd et al., 2019](https://doi.org/10.1016/j.coisb.2019.04.002).
 
-## Overview
-PROGENy (Pathway RespOnsive GENes) aims to infer activity of cancer-relevant signaling pathways using transcriptomics data. In comparison to conventional pathway analysis methods (Class Scoring Methods, e.g. Gene Set Enrichment Analysis or Topology Based approaches, e.g. SPIA) that use the genes of the pathway members, PROGENy calculates pathway activity based on consensus gene signatures obtained from perturbation experiments, that is, the footprint of the pathway on gene expression. 
+To infer pathway activity a simple, yet effective linear regression model is trained by perturbation experiments. The perturbed pathways serve as input (-1 indicates inhibition, 1 activation, 0 otherwise) and the corresponding (z-score normalized) gene expression values as response variable. In total the training set consists of 580 public available experiments and 2652 microarrays, making it one of the most comprehensive study of pathway signatures to date. PROGENy has been proven to infer upstream pathway activity in context of (i) known driver mutations in primary tumors, (ii) drugs response in cell lines, and (iii) survival in cancer patients.
 
-To infer pathway activity a simple, yet effective linear regression model is trained by perturbation experiments. The perturbed pathways serve as input (-1 indicates inhibition, 1 activation, 0 otherwise) and the corresponding (z-score normalized) gene expression values as response variable. In total the training set consists of 580 public available experiments and 2652 microarrays, making it one of the most comprehensive study of pathway signatures to date. PROGENy has been proven to infer upstream pathway activity in context of (i) known driver mutations in primary tumors, (ii) drugs response in cell lines, and (iii) survival in cancer patients. ([Link to publication](http://rdcu.be/DTYo))
+### Update #1
+Originally PROGENy was developed for the application to human data. In a benchmark study we showed that PROGENy is also applicable to mouse data, as described in [Holland et al., 2019](https://doi.org/10.1016/j.bbagrm.2019.194431). Accordingly, we developed a mouse version of DoRothEA by transforming the human genes to their mouse orthologs.
 
-## Bioconductor package
+### Update #2
+We expanded human and mouse PROGENy with the pathways *Androgen*, *Estrogen* and *WNT*.
+
+### Bioconductor package
 We developed a [Bioconductor package for PROGENy](http://bioconductor.org/packages/release/bioc/html/progeny.html). If you have questions please use [this](https://github.com/saezlab/progeny/issues) platform to get in contact with other users and the developer.
 
-## Web Application
+### Web Application
 We provide an easy to use [web application](https://progeny.shinyapps.io/progenyapp/) to calculate PROGENy scores from gene expression data.
 
-## Reference
-Please use this reference to cite PROGENy:
->  Schubert M, Klinger B, Klünemann M, et al. [Perturbation-response genes reveal signaling footprints in cancer gene expression](http://rdcu.be/DTYo). Nat Commun. 2018;9(1):20. 
+## Citing PROGENy
+Beside the original paper there is an additional publication expanding the usage of PROGENy.
 
-```
-@article{Schubert2018,
-  doi = {10.1038/s41467-017-02391-6},
-  url = {https://doi.org/10.1038/s41467-017-02391-6},
-  year  = {2018},
-  month = {jan},
-  publisher = {Springer Nature},
-  volume = {9},
-  number = {1},
-  author = {Michael Schubert and Bertram Klinger and Martina Kl\"{u}nemann and Anja Sieber and Florian Uhlitz and Sascha Sauer and Mathew J. Garnett and Nils Bl\"{u}thgen and Julio Saez-Rodriguez},
-  title = {Perturbation-response genes reveal signaling footprints in cancer gene expression},
-  journal = {Nature Communications}
-}
-```
+* If you use PROGENy for your research please cite the original publication:
+>  Schubert M, Klinger B, Klünemann M, Sieber A, Uhlitz F, Sauer S, Garnett MJ, Blüthgen N, Saez-Rodriguez J. "Perturbation-response genes reveal signaling footprints in cancer gene expression." _Nature Communications._ DOI: [10.1038/s41467-017-02391-6](https://doi.org/10.1038/s41467-017-02391-6).
+
+* If you use either the mouse or expanden version (mouse and human) of PROGENy please cite additionally:
+> Holland CH, Szalai B, Saez-Rodriguez J. "Transfer of regulatory knowledge from human to mouse for functional genomics analysis." _Biochimica et Biophysica Acta (BBA) - Gene Regulatory Mechanisms._ 2019. DOI: [10.1016/j.bbagrm.2019.194431](https://doi.org/10.1016/j.bbagrm.2019.194431).
