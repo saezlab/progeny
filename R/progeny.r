@@ -40,18 +40,18 @@
 #'
 #' # calculate pathway activities
 #' pathways = progeny(gene_expression, scale=TRUE, organism="Human")
-progeny = function(expr, scale=TRUE, organism="Human", top = 100, perm = FALSE, n_perm = 10000) {
+progeny = function(expr, scale=TRUE, organism="Human", top = 100, perm = 1) {
     UseMethod("progeny")
 }
 
 #' @export
 progeny.ExpressionSet = function(expr, scale=TRUE, organism="Human", top = 100,
-                                 perm = FALSE, n_perm = 10000) {
-    progeny(Biobase::exprs(expr), scale=scale, organism=organism, top=top)
+                                perm = 1) {
+    progeny(Biobase::exprs(expr), scale=scale, organism=organism, top=top, perm = perm)
 }
 
 #' @export
-progeny.matrix = function(expr, scale=TRUE, organism="Human", top = 100, perm = FALSE, n_perm = 10000) {
+progeny.matrix = function(expr, scale=TRUE, organism="Human", top = 100, perm = 1) {
     if (organism == "Human") {
       full_model = get("model_human_full", envir = .GlobalEnv)
     } else if (organism == "Mouse") {
@@ -69,16 +69,17 @@ progeny.matrix = function(expr, scale=TRUE, organism="Human", top = 100, perm = 
       data.frame(row.names = 1, check.names = F, stringsAsFactors = F)
   
     common_genes = intersect(rownames(expr), rownames(model))
-    if (perm==FALSE) {
+    if (perm==1) {
       re = t(expr[common_genes,,drop=FALSE]) %*% 
         as.matrix(model[common_genes,,drop=FALSE])
-    } else if (perm==TRUE) {
-      expr = as.matrix(data.frame(names = row.names(expr), row.names = NULL, expr))
+    } else if (perm > 1) {
+      expr = data.frame(names = row.names(expr), row.names = NULL, expr)
       model = as.matrix(data.frame(names = row.names(model), row.names = NULL, model))
-      re = progeny_perm(expr, model, k = n_perm, 
+      re = progeny_perm(expr, model, k = perm, 
                           z_scores = T, get_nulldist = F)
     } else {
-      stop("Wrong perm parameter. Please leave FALSE by default of specify TRUE")
+      stop("Wrong perm parameter. Please leave 1 by default or specify another
+           value for application the permutation progeny function")
     }
    
     if (scale && nrow(re) > 1) {
@@ -92,6 +93,6 @@ progeny.matrix = function(expr, scale=TRUE, organism="Human", top = 100, perm = 
 }
 
 #' @export
-progeny.default = function(expr, scale=TRUE, organism="Human", top = 100, perm = FALSE, n_perm = 10000) {
+progeny.default = function(expr, scale=TRUE, organism="Human", top = 100, perm = 1) {
     stop("Do not know how to access the data matrix from class ", class(expr))
 }
