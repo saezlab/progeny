@@ -73,8 +73,8 @@ progeny.matrix = function(expr, scale=TRUE, organism="Human", top = 100, perm = 
       re = t(expr[common_genes,,drop=FALSE]) %*% 
         as.matrix(model[common_genes,,drop=FALSE])
     } else if (perm==TRUE) {
-      expr = as.matrix(data.frame(names = row.names(expr), expr))
-      model = as.matrix(data.frame(names = row.names(model), model))
+      expr = as.matrix(data.frame(names = row.names(expr), row.names = NULL, expr))
+      model = as.matrix(data.frame(names = row.names(model), row.names = NULL, model))
       re = progeny_perm(expr, model, k = n_perm, 
                           z_scores = T, get_nulldist = F)
     } else {
