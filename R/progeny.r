@@ -78,7 +78,7 @@ progeny.matrix = function(expr, scale=TRUE, organism="Human", top = 100, perm = 
       re = progeny_perm(expr, model, k = n_perm, 
                           z_scores = T, get_nulldist = F)
     } else {
-      stop("Wrong perm parametr. Please leave FALSE by default of specify TRUE")
+      stop("Wrong perm parameter. Please leave FALSE by default of specify TRUE")
     }
    
     if (scale && nrow(re) > 1) {
