@@ -40,17 +40,18 @@
 #'
 #' # calculate pathway activities
 #' pathways = progeny(gene_expression, scale=TRUE, organism="Human")
-progeny = function(expr, scale=TRUE, organism="Human", top = 100) {
+progeny = function(expr, scale=TRUE, organism="Human", top = 100, perm = FALSE, n_perm = 10000) {
     UseMethod("progeny")
 }
 
 #' @export
-progeny.ExpressionSet = function(expr, scale=TRUE, organism="Human", top = 100) {
+progeny.ExpressionSet = function(expr, scale=TRUE, organism="Human", top = 100,
+                                 perm = FALSE, n_perm = 10000) {
     progeny(Biobase::exprs(expr), scale=scale, organism=organism, top=top)
 }
 
 #' @export
-progeny.matrix = function(expr, scale=TRUE, organism="Human", top = 100) {
+progeny.matrix = function(expr, scale=TRUE, organism="Human", top = 100, perm = FALSE, n_perm = 10000) {
     if (organism == "Human") {
       full_model = get("model_human_full", envir = .GlobalEnv)
     } else if (organism == "Mouse") {
@@ -61,16 +62,25 @@ progeny.matrix = function(expr, scale=TRUE, organism="Human", top = 100) {
   
     model = full_model %>%
       group_by(pathway) %>%
-      top_n(top, wt = adj.p) %>%
+      top_n(top, wt = p.value) %>%
       ungroup(pathway) %>%
-      select(-p.value, -adj.p) %>%
+      select(-p.value) %>%
       spread(pathway, weight, fill=0) %>%
       data.frame(row.names = 1, check.names = F, stringsAsFactors = F)
   
     common_genes = intersect(rownames(expr), rownames(model))
-    re = t(expr[common_genes,,drop=FALSE]) %*% 
-      as.matrix(model[common_genes,,drop=FALSE])
-
+    if (perm==FALSE) {
+      re = t(expr[common_genes,,drop=FALSE]) %*% 
+        as.matrix(model[common_genes,,drop=FALSE])
+    } else if (perm==TRUE) {
+      expr = as.matrix(data.frame(names = row.names(expr), expr))
+      model = as.matrix(data.frame(names = row.names(model), model))
+      re = progeny_perm(expr, model, k = n_perm, 
+                          z_scores = T, get_nulldist = F)
+    } else {
+      stop("Wrong perm parametr. Please leave FALSE by default of specify TRUE")
+    }
+   
     if (scale && nrow(re) > 1) {
         rn = rownames(re)
         re = apply(re, 2, scale)
@@ -78,9 +88,10 @@ progeny.matrix = function(expr, scale=TRUE, organism="Human", top = 100) {
     }
 
     re
+    
 }
 
 #' @export
-progeny.default = function(expr, scale=TRUE, organism="Human", top = 100) {
+progeny.default = function(expr, scale=TRUE, organism="Human", top = 100, perm = FALSE, n_perm = 10000) {
     stop("Do not know how to access the data matrix from class ", class(expr))
 }
