@@ -23,7 +23,9 @@
 #' activity.
 #'
 #' @param expr   A gene expression object with HGNC symbols in rows and samples
-#'               in columns
+#'               in columns. In order to run Progeny in single cell RNAseq data,
+#'               it also accepts Seurat and SingleCellExperiment object, taking
+#'               the normalized counts for the computation.   
 #' @param scale  Logical value indicating whether to scale the scores of each
 #'               pathway to have a mean of zero and standard deviation of one
 #' @param organism The model organism - human or mouse
@@ -51,6 +53,20 @@ progeny.ExpressionSet = function(expr, scale=TRUE, organism="Human", top = 100,
 }
 
 #' @export
+progeny.Seurat = function(expr, scale=TRUE, organism="Human", top = 100,
+    perm = 1) {
+        progeny(as.matrix(expr[["RNA"]]@data), scale=scale, organism=organism, 
+            top=top, perm = perm)
+}
+
+#' @export
+progeny.SingleCellExperiment = 
+    function(expr, scale=TRUE, organism="Human", top = 100) {
+        progeny(as.matrix(normcounts(expr)), scale=scale, organism=organism, 
+        top=top, perm = perm)
+}
+
+#' @export
 progeny.matrix = function(expr, scale=TRUE, organism="Human", top = 100, perm = 1) {
     if (organism == "Human") {
       full_model = get("model_human_full", envir = .GlobalEnv)
@@ -62,7 +78,7 @@ progeny.matrix = function(expr, scale=TRUE, organism="Human", top = 100, perm = 
   
     model = full_model %>%
       group_by(pathway) %>%
-      top_n(top, wt = p.value) %>%
+      top_n(top, wt = -p.value) %>%
       ungroup(pathway) %>%
       select(-p.value) %>%
       spread(pathway, weight, fill=0) %>%

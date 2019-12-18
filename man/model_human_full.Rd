@@ -3,7 +3,7 @@
 \docType{data}
 \name{model_human_full}
 \alias{model_human_full}
-\title{The full human linear human model underlying PROGENy}
+\title{The full human linear model underlying PROGENy}
 \format{The full human model contains 22479 genes, associated pathways,
 p.value and p.adj value}
 \source{

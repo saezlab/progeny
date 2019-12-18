@@ -3,3 +3,4 @@ vignettes/*.R
 vignettes/*.md
 vignettes/.build.timestamp
 *.swp
+.Rproj.user
