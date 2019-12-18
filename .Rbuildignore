@@ -3,3 +3,5 @@ CHANGES\.md
 Makefile
 README\.md
 ^\.travis\.yml$
+^.*\.Rproj$
+^\.Rproj\.user$

@@ -5,11 +5,13 @@
 \alias{progeny}
 \title{Calculate PROGENy pathway scores from gene expression}
 \usage{
-progeny(expr, scale = TRUE, organism = "Human", top = 100)
+progeny(expr, scale = TRUE, organism = "Human", top = 100, perm = 1)
 }
 \arguments{
 \item{expr}{A gene expression object with HGNC symbols in rows and samples
-in columns}
+in columns. In order to run Progeny in single cell RNAseq data,
+it also accepts Seurat and SingleCellExperiment object, taking
+the normalized counts for the computation.}
 
 \item{scale}{Logical value indicating whether to scale the scores of each
 pathway to have a mean of zero and standard deviation of one}
@@ -52,9 +54,8 @@ coefficient were included, as the rest is not used to infer pathway
 activity.
 }
 \examples{
-# use your gene expression matrix here, this is just for illustration
-gene_expression = matrix(rep(1, nrow(model)),
-    dimnames=list(rownames(model), "sample"))
+# use example gene expression matrix here, this is just for illustration
+gene_expression = get("gene_expr_human", envir = .GlobalEnv)
 
 # calculate pathway activities
 pathways = progeny(gene_expression, scale=TRUE, organism="Human")
