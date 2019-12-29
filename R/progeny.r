@@ -42,32 +42,32 @@
 #'
 #' # calculate pathway activities
 #' pathways = progeny(gene_expression, scale=TRUE, organism="Human")
-progeny = function(expr, scale=TRUE, organism="Human", top = 100, perm = 1) {
+progeny = function(expr, scale=TRUE, organism="Human", top = 100, perm = 1, plot=FALSE) {
     UseMethod("progeny")
 }
 
 #' @export
 progeny.ExpressionSet = function(expr, scale=TRUE, organism="Human", top = 100,
-                                perm = 1) {
+                                perm = 1, plot=FALSE) {
     progeny(Biobase::exprs(expr), scale=scale, organism=organism, top=top, perm = perm)
 }
 
 #' @export
 progeny.Seurat = function(expr, scale=TRUE, organism="Human", top = 100,
-    perm = 1) {
+    perm = 1, plot=FALSE) {
         progeny(as.matrix(expr[["RNA"]]@data), scale=scale, organism=organism, 
             top=top, perm = perm)
 }
 
 #' @export
 progeny.SingleCellExperiment = 
-    function(expr, scale=TRUE, organism="Human", top = 100) {
+    function(expr, scale=TRUE, organism="Human", top = 100, plot=FALSE) {
         progeny(as.matrix(normcounts(expr)), scale=scale, organism=organism, 
         top=top, perm = perm)
 }
 
 #' @export
-progeny.matrix = function(expr, scale=TRUE, organism="Human", top = 100, perm = 1) {
+progeny.matrix = function(expr, scale=TRUE, organism="Human", top = 100, perm = 1, plot=FALSE) {
     if (organism == "Human") {
       full_model = get("model_human_full", envir = .GlobalEnv)
     } else if (organism == "Mouse") {
@@ -80,11 +80,12 @@ progeny.matrix = function(expr, scale=TRUE, organism="Human", top = 100, perm = 
       group_by(pathway) %>%
       top_n(top, wt = -p.value) %>%
       ungroup(pathway) %>%
-      select(-p.value) %>%
+      dplyr::select(-p.value) %>%
       spread(pathway, weight, fill=0) %>%
       data.frame(row.names = 1, check.names = F, stringsAsFactors = F)
   
     common_genes = intersect(rownames(expr), rownames(model))
+    
     if (perm==1) {
       re = t(expr[common_genes,,drop=FALSE]) %*% 
         as.matrix(model[common_genes,,drop=FALSE])
@@ -98,6 +99,12 @@ progeny.matrix = function(expr, scale=TRUE, organism="Human", top = 100, perm = 
            value for application the permutation progeny function")
     }
    
+    if (plot) {
+      expr = data.frame(names = row.names(expr), row.names = NULL, expr)
+      model = as.matrix(data.frame(names = row.names(model), row.names = NULL, model))
+      progenyScatter(expr, model, dfID = 1, weightID = 1, statName = "gene stats")
+    }
+    
     if (scale && nrow(re) > 1) {
         rn = rownames(re)
         re = apply(re, 2, scale)
