@@ -42,14 +42,16 @@
 #'
 #' # calculate pathway activities
 #' pathways = progeny(gene_expression, scale=TRUE, organism="Human")
-progeny = function(expr, scale=TRUE, organism="Human", top = 100, perm = 1, plot=FALSE) {
+progeny = function(expr, scale=TRUE, organism="Human", top = 100, perm = 1, 
+                   plot=FALSE) {
     UseMethod("progeny")
 }
 
 #' @export
 progeny.ExpressionSet = function(expr, scale=TRUE, organism="Human", top = 100,
                                 perm = 1, plot=FALSE) {
-    progeny(Biobase::exprs(expr), scale=scale, organism=organism, top=top, perm = perm)
+    progeny(Biobase::exprs(expr), scale=scale, organism=organism, top=top, 
+            perm = perm)
 }
 
 #' @export
@@ -67,7 +69,8 @@ progeny.SingleCellExperiment =
 }
 
 #' @export
-progeny.matrix = function(expr, scale=TRUE, organism="Human", top = 100, perm = 1, plot=FALSE) {
+progeny.matrix = function(expr, scale=TRUE, organism="Human", top = 100, 
+                          perm = 1, plot=FALSE) {
     if (organism == "Human") {
       full_model = get("model_human_full", envir = .GlobalEnv)
     } else if (organism == "Mouse") {
@@ -87,12 +90,13 @@ progeny.matrix = function(expr, scale=TRUE, organism="Human", top = 100, perm = 
     common_genes = intersect(rownames(expr), rownames(model))
     
     if (perm==1) {
-      re = t(expr[common_genes,,drop=FALSE]) %*% 
+      re <- t(expr[common_genes,,drop=FALSE]) %*% 
         as.matrix(model[common_genes,,drop=FALSE])
     } else if (perm > 1) {
-      expr = data.frame(names = row.names(expr), row.names = NULL, expr)
-      model = as.matrix(data.frame(names = row.names(model), row.names = NULL, model))
-      re = progeny_perm(expr, model, k = perm, 
+      expr <- data.frame(names = row.names(expr), row.names = NULL, expr)
+      model <- data.frame(names = row.names(model), row.names = NULL, 
+                                   model)
+      re <- progeny_perm(expr, model, k = perm, 
                           z_scores = T, get_nulldist = F)
     } else {
       stop("Wrong perm parameter. Please leave 1 by default or specify another
@@ -100,9 +104,11 @@ progeny.matrix = function(expr, scale=TRUE, organism="Human", top = 100, perm = 
     }
    
     if (plot) {
-      expr = data.frame(names = row.names(expr), row.names = NULL, expr)
-      model = as.matrix(data.frame(names = row.names(model), row.names = NULL, model))
-      progenyScatter(expr, model, dfID = 1, weightID = 1, statName = "gene stats")
+      expr <-  data.frame(names = row.names(expr), row.names = NULL, expr)
+      model <-  data.frame(names = row.names(model), row.names = NULL,
+                                   model)
+      progenyScatter(expr, model, dfID = 1, weightID = 1, 
+                     statName = "gene stats")
     }
     
     if (scale && nrow(re) > 1) {
@@ -116,6 +122,7 @@ progeny.matrix = function(expr, scale=TRUE, organism="Human", top = 100, perm = 
 }
 
 #' @export
-progeny.default = function(expr, scale=TRUE, organism="Human", top = 100, perm = 1) {
+progeny.default = function(expr, scale=TRUE, organism="Human", top = 100, 
+                           perm = 1) {
     stop("Do not know how to access the data matrix from class ", class(expr))
 }
