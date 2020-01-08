@@ -18,16 +18,17 @@
 #'or contrast statistic. One of the column should correspond to the gene symboles.
 #'@param cm a progeny coeficient matrix. One of the column should be the gene symboles.
 #'@param dfID an integer corresponding to the column number of the gene identifiers of df.
-#'@param weightID an integer corresponding to the column number of the gene identifiers of 
-#'the weight matrix.
+#'@param weightID an integer corresponding to the column number of the gene 
+#'identifiers of the weight matrix.
 #'@param statname The neame of the stat used, to be displayed on the plot
-#'@importFrom ggplot2 ggplot
+#'@import ggplot2 
 #'@importFrom ggrepel geom_label_repel
 #'@importFrom gridExtra arrangeGrob
 #'@return The function returns a list of list of arrangeGrob object.
 #'The first level list elements correspond to samples/contrasts. 
 #'The second level correspond to pathways.
 #'The plots can be saved in a pdf format using the saveProgenyPlots function.
+#'@export
 progenyScatter <- function(df,weight_matrix,dfID = 1, weightID = 1, statName = "gene stats")
 {
   plot_list_contrasts <- list(0)
@@ -95,4 +96,33 @@ progenyScatter <- function(df,weight_matrix,dfID = 1, weightID = 1, statName = "
     plot_list_contrasts[[i-1]] <- plot_list_pathways
   }
   return(plot_list_contrasts)
+}
+
+#'\code{saveProgenyPlots}
+#'
+#'This function is designed to save the plots (in pdf format) of a nested (2 level) list of arrangeGrob objects, such as the one returned by the progenyScatter function.
+#'
+#'@param plots a list of list of arrangeGrob object (such as the one returned by the progenyScatter function.).The first level list elements correspond to samples/contrasts. The second level correspond to pathways.
+#'The plots can be saved in a pdf format using the saveProgenyPlots function.
+#'@param contrast_names a vector of same length as the first level of the plot list corresponding to the names of each sample/contrast
+#'@param dirpath the path to the directory where the plotsshould be saved
+#'@export
+saveProgenyPlots <- function(plots, contrast_names, dirpath)
+{
+  i <- 1
+  for (condition in plots)
+  {
+    dirname <- paste(dirpath,contrast_names[i], sep = "")
+    dir.create(dirname, recursive = T, showWarnings = F)
+    j <- 1
+    for (pathway in condition)
+    {
+      filename <- paste(dirname,names(condition)[j],sep = "/")
+      filename <- paste(filename,".pdf",sep = "")
+      print(filename)
+      ggsave(filename, pathway,device = "pdf", dpi = 300)
+      j <- j+1
+    }
+    i <- i+1
+  }
 }
