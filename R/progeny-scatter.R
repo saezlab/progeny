@@ -16,8 +16,10 @@
 #'@param df a n*m data frame, where n is the number of omic features (genes). 
 #'m isn't really important, as long as at least one column corespond to a sample
 #'or contrast statistic. One of the column should correspond to the gene symboles.
-#'@param cm a progeny coeficient matrix. One of the column should be the gene symboles.
-#'@param dfID an integer corresponding to the column number of the gene identifiers of df.
+#'@param cm a progeny coeficient matrix. One of the column should be 
+#'the gene symboles.
+#'@param dfID an integer corresponding to the column number of 
+#'the gene identifiers of df.
 #'@param weightID an integer corresponding to the column number of the gene 
 #'identifiers of the weight matrix.
 #'@param statname The neame of the stat used, to be displayed on the plot
@@ -29,7 +31,8 @@
 #'The second level correspond to pathways.
 #'The plots can be saved in a pdf format using the saveProgenyPlots function.
 #'@export
-progenyScatter <- function(df,weight_matrix,dfID = 1, weightID = 1, statName = "gene stats")
+progenyScatter <- function(df,weight_matrix,dfID = 1, weightID = 1, 
+                           statName = "gene stats")
 {
   plot_list_contrasts <- list(0)
   for (i in 2:length(df[1,]))
@@ -87,7 +90,8 @@ progenyScatter <- function(df,weight_matrix,dfID = 1, weightID = 1, statName = "
         labs(x = title, y = statName)
       
       lay <- t(as.matrix(c(1,1,1,1,2)))
-      gg <- arrangeGrob(scatterplot, histo, nrow = 1, ncol = 2, layout_matrix = lay)
+      gg <- arrangeGrob(scatterplot, histo, nrow = 1, 
+                        ncol = 2, layout_matrix = lay)
       
       #grid.arrange(gg)
       plot_list_pathways[[j-1]] <- gg
@@ -100,11 +104,16 @@ progenyScatter <- function(df,weight_matrix,dfID = 1, weightID = 1, statName = "
 
 #'\code{saveProgenyPlots}
 #'
-#'This function is designed to save the plots (in pdf format) of a nested (2 level) list of arrangeGrob objects, such as the one returned by the progenyScatter function.
+#'This function is designed to save the plots (in pdf format) of a nested 
+#'(2 level) list of arrangeGrob objects, such as the one returned by 
+#'the progenyScatter function.
 #'
-#'@param plots a list of list of arrangeGrob object (such as the one returned by the progenyScatter function.).The first level list elements correspond to samples/contrasts. The second level correspond to pathways.
+#'@param plots a list of list of arrangeGrob object (such as the one returned 
+#'by the progenyScatter function.).The first level list elements correspond 
+#'to samples/contrasts. The second level correspond to pathways.
 #'The plots can be saved in a pdf format using the saveProgenyPlots function.
-#'@param contrast_names a vector of same length as the first level of the plot list corresponding to the names of each sample/contrast
+#'@param contrast_names a vector of same length as the first level of 
+#'the plot list corresponding to the names of each sample/contrast
 #'@param dirpath the path to the directory where the plotsshould be saved
 #'@export
 saveProgenyPlots <- function(plots, contrast_names, dirpath)
