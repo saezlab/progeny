@@ -135,3 +135,21 @@ saveProgenyPlots <- function(plots, contrast_names, dirpath)
     i <- i+1
   }
 }
+
+#'This function is designed for getting a full model matrix
+#'@param organism Model organism has taken from the main function's argument
+#'@export
+getFullModel <- function(organism) 
+{
+  if (organism == "Human") {
+    full_model <- get("model_human_full", envir = .GlobalEnv)
+  } else if (organism == "Mouse") {
+    full_model <- get("model_mouse_full", envir = .GlobalEnv)
+  } else {
+    stop("Wrong organism name. Please specify 'Human' or 'Mouse'.")
+  }
+  
+  return(full_model)
+  
+}
+

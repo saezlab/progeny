@@ -31,7 +31,7 @@
 #'the direction of the regulation.
 #'The second element is the null distribution list (a null distribution is
 #'generated for each sample/contrast).
-
+#'@export
 progeny_perm <- function(df,weight_matrix,k = 10000, z_scores = T, get_nulldist = F)
 {
   resList <- list()
@@ -107,7 +107,7 @@ progeny_perm <- function(df,weight_matrix,k = 10000, z_scores = T, get_nulldist 
   }
   else
   {
-    return(resDf)
+    return(t(resDf))
   }
   
 }
