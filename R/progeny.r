@@ -42,44 +42,43 @@
 #'
 #' # calculate pathway activities
 #' pathways = progeny(gene_expression, scale=TRUE, organism="Human")
-progeny = function(expr, scale=TRUE, organism="Human", top = 100, perm = 1, 
-                   plot=FALSE) {
+progeny = function(expr, scale=TRUE, organism="Human", top = 100, perm = 1) {
     UseMethod("progeny")
 }
 
 #' @export
 progeny.ExpressionSet = function(expr, scale=TRUE, organism="Human", top = 100,
-                                perm = 1, plot=FALSE) {
+                                perm = 1) {
     progeny(Biobase::exprs(expr), scale=scale, organism=organism, top=top, 
             perm = perm)
 }
 
 #' @export
 progeny.Seurat = function(expr, scale=TRUE, organism="Human", top = 100,
-    perm = 1, plot=FALSE) {
+    perm = 1) {
         progeny(as.matrix(expr[["RNA"]]@data), scale=scale, organism=organism, 
             top=top, perm = perm)
 }
 
 #' @export
 progeny.SingleCellExperiment = 
-    function(expr, scale=TRUE, organism="Human", top = 100, plot=FALSE) {
+    function(expr, scale=TRUE, organism="Human", top = 100) {
         progeny(as.matrix(normcounts(expr)), scale=scale, organism=organism, 
         top=top, perm = perm)
 }
 
 #' @export
 progeny.matrix = function(expr, scale=TRUE, organism="Human", top = 100, 
-                          perm = 1, plot=FALSE) {
+                          perm = 1) {
     if (organism == "Human") {
-      full_model = get("model_human_full", envir = .GlobalEnv)
+      full_model <- get("model_human_full", envir = .GlobalEnv)
     } else if (organism == "Mouse") {
-      full_model = get("model_mouse_full", envir = .GlobalEnv)
+      full_model <- get("model_mouse_full", envir = .GlobalEnv)
     } else {
       stop("Wrong organism name. Please specify 'Human' or 'Mouse'.")
     }
   
-    model = full_model %>%
+    model <- full_model %>%
       group_by(pathway) %>%
       top_n(top, wt = -p.value) %>%
       ungroup(pathway) %>%
@@ -102,19 +101,11 @@ progeny.matrix = function(expr, scale=TRUE, organism="Human", top = 100,
       stop("Wrong perm parameter. Please leave 1 by default or specify another
            value for application the permutation progeny function")
     }
-   
-    if (plot) {
-      expr <-  data.frame(names = row.names(expr), row.names = NULL, expr)
-      model <-  data.frame(names = row.names(model), row.names = NULL,
-                                   model)
-      progenyScatter(expr, model, dfID = 1, weightID = 1, 
-                     statName = "gene stats")
-    }
     
     if (scale && nrow(re) > 1) {
-        rn = rownames(re)
-        re = apply(re, 2, scale)
-        rownames(re) = rn
+        rn <- rownames(re)
+        re <- apply(re, 2, scale)
+        rownames(re) <- rn
     }
 
     re
