@@ -1,34 +1,38 @@
 library(progeny)
 
-#get test gene expression datasets
-gene_expr_human = get("gene_expr_human", envir = .GlobalEnv)
-gene_expr_mouse = get("gene_expr_mouse", envir = .GlobalEnv)
+#get input data 
+input_human <- get("input_human", envir = .GlobalEnv)
+input_mouse <- get("input_mouse", envir = .GlobalEnv)
 
-#get example output
-result_human_expected = get("result_human_expected", envir = .GlobalEnv)
-result_mouse_expected = get("result_mouse_expected", envir = .GlobalEnv)
+#get example output 
+progeny_human_def_expected <-  get("human_def_expected", envir = .GlobalEnv)
+progeny_mouse_def_expected <-  get("mouse_def_expected", envir = .GlobalEnv)
 
-
-#Obtaining actual result
-result_human_actual <- progeny(gene_expr_human, scale=TRUE, 
+#obtaining actual result
+progeny_human_def_act <- progeny(input_human, scale=TRUE, 
                                  organism = "Human", top = 10)
-result_mouse_actual <- progeny(gene_expr_mouse, scale=TRUE, 
+progeny_mouse_def_act <- progeny(input_mouse, scale=TRUE, 
                                  organism = "Mouse", top = 10)
 
-#Testing
+#testing
 test_that("Comparison of the results", {
-  expect_equal(result_human_actual, result_human_expected)
-  expect_equal(result_mouse_actual, result_mouse_expected)
+  expect_equal(progeny_human_def_act, progeny_human_def_expected)
+  expect_equal(progeny_mouse_def_act, progeny_mouse_def_expected)
 })
 
 test_that("Wrong parameters", {
-  expect_error(progeny(gene_expr_human, scale=TRUE, 
+  expect_error(progeny(input_human, scale=TRUE, 
                          organism = "Test", top = 10),
                "Wrong organism name. Please specify 'Human' or 'Mouse'."
                )
-  expect_error(progeny(gene_expr_human, scale=TRUE, 
+  expect_error(progeny(input_human, scale=TRUE, 
                        organism = "Human", top = 0),
                "attempt to set 'rownames' on an object with no dimensions"
                )
+  expect_error(progeny(input_human, scale=TRUE, 
+                       organism = "Human", top = 10, perm = 0),
+            "Wrong perm parameter. Please leave 1 by default or specify another
+           value for application the permutation progeny function"
+  )
 })
 
