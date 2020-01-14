@@ -138,8 +138,8 @@ perform the analysis:
 ```{r}
 # load the downloaded files
 
-drug_table <- as.data.frame(readxl::read_excel(paths[1], skip=5))
-drug_table <- apply(drug_table,2,as.numeric)
+drug_table <- readxl::read_excel(paths[1], skip=5)
+drug_table <- as.data.frame(apply(drug_table,2,as.numeric))
 drug_table[is.na(drug_table)] <- 0
 
 #drug_table = mutate_each(funs(replace_na(drug_table,0)))
