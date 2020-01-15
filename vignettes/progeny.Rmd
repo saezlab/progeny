@@ -137,23 +137,18 @@ perform the analysis:
 
 ```{r}
 # load the downloaded files
-
-drug_table <- readxl::read_excel(paths[1], skip=5)
-drug_table <- as.data.frame(apply(drug_table,2,as.numeric))
-drug_table[is.na(drug_table)] <- 0
-
-#drug_table = mutate_each(funs(replace_na(drug_table,0)))
-
-gene_table = readr::read_tsv(paths[2])
+drug_table <- readxl::read_excel(paths[1], skip=5, na="NA")
+drug_table <- replace(drug_table, is.na(drug_table), 0)
+gene_table <- readr::read_tsv(paths[2])
 
 # we need drug response with COSMIC IDs
-drug_response = data.matrix(drug_table[,3:ncol(drug_table)])
-rownames(drug_response) = drug_table[[1]]
+drug_response <- data.matrix(drug_table[,3:ncol(drug_table)])
+rownames(drug_response) <- drug_table[[1]]
 
 # we need genes in rows and samples in columns
-gene_expr = data.matrix(gene_table[,3:ncol(gene_table)])
-colnames(gene_expr) = sub("DATA.", "", colnames(gene_expr), fixed=TRUE)
-rownames(gene_expr) = gene_table$GENE_SYMBOLS
+gene_expr <- data.matrix(gene_table[,3:ncol(gene_table)])
+colnames(gene_expr) <- sub("DATA.", "", colnames(gene_expr), fixed=TRUE)
+rownames(gene_expr) <- gene_table$GENE_SYMBOLS
 ```
 
 ### Running PROGENy to get pathway activity scores
