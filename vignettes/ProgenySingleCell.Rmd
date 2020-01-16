@@ -103,7 +103,8 @@ pbmc <-
 ```
 
 ```{r, eval=TRUE , include=FALSE}
-load(file="/home/alvaldeolivas/Desktop/Trabajo/Heidelberg/ProgenySingleCellVignette/data/SeuratObject.RData", verbose = FALSE)
+pbmc <- 
+    readRDS(url("https://github.com/alberto-valdeolivas/ProgenyVignette/raw/master/SeuratObject.rds"))
 ```
 
 ## Pre-processing, normalization and identification of highly variable features
