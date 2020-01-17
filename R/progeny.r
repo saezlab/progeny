@@ -31,17 +31,19 @@
 #' @param organism The model organism - human or mouse
 #' @param top    Top n genes for generating the model matrix according to adjusted
 #'               p-value
+#' @param perm    Number of permutations
 #' @return       A matrix with samples in columns and pathways in rows
-#' @importFrom magrittr %>%
 #' @importFrom dplyr group_by top_n ungroup select 
-#' @importFrom tidyr spread
+#' @importFrom tidyr spread %>%
+#' @import SingleCellExperiment
 #' @export
 #' @examples
 #' # use example gene expression matrix here, this is just for illustration
-#' gene_expression = get("gene_expr_human", envir = .GlobalEnv)
+#' gene_expression = get("human_def_expected", envir = .GlobalEnv)
 #'
 #' # calculate pathway activities
-#' pathways = progeny(gene_expression, scale=TRUE, organism="Human")
+#' pathways = progeny(gene_expression, scale=TRUE, 
+#'     organism="Human", top = 100, perm = 1)
 progeny = function(expr, scale=TRUE, organism="Human", top = 100, perm = 1) {
     UseMethod("progeny")
 }
@@ -62,7 +64,7 @@ progeny.Seurat = function(expr, scale=TRUE, organism="Human", top = 100,
 
 #' @export
 progeny.SingleCellExperiment = 
-    function(expr, scale=TRUE, organism="Human", top = 100) {
+    function(expr, scale=TRUE, organism="Human", top = 100, perm = 1) {
         progeny(as.matrix(normcounts(expr)), scale=scale, organism=organism, 
         top=top, perm = perm)
 }
@@ -70,20 +72,15 @@ progeny.SingleCellExperiment =
 #' @export
 progeny.matrix = function(expr, scale=TRUE, organism="Human", top = 100, 
                           perm = 1) {
-    if (organism == "Human") {
-      full_model <- get("model_human_full", envir = .GlobalEnv)
-    } else if (organism == "Mouse") {
-      full_model <- get("model_mouse_full", envir = .GlobalEnv)
-    } else {
-      stop("Wrong organism name. Please specify 'Human' or 'Mouse'.")
-    }
+    
+    full_model <- getFullModel(organism)
   
     model <- full_model %>%
-      group_by(pathway) %>%
-      top_n(top, wt = -p.value) %>%
-      ungroup(pathway) %>%
+      dplyr::group_by(pathway) %>%
+      dplyr::top_n(top, wt = -p.value) %>%
+      dplyr::ungroup(pathway) %>%
       dplyr::select(-p.value) %>%
-      spread(pathway, weight, fill=0) %>%
+      tidyr::spread(pathway, weight, fill=0) %>%
       data.frame(row.names = 1, check.names = F, stringsAsFactors = F)
   
     common_genes = intersect(rownames(expr), rownames(model))
@@ -95,7 +92,7 @@ progeny.matrix = function(expr, scale=TRUE, organism="Human", top = 100,
       expr <- data.frame(names = row.names(expr), row.names = NULL, expr)
       model <- data.frame(names = row.names(model), row.names = NULL, 
                                    model)
-      re <- progeny_perm(expr, model, k = perm, 
+      re <- progenyPerm(expr, model, k = perm, 
                           z_scores = T, get_nulldist = F)
     } else {
       stop("Wrong perm parameter. Please leave 1 by default or specify another

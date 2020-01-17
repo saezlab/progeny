@@ -20,6 +20,8 @@ pathway to have a mean of zero and standard deviation of one}
 
 \item{top}{Top n genes for generating the model matrix according to adjusted
 p-value}
+
+\item{perm}{Number of permutations}
 }
 \value{
 A matrix with samples in columns and pathways in rows
@@ -55,8 +57,9 @@ activity.
 }
 \examples{
 # use example gene expression matrix here, this is just for illustration
-gene_expression = get("gene_expr_human", envir = .GlobalEnv)
+gene_expression = get("human_def_expected", envir = .GlobalEnv)
 
 # calculate pathway activities
-pathways = progeny(gene_expression, scale=TRUE, organism="Human")
+pathways = progeny(gene_expression, scale=TRUE, 
+    organism="Human", top = 100, perm = 1)
 }

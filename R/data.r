@@ -9,7 +9,6 @@
 #' @docType data
 #' @keywords datasets
 #' @name model_human_full
-#' @usage get("model_human_full")
 #' @source \url{http://biorxiv.org/content/early/2016/08/28/065672}
 NULL
 
@@ -23,8 +22,7 @@ NULL
 #' 
 #' @docType data
 #' @keywords datasets
-#' @name model_human_full
-#' @usage get("model_mouse_full")
+#' @name model_mouse_full
 #' @source \url{http://biorxiv.org/content/early/2016/08/28/065672}
 NULL
 
@@ -33,12 +31,11 @@ NULL
 #' HGNC gene symbols in rows, gene expression counts in columns.
 #'
 #' @format The test human gene expression data contains read counts info about 
-#' 152 genes in 12 conditions.
+#' 121 genes in 8 conditions.
 #' 
 #' @docType data
 #' @keywords datasets
-#' @name gene_expr_human
-#' @usage get("gene_expr_human")
+#' @name input_human
 #' @source \url{http://biorxiv.org/content/early/2016/08/28/065672}
 NULL
 
@@ -47,16 +44,15 @@ NULL
 #' HGNC gene symbols in rows, gene expression counts in columns.
 #'
 #' @format The test mouse gene expression data contains read counts info about 
-#' 144 genes in 12 conditions.
+#' 88 genes in 8 conditions.
 #' 
 #' @docType data
 #' @keywords datasets
-#' @name gene_expr_mouse
-#' @usage get("gene_expr_mouse")
+#' @name input_mouse
 #' @source \url{http://biorxiv.org/content/early/2016/08/28/065672}
 NULL
 
-#' The test human result output matrix 
+#' The test human result output matrix produced by default progeny function
 #'
 #' Conditions in rows, pathways in columns.
 #'
@@ -65,12 +61,11 @@ NULL
 #' 
 #' @docType data
 #' @keywords datasets
-#' @name result_human_expected
-#' @usage get("result_human_expected")
+#' @name human_def_expected
 #' @source \url{http://biorxiv.org/content/early/2016/08/28/065672}
 NULL
 
-#' The test mouse result output matrix 
+#' The test mouse result output matrix produced by default progeny function
 #'
 #' Conditions in rows, pathways in columns.
 #'
@@ -79,8 +74,32 @@ NULL
 #' 
 #' @docType data
 #' @keywords datasets
-#' @name result_mouse_expected
-#' @usage get("result_mouse_expected")
+#' @name mouse_def_expected
 #' @source \url{http://biorxiv.org/content/early/2016/08/28/065672}
 NULL
 
+#' The test human result output matrix produced by permutation progeny function
+#'
+#' Conditions in rows, pathways in columns.
+#'
+#' @format The test human result output matrix contains pathway score for each
+#' condtioin
+#' 
+#' @docType data
+#' @keywords datasets
+#' @name human_perm_expected
+#' @source \url{http://biorxiv.org/content/early/2016/08/28/065672}
+NULL
+
+#' The test mouse result output matrix produced by permutation progeny function
+#'
+#' Conditions in rows, pathways in columns.
+#'
+#' @format The test mouse result output matrix contains pathway score for each
+#' condtioin
+#' 
+#' @docType data
+#' @keywords datasets
+#' @name mouse_perm_expected
+#' @source \url{http://biorxiv.org/content/early/2016/08/28/065672}
+NULL
