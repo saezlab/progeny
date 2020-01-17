@@ -7,7 +7,13 @@ This function is designed to compute progeny pathway scores and assess there
 significance using a gene sampling based permutation strategy, for a series of
 experimental samples/contrasts.}
 \usage{
-progenyPerm(df, weight_matrix, k = 10000, z_scores = T, get_nulldist = F)
+progenyPerm(
+  df,
+  weight_matrix,
+  k = 10000,
+  z_scores = TRUE,
+  get_nulldist = FALSE
+)
 }
 \arguments{
 \item{df}{A data.frame of n*m+1 dimension, where n is the number of omic
