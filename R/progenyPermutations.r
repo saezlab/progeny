@@ -33,7 +33,8 @@
 #'The second element is the null distribution list (a null distribution is
 #'generated for each sample/contrast).
 #'@export
-progenyPerm <- function(df,weight_matrix,k = 10000, z_scores = T, get_nulldist = F)
+progenyPerm <- function(df,weight_matrix,k = 10000, z_scores = TRUE, 
+                        get_nulldist = FALSE)
 {
   resList <- list()
   if(get_nulldist)
@@ -68,7 +69,7 @@ progenyPerm <- function(df,weight_matrix,k = 10000, z_scores = T, get_nulldist =
     scores <- as.data.frame(current_weights %*% current_mat)
     
     null_dist_t <- replicate(k, sample(t_values,length(current_mat[,1]), 
-                                       replace = F))
+                                       replace = FALSE))
     
     null_dist_scores <- current_weights %*% null_dist_t
     

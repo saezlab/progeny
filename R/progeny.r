@@ -36,6 +36,7 @@
 #' @importFrom dplyr group_by top_n ungroup select 
 #' @importFrom tidyr spread %>%
 #' @import SingleCellExperiment
+#' @import Seurat
 #' @export
 #' @examples
 #' # use example gene expression matrix here, this is just for illustration
@@ -93,7 +94,7 @@ progeny.matrix = function(expr, scale=TRUE, organism="Human", top = 100,
       model <- data.frame(names = row.names(model), row.names = NULL, 
                                    model)
       re <- progenyPerm(expr, model, k = perm, 
-                          z_scores = T, get_nulldist = F)
+                          z_scores = TRUE, get_nulldist = FALSE)
     } else {
       stop("Wrong perm parameter. Please leave 1 by default or specify another
            value for application the permutation progeny function")

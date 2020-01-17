@@ -155,4 +155,5 @@ getFullModel <- function(organism)
   
 }
 
+#system command for the global variables assignment: not for usage by hand
 utils::globalVariables(c("pathway", "p.value", "weight", "color", "ID", "perm"))
