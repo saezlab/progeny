@@ -16,16 +16,18 @@
 #'@param df a n*m data frame, where n is the number of omic features (genes). 
 #'m isn't really important, as long as at least one column corespond to a sample
 #'or contrast statistic. One of the column should correspond to the gene symboles.
-#'@param cm a progeny coeficient matrix. One of the column should be 
-#'the gene symboles.
+#'@param weight_matrix A progeny coeficient matrix. the first column should be
+#'the identifiers of the omic features, and should be coherent with 
+#'the identifiers provided in df.
 #'@param dfID an integer corresponding to the column number of 
 #'the gene identifiers of df.
 #'@param weightID an integer corresponding to the column number of the gene 
 #'identifiers of the weight matrix.
-#'@param statname The neame of the stat used, to be displayed on the plot
+#'@param statName The neame of the stat used, to be displayed on the plot
 #'@import ggplot2 
 #'@importFrom ggrepel geom_label_repel
 #'@importFrom gridExtra arrangeGrob
+#'@importFrom stats ecdf
 #'@return The function returns a list of list of arrangeGrob object.
 #'The first level list elements correspond to samples/contrasts. 
 #'The second level correspond to pathways.
@@ -153,3 +155,4 @@ getFullModel <- function(organism)
   
 }
 
+utils::globalVariables(c("pathway", "p.value", "weight", "color", "ID", "perm"))

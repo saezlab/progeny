@@ -192,7 +192,7 @@ and we then characterice the different cell populations based on these scores.
 
 ```{r, message = FALSE}
 ## We compute the Progeny activity scores. 
-progeny_scores = progeny(pbmc, scale=TRUE, organism="Human", top = 500)
+progeny_scores = progeny(pbmc, scale=TRUE, organism="Human", top=500, perm=1)
 
 ## We transform Progeny scores into a data frame to better handling the results
 progeny_scores_df <- as.data.frame(progeny_scores)  %>%

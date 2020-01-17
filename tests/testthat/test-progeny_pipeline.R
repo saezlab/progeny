@@ -5,19 +5,26 @@ input_human <- get("input_human", envir = .GlobalEnv)
 input_mouse <- get("input_mouse", envir = .GlobalEnv)
 
 #get example output 
-progeny_human_def_expected <-  get("human_def_expected", envir = .GlobalEnv)
-progeny_mouse_def_expected <-  get("mouse_def_expected", envir = .GlobalEnv)
+progeny_human_def_expected <- get("human_def_expected", envir = .GlobalEnv)
+progeny_mouse_def_expected <- get("mouse_def_expected", envir = .GlobalEnv)
+progeny_human_perm_expected <- get("human_perm_expected", envir = .GlobalEnv)
+progeny_mouse_perm_expected <- get("human_perm_expected", envir = .GlobalEnv)
 
 #obtaining actual result
 progeny_human_def_act <- progeny(input_human, scale=TRUE, 
                                  organism = "Human", top = 10)
 progeny_mouse_def_act <- progeny(input_mouse, scale=TRUE, 
                                  organism = "Mouse", top = 10)
+progeny_human_perm_act <- progeny(input_human, scale=TRUE, perm = 1000, 
+                                 organism = "Human", top = 10)
+progeny_mouse_perm_act <- progeny(input_human, scale=TRUE, perm = 1000,
+                                 organism = "Human", top = 10)
 
 #testing
 test_that("Comparison of the results", {
   expect_equal(progeny_human_def_act, progeny_human_def_expected)
   expect_equal(progeny_mouse_def_act, progeny_mouse_def_expected)
+  expect_equal(progeny_human_perm_act, progeny_human_perm_expected, tolerance = 0.5)
 })
 
 test_that("Wrong parameters", {

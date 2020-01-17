@@ -13,12 +13,13 @@
 #'@param k The number of permutations to be preformed to generate 
 #'the null-distribution used to estimate significance of progeny scores. 
 #'Default value is 10000.
-#'@param z_score if true, the z-scores will be returned for 
+#'@param z_scores if true, the z-scores will be returned for 
 #'the pathway activity estimations. Else, the function returns 
 #'a normalised z-score value between -1 and 1.
 #'@param get_nulldist if true, the null score distribution used for normalisation
 #'will be returned along with the actual normalised score data frame.
-#'@export
+#'@importFrom stats complete.cases sd
+#'@export 
 #'@return This function returns a list of two elements. The first element is 
 #'a dataframe of p*m+1 dimensions, where p is the number of progeny pathways, 
 #'and m is the number of samples/contrasts.
@@ -32,7 +33,7 @@
 #'The second element is the null distribution list (a null distribution is
 #'generated for each sample/contrast).
 #'@export
-progeny_perm <- function(df,weight_matrix,k = 10000, z_scores = T, get_nulldist = F)
+progenyPerm <- function(df,weight_matrix,k = 10000, z_scores = T, get_nulldist = F)
 {
   resList <- list()
   if(get_nulldist)
