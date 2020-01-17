@@ -24,7 +24,10 @@ progeny_mouse_perm_act <- progeny(input_human, scale=TRUE, perm = 1000,
 test_that("Comparison of the results", {
   expect_equal(progeny_human_def_act, progeny_human_def_expected)
   expect_equal(progeny_mouse_def_act, progeny_mouse_def_expected)
-  expect_equal(progeny_human_perm_act, progeny_human_perm_expected, tolerance = 0.5)
+  expect_equal(progeny_human_perm_act, progeny_human_perm_expected, 
+               tolerance = 0.3)
+  expect_equal(progeny_mouse_perm_act, progeny_mouse_perm_expected, 
+               tolerance = 0.3)
 })
 
 test_that("Wrong parameters", {
