@@ -74,6 +74,7 @@ library(tidyr)
 library(readr)
 library(pheatmap)
 library(tibble)
+library(rlang)
 ```
 
 # Example of usage
@@ -177,7 +178,7 @@ pbmc <- RenameIdents(pbmc, new.cluster.ids)
 ## We create a data frame with the specification of the cells that belong to 
 ## each cluster to match with the Progeny scores.
 CellsClusters <- data.frame(Cell = names(Idents(pbmc)), 
-    CellType = as.character(Idents(pbmc)),
+    CellType = as_name(Idents(pbmc)),
     stringsAsFactors = FALSE)
 ```
 
@@ -215,7 +216,7 @@ We plot the different pathway activities for the different cell populations
 summarized_progeny_scores_df <- summarized_progeny_scores %>%
     dplyr::select(-std) %>%   
     spread(Pathway, avg) %>%
-    data.frame(row.names = 1, check.names = F, stringsAsFactors = F) 
+    data.frame(row.names = 1, check.names = FALSE, stringsAsFactors = FALSE) 
 ```
 
 ```{r}

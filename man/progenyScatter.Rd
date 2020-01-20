@@ -64,3 +64,16 @@ if the gene level stat is positive/negative. Negative weigth will lead to
 a negative(red)/positive(green) gene contribution if the gene level stat is
 positive/negative.
 }
+\examples{
+# use example gene expression matrix
+df <- get("input_human", envir = .GlobalEnv) \%>\% data.frame(
+ names = row.names(df), row.names = NULL, df
+)
+# getting a full model matrix
+full_model <- getFullModel("Human")
+
+# getting a model matrix with 100 top significant genes
+weight_matrix <- getModel(full_model, top=100) \%>\% data.frame(
+ names = row.names(weight_matrix), row.names = NULL, weight_matrix
+)
+}

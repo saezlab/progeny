@@ -56,3 +56,10 @@ This function is designed to compute progeny pathway scores and assess there
 significance using a gene sampling based permutation strategy, for a series of
 experimental samples/contrasts.
 }
+\examples{
+# use example gene expression matrix
+df <- get("input_human", envir = .GlobalEnv)
+
+# calculate pathway activities
+progeny(df, scale=TRUE, organism="Human", top=100, perm=10000)
+}
