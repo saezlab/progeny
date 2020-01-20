@@ -32,6 +32,12 @@
 #'the direction of the regulation.
 #'The second element is the null distribution list (a null distribution is
 #'generated for each sample/contrast).
+#'@examples
+#' # use example gene expression matrix
+#' df <- get("input_human", envir = .GlobalEnv)
+#'
+#' # calculate pathway activities
+#' progeny(df, scale=TRUE, organism="Human", top=100, perm=10000)
 #'@export
 progenyPerm <- function(df,weight_matrix,k = 10000, z_scores = TRUE, 
                         get_nulldist = FALSE)

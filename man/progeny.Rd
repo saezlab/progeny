@@ -57,9 +57,9 @@ activity.
 }
 \examples{
 # use example gene expression matrix here, this is just for illustration
-gene_expression = get("human_def_expected", envir = .GlobalEnv)
+gene_expression <- get("input_human", envir = .GlobalEnv)
 
 # calculate pathway activities
-pathways = progeny(gene_expression, scale=TRUE, 
+pathways <- progeny(gene_expression, scale=TRUE, 
     organism="Human", top = 100, perm = 1)
 }

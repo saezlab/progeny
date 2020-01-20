@@ -12,3 +12,6 @@ getFullModel(organism)
 \description{
 This function is designed for getting a full model matrix
 }
+\examples{
+getFullModel("Human")
+}

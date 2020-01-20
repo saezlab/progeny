@@ -40,10 +40,10 @@
 #' @export
 #' @examples
 #' # use example gene expression matrix here, this is just for illustration
-#' gene_expression = get("human_def_expected", envir = .GlobalEnv)
+#' gene_expression <- get("input_human", envir = .GlobalEnv)
 #'
 #' # calculate pathway activities
-#' pathways = progeny(gene_expression, scale=TRUE, 
+#' pathways <- progeny(gene_expression, scale=TRUE, 
 #'     organism="Human", top = 100, perm = 1)
 progeny = function(expr, scale=TRUE, organism="Human", top = 100, perm = 1) {
     UseMethod("progeny")
@@ -74,16 +74,8 @@ progeny.SingleCellExperiment =
 progeny.matrix = function(expr, scale=TRUE, organism="Human", top = 100, 
                           perm = 1) {
     
-    full_model <- getFullModel(organism)
-  
-    model <- full_model %>%
-      dplyr::group_by(pathway) %>%
-      dplyr::top_n(top, wt = -p.value) %>%
-      dplyr::ungroup(pathway) %>%
-      dplyr::select(-p.value) %>%
-      tidyr::spread(pathway, weight, fill=0) %>%
-      data.frame(row.names = 1, check.names = F, stringsAsFactors = F)
-  
+    full_model <- getFullModel(organism=organism)
+    model <- getModel(full_model, top=top)
     common_genes = intersect(rownames(expr), rownames(model))
     
     if (perm==1) {

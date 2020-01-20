@@ -22,3 +22,16 @@ This function is designed to save the plots (in pdf format) of a nested
 (2 level) list of arrangeGrob objects, such as the one returned by 
 the progenyScatter function.
 }
+\examples{
+#create plots using progneyScatter function:
+plots <- progenyScatter(df, weight_matrix)
+
+#create a list with contrast names:
+contrast_names <- names(df[2:ncol(df)])
+
+#assign a path to store your plots
+dirpath <- "./progeny_plots/"
+
+#save it
+saveProgenyPlots(plots, contast_names, dirpath)
+}
