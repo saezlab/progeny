@@ -74,7 +74,6 @@ library(tidyr)
 library(readr)
 library(pheatmap)
 library(tibble)
-library(rlang)
 ```
 
 # Example of usage
@@ -178,14 +177,14 @@ pbmc <- RenameIdents(pbmc, new.cluster.ids)
 ## We create a data frame with the specification of the cells that belong to 
 ## each cluster to match with the Progeny scores.
 CellsClusters <- data.frame(Cell = names(Idents(pbmc)), 
-    CellType = as_name(Idents(pbmc)),
+    CellType = as.character(Idents(pbmc)),
     stringsAsFactors = FALSE)
 ```
 
 We plot again the clusters along with their cell type labels
 
 ```{r, message = FALSE, warning = FALSE}
-DimPlot(pbmc, reduction = "umap", label = TRUE, pt.size = 0.5) + NoLegend()
+#DimPlot(pbmc, reduction = "umap", label = TRUE, pt.size = 0.5) + NoLegend()
 ```
 
 Finally, we compute **PROGENy** pathway activity scores on the scRNA-seq data, 

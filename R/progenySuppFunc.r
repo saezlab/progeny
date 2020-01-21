@@ -34,16 +34,19 @@
 #'The plots can be saved in a pdf format using the saveProgenyPlots function.
 #'@examples
 #' # use example gene expression matrix
-#' df <- get("input_human", envir = .GlobalEnv) %>% data.frame(
-#'  names = row.names(df), row.names = NULL, df
-#' )
-#' # getting a full model matrix
-#'full_model <- getFullModel("Human")
+#' gene_expression <- read.csv(system.file("extdata", 
+#' "human_input.csv", package = "progeny"))
 #'
-#' # getting a model matrix with 100 top significant genes
-#' weight_matrix <- getModel(full_model, top=100) %>% data.frame(
-#'  names = row.names(weight_matrix), row.names = NULL, weight_matrix
-#' )
+#' # getting a full model matrix
+#' full_model <- getFullModel("Human")
+#'
+#' # getting a model matrix with 100 top significant genes and converting to df
+#' weight_matrix <- getModel(full_model, top=100)
+#' weight_matrix <- data.frame(names = row.names(weight_matrix), 
+#'   row.names = NULL, weight_matrix)
+#' 
+#' #use progenyScatter function
+#' plots <- progenyScatter(gene_expression, weight_matrix)
 #'@export
 progenyScatter <- function(df,weight_matrix,dfID = 1, weightID = 1, 
                            statName = "gene stats")
@@ -130,17 +133,17 @@ progenyScatter <- function(df,weight_matrix,dfID = 1, weightID = 1,
 #'the plot list corresponding to the names of each sample/contrast
 #'@param dirpath the path to the directory where the plotsshould be saved
 #'@examples
-#' #create plots using progneyScatter function:
-#' plots <- progenyScatter(df, weight_matrix)
+#' #create plots using progneyScatter function
+#' plots <- progenyScatter(gene_expression, weight_matrix)
 #'
-#' #create a list with contrast names:
-#' contrast_names <- names(df[2:ncol(df)])
+#' #create a list with contrast names
+#' contrast_names <- names(gene_expression[2:ncol(gene_expression)])
 #'
 #' #assign a path to store your plots
 #' dirpath <- "./progeny_plots/"
 #' 
 #' #save it
-#' saveProgenyPlots(plots, contast_names, dirpath)
+#' saveProgenyPlots(plots, contrast_names, dirpath)
 #'@export
 saveProgenyPlots <- function(plots, contrast_names, dirpath)
 {
@@ -182,10 +185,14 @@ getFullModel <- function(organism)
 
 #'This function is designed for getting a model matrix with top desired number
 #'of genes for each pathway
-#'@param full The full model matrix taken from getFullModel function return
+#'@param full_model The full model matrix taken from getFullModel function return
 #'@param top Desire top number of genes for each pathway according to their
 #'significance(p.value)
-#'@examples getModel(full_model, top=100)
+#'@examples #getting a full model matrix
+#'full_model <- getFullModel("Human")
+#'
+#'#getting a model matrix according desired top n significant genes
+#'model <- getModel(full_model, top=100)
 #'@export
 getModel <- function(full_model, top) 
 {
