@@ -144,6 +144,8 @@ progenyScatter <- function(df,weight_matrix,dfID = 1, weightID = 1,
 #' 
 #' #save it
 #' saveProgenyPlots(plots, contrast_names, dirpath)
+#' @return This function produces the pdf files of plots taken from the 
+#' progenyScatter function
 #'@export
 saveProgenyPlots <- function(plots, contrast_names, dirpath)
 {
@@ -168,6 +170,7 @@ saveProgenyPlots <- function(plots, contrast_names, dirpath)
 #'This function is designed for getting a full model matrix
 #'@param organism Model organism has taken from the main function's argument
 #'@examples getFullModel("Human")
+#'@return This function returns the full model matrix (human or mouse)
 #'@export
 getFullModel <- function(organism) 
 {
@@ -191,8 +194,10 @@ getFullModel <- function(organism)
 #'@examples #getting a full model matrix
 #'full_model <- getFullModel("Human")
 #'
-#'#getting a model matrix according desired top n significant genes
+#'#getting a model matrix according to the desired top n significant genes
 #'model <- getModel(full_model, top=100)
+#'@return This function returns model matrix according to the top n significant
+#'genes
 #'@export
 getModel <- function(full_model, top) 
 {
@@ -202,7 +207,7 @@ getModel <- function(full_model, top)
     dplyr::ungroup(pathway) %>%
     dplyr::select(-p.value) %>%
     tidyr::spread(pathway, weight, fill=0) %>%
-    data.frame(row.names = 1, check.names = F, stringsAsFactors = F)
+    data.frame(row.names = 1, check.names = FALSE, stringsAsFactors = FALSE)
   
   return(model)
 }
