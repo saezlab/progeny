@@ -9,6 +9,9 @@ getFullModel(organism)
 \arguments{
 \item{organism}{Model organism has taken from the main function's argument}
 }
+\value{
+This function returns the full model matrix (human or mouse)
+}
 \description{
 This function is designed for getting a full model matrix
 }

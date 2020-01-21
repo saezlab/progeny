@@ -17,6 +17,10 @@ the plot list corresponding to the names of each sample/contrast}
 
 \item{dirpath}{the path to the directory where the plotsshould be saved}
 }
+\value{
+This function produces the pdf files of plots taken from the 
+progenyScatter function
+}
 \description{
 This function is designed to save the plots (in pdf format) of a nested 
 (2 level) list of arrangeGrob objects, such as the one returned by 

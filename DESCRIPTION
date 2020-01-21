@@ -23,7 +23,6 @@ Imports:
     gridExtra,
     Seurat,
     SingleCellExperiment,
-    rlang,
     stats
 biocViews: SystemsBiology, GeneExpression, FunctionalPrediction, GeneRegulation
 License: Apache License (== 2.0) | file LICENSE

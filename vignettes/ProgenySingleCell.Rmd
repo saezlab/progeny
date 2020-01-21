@@ -20,7 +20,7 @@ abstract: |
   pathways by running PROGENy on single-cell RNA-seq data. 
 license: GNU-GLPv3, please check http://www.gnu.org/licenses/
 vignette: |
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{Applying PROGENy on single-cell RNA-seq data}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
