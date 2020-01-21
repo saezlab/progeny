@@ -34,10 +34,11 @@
 #'generated for each sample/contrast).
 #'@examples
 #' # use example gene expression matrix
-#' df <- get("input_human", envir = .GlobalEnv)
+#' gene_expression <- as.matrix(read.csv(system.file("extdata", 
+#' "human_input.csv", package = "progeny"), row.names = 1))
 #'
 #' # calculate pathway activities
-#' progeny(df, scale=TRUE, organism="Human", top=100, perm=10000)
+#' progeny(gene_expression, scale=TRUE, organism="Human", top=100, perm=10000)
 #'@export
 progenyPerm <- function(df,weight_matrix,k = 10000, z_scores = TRUE, 
                         get_nulldist = FALSE)

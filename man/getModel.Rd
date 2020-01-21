@@ -8,15 +8,19 @@ of genes for each pathway}
 getModel(full_model, top)
 }
 \arguments{
+\item{full_model}{The full model matrix taken from getFullModel function return}
+
 \item{top}{Desire top number of genes for each pathway according to their
 significance(p.value)}
-
-\item{full}{The full model matrix taken from getFullModel function return}
 }
 \description{
 This function is designed for getting a model matrix with top desired number
 of genes for each pathway
 }
 \examples{
-getModel(full_model, top=100)
+#getting a full model matrix
+full_model <- getFullModel("Human")
+
+#getting a model matrix according desired top n significant genes
+model <- getModel(full_model, top=100)
 }

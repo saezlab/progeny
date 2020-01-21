@@ -57,7 +57,8 @@ activity.
 }
 \examples{
 # use example gene expression matrix here, this is just for illustration
-gene_expression <- get("input_human", envir = .GlobalEnv)
+gene_expression <- as.matrix(read.csv(system.file("extdata", 
+"human_input.csv", package = "progeny"), row.names = 1))
 
 # calculate pathway activities
 pathways <- progeny(gene_expression, scale=TRUE, 

@@ -66,14 +66,17 @@ positive/negative.
 }
 \examples{
 # use example gene expression matrix
-df <- get("input_human", envir = .GlobalEnv) \%>\% data.frame(
- names = row.names(df), row.names = NULL, df
-)
+gene_expression <- read.csv(system.file("extdata", 
+"human_input.csv", package = "progeny"))
+
 # getting a full model matrix
 full_model <- getFullModel("Human")
 
-# getting a model matrix with 100 top significant genes
-weight_matrix <- getModel(full_model, top=100) \%>\% data.frame(
- names = row.names(weight_matrix), row.names = NULL, weight_matrix
-)
+# getting a model matrix with 100 top significant genes and converting to df
+weight_matrix <- getModel(full_model, top=100)
+weight_matrix <- data.frame(names = row.names(weight_matrix), 
+  row.names = NULL, weight_matrix)
+
+#use progenyScatter function
+plots <- progenyScatter(gene_expression, weight_matrix)
 }

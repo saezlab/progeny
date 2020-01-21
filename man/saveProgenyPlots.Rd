@@ -23,15 +23,15 @@ This function is designed to save the plots (in pdf format) of a nested
 the progenyScatter function.
 }
 \examples{
-#create plots using progneyScatter function:
-plots <- progenyScatter(df, weight_matrix)
+#create plots using progneyScatter function
+plots <- progenyScatter(gene_expression, weight_matrix)
 
-#create a list with contrast names:
-contrast_names <- names(df[2:ncol(df)])
+#create a list with contrast names
+contrast_names <- names(gene_expression[2:ncol(gene_expression)])
 
 #assign a path to store your plots
 dirpath <- "./progeny_plots/"
 
 #save it
-saveProgenyPlots(plots, contast_names, dirpath)
+saveProgenyPlots(plots, contrast_names, dirpath)
 }
