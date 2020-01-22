@@ -1,0 +1,17 @@
+progeny v2.0.0 (Release date: 2020-01-18)
+==============
+
+Changes:
+
+* Added the mouse model matrix
+
+* The human model matrix extended to 14 pathways
+
+* Added following functions: progenyPerm, progenyScatter, progenySavePlots, getFullModel, getModel
+
+* Added tests and test data
+
+* Added the vignette for usage the progeny on single-cell rna-seq data
+
+
+
