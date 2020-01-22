@@ -28,6 +28,14 @@ the progenyScatter function.
 }
 \examples{
 #create plots using progneyScatter function
+gene_expression <- read.csv(system.file("extdata", 
+"human_input.csv", package = "progeny"))
+
+# getting a weight_matrix
+full_model <- getFullModel("Human")
+weight_matrix <- getModel(full_model, top=100)
+weight_matrix <- data.frame(names = row.names(weight_matrix), 
+  row.names = NULL, weight_matrix) 
 plots <- progenyScatter(gene_expression, weight_matrix)
 
 #create a list with contrast names

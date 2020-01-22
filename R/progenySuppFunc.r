@@ -72,7 +72,7 @@ progenyScatter <- function(df,weight_matrix,dfID = 1, weightID = 1,
               axis.text.y = element_blank(), axis.ticks.y = element_blank(),
               panel.grid.major = element_blank(),
               panel.grid.minor = element_blank()
-              )
+        )
       
       names(pathway_weights) <- c("ID","weight")
       pathway_weights <- pathway_weights[pathway_weights$weight != 0,]
@@ -134,6 +134,14 @@ progenyScatter <- function(df,weight_matrix,dfID = 1, weightID = 1,
 #'@param dirpath the path to the directory where the plotsshould be saved
 #'@examples
 #' #create plots using progneyScatter function
+#' gene_expression <- read.csv(system.file("extdata", 
+#' "human_input.csv", package = "progeny"))
+#' 
+#' # getting a weight_matrix
+#' full_model <- getFullModel("Human")
+#' weight_matrix <- getModel(full_model, top=100)
+#' weight_matrix <- data.frame(names = row.names(weight_matrix), 
+#'   row.names = NULL, weight_matrix) 
 #' plots <- progenyScatter(gene_expression, weight_matrix)
 #'
 #' #create a list with contrast names
