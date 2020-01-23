@@ -12,11 +12,11 @@ p.value and p.adj value
     \item{p.value}{significance of gene in a pathway}
 }}
 \source{
-\url{http://biorxiv.org/content/early/2016/08/28/065672}
+\url{https://www.ncbi.nlm.nih.gov/pubmed/31525460}
 }
 \description{
 HGNC gene symbols in rows, pathways in columns. Pathway activity inference
-works by a matrix multiplication of gene expression with the model.
+works by matrix multiplication of gene expression with the model.
 }
 \examples{
 getFullModel("Mouse")

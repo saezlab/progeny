@@ -9,13 +9,13 @@ saveProgenyPlots(plots, contrast_names, dirpath)
 \arguments{
 \item{plots}{a list of list of arrangeGrob object (such as the one returned 
 by the progenyScatter function.).The first level list elements correspond 
-to samples/contrasts. The second level correspond to pathways.
+to samples/contrasts. The second level corresponds to pathways.
 The plots can be saved in a pdf format using the saveProgenyPlots function.}
 
-\item{contrast_names}{a vector of same length as the first level of 
+\item{contrast_names}{a vector of the same length as the first level of 
 the plot list corresponding to the names of each sample/contrast}
 
-\item{dirpath}{the path to the directory where the plotsshould be saved}
+\item{dirpath}{the path to the directory where the plots should be saved}
 }
 \value{
 This function produces the pdf files of plots taken from the 

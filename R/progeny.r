@@ -23,15 +23,15 @@
 #' activity.
 #'
 #' @param expr   A gene expression object with HGNC symbols in rows and samples
-#'               in columns. In order to run Progeny in single cell RNAseq data,
+#'               in columns. In order to run PROGENy in single-cell RNAseq data,
 #'               it also accepts Seurat and SingleCellExperiment object, taking
 #'               the normalized counts for the computation.   
-#' @param scale  Logical value indicating whether to scale the scores of each
-#'               pathway to have a mean of zero and standard deviation of one
+#' @param scale  A logical value indicating whether to scale the scores of each
+#'               pathway to have a mean of zero and a standard deviation of one
 #' @param organism The model organism - human or mouse
-#' @param top    Top n genes for generating the model matrix according to adjusted
-#'               p-value
-#' @param perm    Number of permutations
+#' @param top    Top n genes for generating the model matrix according to the
+#'               adjusted p-value
+#' @param perm   Number of permutations
 #' @return       A matrix with samples in columns and pathways in rows
 #' @importFrom dplyr group_by top_n ungroup select 
 #' @importFrom tidyr spread %>%
