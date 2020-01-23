@@ -218,6 +218,6 @@ getModel <- function(full_model, top)
   
   return(model)
 }
-все
+
 #system command for the global variables assignment: not for usage by hand
 utils::globalVariables(c("pathway", "p.value", "weight", "color", "ID", "perm"))
