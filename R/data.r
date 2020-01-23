@@ -19,7 +19,7 @@ NULL
 
 #' The full mouse linear model underlying PROGENy
 #'
-#' HGNC gene symbols in rows, pathways in columns. Pathway activity inference
+#' MGI gene symbols in rows, pathways in columns. Pathway activity inference
 #' works by matrix multiplication of gene expression with the model.
 #'
 #' @format The full mouse model contains 17426 genes, associated pathways,

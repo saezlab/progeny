@@ -6,7 +6,7 @@
 #' samples and in rows and pathways in columns.
 #'
 #' The publication of the method is available at:
-#' https://www.biorxiv.org/content/early/2016/08/28/065672
+#' https://www.nature.com/articles/s41467-017-02391-6
 #'
 #' The supplied expression object has to contain HGNC symbols in rows. This
 #' will, in most cases (and how we originally used it), be either normalized
