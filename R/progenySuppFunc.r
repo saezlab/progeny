@@ -1,34 +1,33 @@
 #'This function generate a series of scatter plot with marginal distribution
-#'(in the form of an arrangeGrob object), for each progeny pathway and 
-#'sample/contrast.Each scatter plot has progeny weights as x axis and the gene 
-#'level stat used to compute progeny score as y axis. The marginal distribution
-#'of the gene level stats is displayed on the right of the plot to give a visual
-#'support of the significnce of each gene contributing to the progeny pathway
-#'score. The colors green and red represent respectivelly positive and negative
-#'contribution of genes to the progeny pathway. For each gene contribution, 
-#'4 cases are possible, as the combinaisons of the sign of the gene level stat
-#'and the sign of the gene level weigth.
+#'(in the form of an arrangeGrob object), for each progeny pathway and
+#'sample/contrast. Each scatter plot has progeny weights as x-axis and the gene
+#'level stat used to compute progeny score as the y-axis. The marginal
+#'distribution of the gene level stats is displayed on the right of the plot
+#'to give visual support of the significance of each gene contributing to
+#'the progeny pathway score. The green and red colors represent the positive
+#'and negative contribution of genes to the progeny pathway, respectively.
+#'For each gene contribution, 4 cases are possible, as the combinations of
+#'the sign of the gene level stat and the sign of the gene level weight.
 #'Positive weight will lead to a positive(green)/negative(red) gene contribution
-#'if the gene level stat is positive/negative. Negative weigth will lead to
-#'a negative(red)/positive(green) gene contribution if the gene level stat is
-#'positive/negative.
-#'
-#'@param df a n*m data frame, where n is the number of omic features (genes). 
-#'m isn't really important, as long as at least one column corespond to a sample
-#'or contrast statistic. One of the column should correspond to the gene symboles.
-#'@param weight_matrix A progeny coeficient matrix. the first column should be
+#'if the gene level stat is positive/negative. Negative weight will lead to
+#'a negative(red)/positive(green) gene contribution if the gene level stat
+#'is positive/negative.
+#'@param df an n*m data frame, where n is the number of omic features (genes). 
+#'m isn't really important, as long as at least one column corresponds to a sample
+#'or contrast statistic. One of the columns should correspond to the gene symbols.
+#'@param weight_matrix A progeny coefficient matrix. the first column should be
 #'the identifiers of the omic features, and should be coherent with 
 #'the identifiers provided in df.
 #'@param dfID an integer corresponding to the column number of 
 #'the gene identifiers of df.
 #'@param weightID an integer corresponding to the column number of the gene 
 #'identifiers of the weight matrix.
-#'@param statName The neame of the stat used, to be displayed on the plot
+#'@param statName The name of the stat used, to be displayed on the plot
 #'@import ggplot2 
 #'@importFrom ggrepel geom_label_repel
 #'@importFrom gridExtra arrangeGrob
 #'@importFrom stats ecdf
-#'@return The function returns a list of list of arrangeGrob object.
+#'@return The function returns a list of list of arrangeGrob objects.
 #'The first level list elements correspond to samples/contrasts. 
 #'The second level correspond to pathways.
 #'The plots can be saved in a pdf format using the saveProgenyPlots function.
@@ -127,11 +126,11 @@ progenyScatter <- function(df,weight_matrix,dfID = 1, weightID = 1,
 #'
 #'@param plots a list of list of arrangeGrob object (such as the one returned 
 #'by the progenyScatter function.).The first level list elements correspond 
-#'to samples/contrasts. The second level correspond to pathways.
+#'to samples/contrasts. The second level corresponds to pathways.
 #'The plots can be saved in a pdf format using the saveProgenyPlots function.
-#'@param contrast_names a vector of same length as the first level of 
+#'@param contrast_names a vector of the same length as the first level of 
 #'the plot list corresponding to the names of each sample/contrast
-#'@param dirpath the path to the directory where the plotsshould be saved
+#'@param dirpath the path to the directory where the plots should be saved
 #'@examples
 #' #create plots using progneyScatter function
 #' gene_expression <- read.csv(system.file("extdata", 
@@ -194,9 +193,9 @@ getFullModel <- function(organism)
   
 }
 
-#'This function is designed for getting a model matrix with top desired number
-#'of genes for each pathway
-#'@param full_model The full model matrix taken from getFullModel function return
+#'This function is designed for getting a model matrix with top significant
+#'genes for each pathway
+#'@param full_model The full model matrix taken from getFullModel function
 #'@param top Desire top number of genes for each pathway according to their
 #'significance(p.value)
 #'@examples #getting a full model matrix
@@ -219,6 +218,6 @@ getModel <- function(full_model, top)
   
   return(model)
 }
-
+все
 #system command for the global variables assignment: not for usage by hand
 utils::globalVariables(c("pathway", "p.value", "weight", "color", "ID", "perm"))

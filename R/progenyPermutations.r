@@ -1,37 +1,34 @@
 #'\code{progeny_perm}
-#'This function is designed to compute progeny pathway scores and assess there 
-#'significance using a gene sampling based permutation strategy, for a series of
-#'experimental samples/contrasts.
-#'
+#'This function is designed to compute progeny pathway scores and assesses
+#'their significance using a gene sampling-based permutation strategy, for 
+#'a series of experimental samples/contrasts.
 #'@param df A data.frame of n*m+1 dimension, where n is the number of omic
 #'features to be considered and m is the number of samples/contrasts.
 #'The first column should be the identifiers of the omic features. 
-#'These identifiers must be coherent with the identifers of the weight matrix.
-#'@param weight_matrix A progeny coeficient matrix. the first column should be
-#'the identifiers of the omic features, and should be coherent with
+#'These identifiers must be coherent with the identifiers of the weight matrix.
+#'@param weight_matrix A progeny coefficient matrix. the first column should be
+#'the identifiers of the omic features and should be coherent with 
 #'the identifiers provided in df.
-#'@param k The number of permutations to be preformed to generate 
-#'the null-distribution used to estimate significance of progeny scores. 
-#'Default value is 10000.
+#'@param k The number of permutations to be performed to generate
+#'the null-distribution used to estimate the significance of progeny scores.  
+#'The default value is 10000.
 #'@param z_scores if true, the z-scores will be returned for 
 #'the pathway activity estimations. Else, the function returns 
-#'a normalised z-score value between -1 and 1.
-#'@param get_nulldist if true, the null score distribution used for normalisation
-#'will be returned along with the actual normalised score data frame.
+#'a normalized z-score value between -1 and 1.
+#'@param get_nulldist if true, the null score distribution used for normalization
+#'will be returned along with the actual normalized score data frame.
 #'@importFrom stats complete.cases sd
 #'@export 
 #'@return This function returns a list of two elements. The first element is 
-#'a dataframe of p*m+1 dimensions, where p is the number of progeny pathways, 
-#'and m is the number of samples/contrasts.
-#'Each cell represent the significance of a progeny pathway score for 
-#'one sample/contrast. The signifcance ranges between -1 and 1. 
-#'The significance is equal to x*2-1, x being the quantile of the progeny
-#'pathway score with respect to the null distribution.
-#'Thus, this significance can be interpreted as the equivalent of 1-p.value
-#'(two sided test over an empirical distribution) with the sign indicating
-#'the direction of the regulation.
-#'The second element is the null distribution list (a null distribution is
-#'generated for each sample/contrast).
+#'a data frame of p*m+1 dimensions, where p is the number of progeny pathways,
+#'and m is the number of samples/contrasts. Each cell represents the significance
+#'of a progeny pathway score for one sample/contrast. The significance ranges
+#'between -1 and 1. The significance is equal to x*2-1, x being the quantile of
+#'the progeny pathway score with respect to the null distribution. Thus, this
+#'significance can be interpreted as the equivalent of 1-p.value two-sided test
+#'over an empirical distribution) with the sign indicating the direction of the
+#'regulation. The second element is the null distribution list (a null
+#'distribution is generated for each sample/contrast).
 #'@examples
 #' # use example gene expression matrix
 #' gene_expression <- as.matrix(read.csv(system.file("extdata", 

@@ -2,13 +2,13 @@
 % Please edit documentation in R/progenySuppFunc.r
 \name{getModel}
 \alias{getModel}
-\title{This function is designed for getting a model matrix with top desired number
-of genes for each pathway}
+\title{This function is designed for getting a model matrix with top significant
+genes for each pathway}
 \usage{
 getModel(full_model, top)
 }
 \arguments{
-\item{full_model}{The full model matrix taken from getFullModel function return}
+\item{full_model}{The full model matrix taken from getFullModel function}
 
 \item{top}{Desire top number of genes for each pathway according to their
 significance(p.value)}
@@ -18,8 +18,8 @@ This function returns model matrix according to the top n significant
 genes
 }
 \description{
-This function is designed for getting a model matrix with top desired number
-of genes for each pathway
+This function is designed for getting a model matrix with top significant
+genes for each pathway
 }
 \examples{
 #getting a full model matrix

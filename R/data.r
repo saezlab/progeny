@@ -1,7 +1,7 @@
 #' The full human linear model underlying PROGENy
 #'
 #' HGNC gene symbols in rows, pathways in columns. Pathway activity inference
-#' works by a matrix multiplication of gene expression with the model.
+#' works by matrix multiplication of gene expression with the model.
 #'
 #' @format The full human model contains 22479 genes, associated pathways,
 #' p.value and p.adj value        
@@ -14,13 +14,13 @@
 #' @keywords datasets
 #' @name model_human_full
 #' @examples getFullModel("Human")
-#' @source \url{http://biorxiv.org/content/early/2016/08/28/065672}
+#' @source \url{https://www.nature.com/articles/s41467-017-02391-6}
 NULL
 
 #' The full mouse linear model underlying PROGENy
 #'
 #' HGNC gene symbols in rows, pathways in columns. Pathway activity inference
-#' works by a matrix multiplication of gene expression with the model.
+#' works by matrix multiplication of gene expression with the model.
 #'
 #' @format The full mouse model contains 17426 genes, associated pathways,
 #' p.value and p.adj value
@@ -33,5 +33,5 @@ NULL
 #' @keywords datasets
 #' @name model_mouse_full
 #' @examples getFullModel("Mouse")
-#' @source \url{http://biorxiv.org/content/early/2016/08/28/065672}
+#' @source \url{https://www.ncbi.nlm.nih.gov/pubmed/31525460}
 NULL
