@@ -18,10 +18,17 @@ pathway to have a mean of zero and a standard deviation of one}
 
 \item{organism}{The model organism - human or mouse}
 
+<<<<<<< HEAD
 \item{top}{The top n genes for generating the model matrix according to
 significance (p-value)}
 
 \item{perm}{A number of permutations}
+=======
+\item{top}{Top n genes for generating the model matrix according to the
+adjusted p-value}
+
+\item{perm}{Number of permutations}
+>>>>>>> 764ded6009f6dbfc51023ee1fbd44f6221b4088f
 }
 \value{
 A matrix with samples in columns and pathways in rows
