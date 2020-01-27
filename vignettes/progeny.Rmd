@@ -158,8 +158,20 @@ this without worrying about the order of genes in the expression matrix using:
 
 ```{r}
 library(progeny)
-pathways = progeny(gene_expr)
+pathways <- progeny(gene_expr)
 ```
+
+To visualize the progeny result
+```{r}
+library(pheatmap)
+myColor = colorRampPalette(c("Darkblue", "white","red"))(100)
+progeny_hmap <- pheatmap(pathways,fontsize=14, 
+                        fontsize_row = 10, 
+                        color=myColor, 
+                        main = "PROGENy", angle_col = 45,
+                        treeheight_col = 0,  border_color = NA)
+```
+
 
 We now have the pathway activity scores for the pathways defined in PROGENy:
 

@@ -15,7 +15,7 @@ p.value and p.adj value
 \url{https://www.ncbi.nlm.nih.gov/pubmed/31525460}
 }
 \description{
-HGNC gene symbols in rows, pathways in columns. Pathway activity inference
+MGI gene symbols in rows, pathways in columns. Pathway activity inference
 works by matrix multiplication of gene expression with the model.
 }
 \examples{

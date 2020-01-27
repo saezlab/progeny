@@ -29,9 +29,9 @@
 #' @param scale  A logical value indicating whether to scale the scores of each
 #'               pathway to have a mean of zero and a standard deviation of one
 #' @param organism The model organism - human or mouse
-#' @param top    Top n genes for generating the model matrix according to the
-#'               adjusted p-value
-#' @param perm   Number of permutations
+#' @param top    The top n genes for generating the model matrix according to
+#'               significance (p-value)
+#' @param perm   A number of permutations
 #' @return       A matrix with samples in columns and pathways in rows
 #' @importFrom dplyr group_by top_n ungroup select 
 #' @importFrom tidyr spread %>%

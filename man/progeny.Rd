@@ -18,10 +18,10 @@ pathway to have a mean of zero and a standard deviation of one}
 
 \item{organism}{The model organism - human or mouse}
 
-\item{top}{Top n genes for generating the model matrix according to the
-adjusted p-value}
+\item{top}{The top n genes for generating the model matrix according to
+significance (p-value)}
 
-\item{perm}{Number of permutations}
+\item{perm}{A number of permutations}
 }
 \value{
 A matrix with samples in columns and pathways in rows
@@ -39,7 +39,7 @@ samples and in rows and pathways in columns.
 }
 \details{
 The publication of the method is available at:
-https://www.biorxiv.org/content/early/2016/08/28/065672
+https://www.nature.com/articles/s41467-017-02391-6
 
 The supplied expression object has to contain HGNC symbols in rows. This
 will, in most cases (and how we originally used it), be either normalized
