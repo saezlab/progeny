@@ -48,26 +48,26 @@
 #' pathways <- progeny(gene_expression, scale=TRUE, 
 #'     organism="Human", top = 100, perm = 1)
 progeny = function(expr, scale=TRUE, organism="Human", top = 100, perm = 1) {
-  UseMethod("progeny")
+    UseMethod("progeny")
 }
 
 #' @export
 progeny.ExpressionSet = function(expr, scale=TRUE, organism="Human", top = 100,
-                                 perm = 1) {
-  progeny(Biobase::exprs(expr), scale=scale, organism=organism, top=top, 
+    perm = 1) {
+    progeny(Biobase::exprs(expr), scale=scale, organism=organism, top=top, 
           perm = perm)
 }
 
 #' @export
 progeny.Seurat = function(expr, scale=TRUE, organism="Human", top = 100,
                           perm = 1) {
-  progeny(as.matrix(expr[["RNA"]]@data), scale=scale, organism=organism, 
+    progeny(as.matrix(expr[["RNA"]]@data), scale=scale, organism=organism, 
           top=top, perm = perm)
 }
 
 #' @export
 progeny.SingleCellExperiment = 
-  function(expr, scale=TRUE, organism="Human", top = 100, perm = 1) {
+    function(expr, scale=TRUE, organism="Human", top = 100, perm = 1) {
     progeny(as.matrix(normcounts(expr)), scale=scale, organism=organism, 
             top=top, perm = perm)
   }
@@ -76,31 +76,31 @@ progeny.SingleCellExperiment =
 progeny.matrix = function(expr, scale=TRUE, organism="Human", top = 100, 
                           perm = 1) {
   
-  full_model <- getFullModel(organism=organism)
-  model <- getModel(full_model, top=top)
-  common_genes = intersect(rownames(expr), rownames(model))
-  
-  if (perm==1) {
-    re <- t(expr[common_genes,,drop=FALSE]) %*% 
-      as.matrix(model[common_genes,,drop=FALSE])
-  } else if (perm > 1) {
-    expr <- data.frame(names = row.names(expr), row.names = NULL, expr)
-    model <- data.frame(names = row.names(model), row.names = NULL, 
-                        model)
-    re <- progenyPerm(expr, model, k = perm, 
-                      z_scores = TRUE, get_nulldist = FALSE)
-  } else {
-    stop("Wrong perm parameter. Please leave 1 by default or specify another
-           value for application the permutation progeny function")
-  }
-  
-  if (scale && nrow(re) > 1) {
-    rn <- rownames(re)
-    re <- apply(re, 2, scale)
-    rownames(re) <- rn
-  }
-  
-  re
+    full_model <- getFullModel(organism=organism)
+    model <- getModel(full_model, top=top)
+    common_genes = intersect(rownames(expr), rownames(model))
+    
+    if (perm==1) {
+      re <- t(expr[common_genes,,drop=FALSE]) %*% 
+        as.matrix(model[common_genes,,drop=FALSE])
+    } else if (perm > 1) {
+      expr <- data.frame(names = row.names(expr), row.names = NULL, expr)
+      model <- data.frame(names = row.names(model), row.names = NULL, 
+                          model)
+      re <- progenyPerm(expr, model, k = perm, 
+                        z_scores = TRUE, get_nulldist = FALSE)
+    } else {
+      stop("Wrong perm parameter. Please leave 1 by default or specify another
+             value for application the permutation progeny function")
+    }
+    
+    if (scale && nrow(re) > 1) {
+      rn <- rownames(re)
+      re <- apply(re, 2, scale)
+      rownames(re) <- rn
+    }
+    
+    re
   
 }
 

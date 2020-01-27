@@ -92,7 +92,7 @@ progenyPerm <- function(df,weight_matrix,k = 10000, z_scores = TRUE,
     }
     else
     {
-      for(j in 1:length(weight_matrix[,-1]))
+      for(j in seq(1, length(weight_matrix[,-1])))
       {
         ecdf_function <- ecdf(null_dist_scores[j,])
         scores[j,1] <- ecdf_function(scores[j,1])
