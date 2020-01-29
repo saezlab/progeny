@@ -82,9 +82,9 @@ progeny.matrix = function(expr, scale=TRUE, organism="Human", top = 100,
     model_unique_genes <- setdiff(rownames(model), rownames(expr))
     
     if (length(model_unique_genes) > 0) {
-      Biobase::note("The next model genes are not in expr input data:", 
+      message("The next model genes are not in expr input data:", 
                     list(model_unique_genes))
-      Biobase::note("A number of such genes:", length(model_unique_genes))
+      message("A number of such genes:", length(model_unique_genes))
     }
 
     if (perm==1) {
