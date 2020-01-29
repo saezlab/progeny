@@ -79,7 +79,7 @@ progeny.matrix = function(expr, scale=TRUE, organism="Human", top = 100,
     full_model <- getFullModel(organism=organism)
     model <- getModel(full_model, top=top)
     common_genes <- intersect(rownames(expr), rownames(model))
-    model_unique_genes <- setdiff(rownames(model), rownames(human_input))
+    model_unique_genes <- setdiff(rownames(model), rownames(expr))
     
     if (length(model_unique_genes) > 0) {
       Biobase::note("The next model genes are not in expr input data:", 
