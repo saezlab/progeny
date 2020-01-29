@@ -81,11 +81,12 @@ progeny.matrix = function(expr, scale=TRUE, organism="Human", top = 100,
     common_genes <- intersect(rownames(expr), rownames(model))
     model_unique_genes <- setdiff(rownames(model), rownames(human_input))
     
-    if (model_unique_genes > 0) {
-      warning("The next list of genes in model is not in expr data:", 
-              list(model_unique_genes), length(model_unique_genes))
+    if (length(model_unique_genes) > 0) {
+      Biobase::note("The next model genes are not in expr input data:", 
+                    list(model_unique_genes))
+      Biobase::note("Number of such genes:", length(model_unique_genes))
     }
-    
+
     if (perm==1) {
       re <- t(expr[common_genes,,drop=FALSE]) %*% 
         as.matrix(model[common_genes,,drop=FALSE])
