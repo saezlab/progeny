@@ -5,7 +5,14 @@
 \alias{progeny}
 \title{Calculate PROGENy pathway scores from gene expression}
 \usage{
-progeny(expr, scale = TRUE, organism = "Human", top = 100, perm = 1)
+progeny(
+  expr,
+  scale = TRUE,
+  organism = "Human",
+  top = 100,
+  perm = 1,
+  ref = rownames(result)
+)
 }
 \arguments{
 \item{expr}{A gene expression object with HGNC symbols in rows and samples
@@ -13,7 +20,7 @@ in columns. In order to run PROGENy in single-cell RNAseq data,
 it also accepts Seurat and SingleCellExperiment object, taking
 the normalized counts for the computation.}
 
-\item{scale}{A logical value indicating whether to scale the scores of each
+\item{scale}{A logical value rnindicating whether to scale the scores of each
 pathway to have a mean of zero and a standard deviation of one}
 
 \item{organism}{The model organism - human or mouse}
@@ -22,7 +29,6 @@ pathway to have a mean of zero and a standard deviation of one}
 significance (p-value)}
 
 \item{perm}{A number of permutations}
-
 }
 \value{
 A matrix with samples in columns and pathways in rows
