@@ -34,5 +34,5 @@ Beside the original paper there are additional publication expanding the usage o
 * If you use either the mouse or expanded version (mouse and human) of PROGENy please cite additionally:
 > Holland CH, Szalai B, Saez-Rodriguez J. "Transfer of regulatory knowledge from human to mouse for functional genomics analysis." _Biochimica et Biophysica Acta (BBA) - Gene Regulatory Mechanisms._ 2019. DOI: [10.1016/j.bbagrm.2019.194431](https://doi.org/10.1016/j.bbagrm.2019.194431).
 
-If you apply PROGENy on single-cell RNA-seq data please cite additionally:
+* If you apply PROGENy on single-cell RNA-seq data please cite additionally:
 > Holland CH, Tanevski J, Perales-Patón J, Gleixner J, Kumar MP, Mereu E, Joughin BA, Stegle O, Lauffenburger DA, Heyn H, Szalai B, Saez-Rodriguez, J. "Robustness and applicability of transcription factor and pathway analysis tools on single-cell RNA-seq data." _Genome Biology._ 2020. DOI: [10.1186/s13059-020-1949-z](https://doi.org/10.1186/s13059-020-1949-z).
