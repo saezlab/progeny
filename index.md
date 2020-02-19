@@ -11,7 +11,7 @@ PROGENy (Pathway RespOnsive GENes) is a functional analysis tool that infers act
 To infer pathway activity a simple, yet effective linear regression model is trained by perturbation experiments. The perturbed pathways serve as input (-1 indicates inhibition, 1 activation, 0 otherwise) and the corresponding (z-score normalized) gene expression values as response variable. In total the training set consists of 580 public available experiments and 2652 microarrays, making it one of the most comprehensive study of pathway signatures to date. PROGENy has been proven to infer upstream pathway activity in context of (i) known driver mutations in primary tumors, (ii) drugs response in cell lines, and (iii) survival in cancer patients.
 
 ### Update #1 - extension to mouse
-Originally PROGENy was developed for the application to human data. In a benchmark study we showed that PROGENy is also applicable to mouse data, as described in [Holland et al., 2019](https://doi.org/10.1016/j.bbagrm.2019.194431). Accordingly, we developed a mouse version of DoRothEA by transforming the human genes to their mouse orthologs.
+Originally PROGENy was developed for the application to human data. In a benchmark study we showed that PROGENy is also applicable to mouse data, as described in [Holland et al., 2019](https://doi.org/10.1016/j.bbagrm.2019.194431). Accordingly, we developed a mouse version of PROGENy by transforming the human genes to their mouse orthologs.
 
 ### Update #2 - expanding pathway collection
 We expanded human and mouse PROGENy with the pathways *Androgen*, *Estrogen* and *WNT*.
