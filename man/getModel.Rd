@@ -5,26 +5,22 @@
 \title{This function is designed for getting a model matrix with top significant
 genes for each pathway}
 \usage{
-getModel(full_model, top)
+getModel(organism, top)
 }
 \arguments{
-\item{full_model}{The full model matrix taken from getFullModel function}
+\item{organism}{"Human" or "Mouse" taken from the main function's argument}
 
-\item{top}{Desire top number of genes for each pathway according to their
+\item{top}{Desired top number of genes for each pathway according to their
 significance(p.value)}
 }
 \value{
 This function returns model matrix according to the top n significant
-genes
 }
 \description{
 This function is designed for getting a model matrix with top significant
 genes for each pathway
 }
 \examples{
-#getting a full model matrix
-full_model <- getFullModel("Human")
-
-#getting a model matrix according to the desired top n significant genes
-model <- getModel(full_model, top=100)
+#getting a model matrix according to the desired top n significant 
+model <- getModel("Human", top=100)
 }

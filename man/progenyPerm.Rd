@@ -33,20 +33,21 @@ The default value is 10000.}
 the pathway activity estimations. Else, the function returns 
 a normalized z-score value between -1 and 1.}
 
-\item{get_nulldist}{if true, the null score distribution used for normalization
-will be returned along with the actual normalized score data frame.}
+\item{get_nulldist}{if true, the null score distribution used for 
+normalization will be returned along with the actual normalized score data 
+frame.}
 }
 \value{
 This function returns a list of two elements. The first element is 
 a data frame of p*m+1 dimensions, where p is the number of progeny pathways,
-and m is the number of samples/contrasts. Each cell represents the significance
-of a progeny pathway score for one sample/contrast. The significance ranges
-between -1 and 1. The significance is equal to x*2-1, x being the quantile of
-the progeny pathway score with respect to the null distribution. Thus, this
-significance can be interpreted as the equivalent of 1-p.value two-sided test
-over an empirical distribution) with the sign indicating the direction of the
-regulation. The second element is the null distribution list (a null
-distribution is generated for each sample/contrast).
+and m is the number of samples/contrasts. Each cell represents the 
+significance of a progeny pathway score for one sample/contrast. The 
+significance ranges between -1 and 1. The significance is equal to x*2-1, x 
+being the quantile of the progeny pathway score with respect to the null 
+distribution. Thus, this significance can be interpreted as the equivalent of 
+1-p.value two-sided test over an empirical distribution) with the sign 
+indicating the direction of the regulation. The second element is the null 
+distribution list (a null distribution is generated for each sample/contrast).
 }
 \description{
 \code{progeny_perm}

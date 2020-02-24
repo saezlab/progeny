@@ -19,6 +19,6 @@ MGI gene symbols in rows, pathways in columns. Pathway activity inference
 works by matrix multiplication of gene expression with the model.
 }
 \examples{
-getFullModel("Mouse")
+get("model_mouse_full", envir = .GlobalEnv)
 }
 \keyword{datasets}

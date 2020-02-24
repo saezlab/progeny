@@ -19,6 +19,6 @@ HGNC gene symbols in rows, pathways in columns. Pathway activity inference
 works by matrix multiplication of gene expression with the model.
 }
 \examples{
-getFullModel("Human")
+get("model_human_full", envir = .GlobalEnv)
 }
 \keyword{datasets}

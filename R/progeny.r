@@ -13,32 +13,51 @@
 #' gene expression of a microarray experiment or log-transformed (and
 #' possible variance-stabilized) counts from an RNA-seq experiment.
 #'
-#' The human model matrix itself consists of 14 pathways and 1301 genes 
-#' and the mouse model matrix - 14 and 1376 respectively). Its coefficients
-#' are non-zero if the gene-pathway pair corresponds to the top N genes
-#' (100 by default) that were up-regulated upon stimulation of the pathway 
-#' in a wide range of experiments. The value corresponds to the fitted z-score 
-#' across experiments in our model fit. Only rows with at least one non-zero
-#' coefficient were included, as the rest is not used to infer pathway
-#' activity.
+#' The human and mouse model matrices consists of 14 pathways and large set of 
+#' genes with an associated p-value (p-value per gene and pathway) that accounts
+#' for the importance of each gene on each pathway upon perturbation. 
+#' Its coefficients are non-zero if the gene-pathway pair corresponds
+#' to the top N genes (100 by default) that were up-regulated upon stimulation
+#' of the pathway in a wide range of experiments. The value corresponds to the 
+#' fitted z-score across experiments in our model fit. 
+#' Only rows with at least one non-zero coefficient were included, as the rest 
+#' is not used to infer pathway activity.
 #'
 #' @param expr   A gene expression object with HGNC symbols in rows and samples
 #'               in columns. In order to run PROGENy in single-cell RNAseq data,
 #'               it also accepts Seurat and SingleCellExperiment object, taking
 #'               the normalized counts for the computation.   
 #' @param scale  A logical value indicating whether to scale the scores of each
-#'               pathway to have a mean of zero and a standard deviation of one
+#'               pathway to have a mean of zero and a standard deviation of one.
+#'               It does not apply if we use permutations. 
 #' @param organism The model organism - human or mouse
 
 #' @param top    The top n genes for generating the model matrix according to
 #'               significance (p-value)
-#' @param perm   A number of permutations
-#' @return       A matrix with samples in columns and pathways in rows
-#' @importFrom dplyr group_by top_n ungroup select 
-#' @importFrom tidyr spread %>%
-#' @import SingleCellExperiment
-#' @import Seurat
+#' @param perm   An interger detailing the number of permutations. No 
+#'               permutations by default (1). When Permutations larger than 1,
+#'               we compute progeny pathway scores and assesses their 
+#'               significance using a gene sampling-based permutation strategy, 
+#'               for a series of experimental samples/contrasts.
+#' @param verbose    A logical value indicating whether to display a message  
+#'                   about genes not matching between the model and the 
+#'                   provided expression set.  
+#' @param z_scores Only applys if the number of permutations is greater than 1. 
+#'                 A logical value. TRUE: the z-scores will be returned for 
+#'                 the pathway activity estimations. FALSE: the function returns 
+#'                 a normalized z-score value between -1 and 1.  
+#' @param get_nulldist Only applys if the number of permutations is greater 
+#'                 than 1. A logical value. TRUE: the null distributions
+#'                 generated to assess the signifance of the pathways scores 
+#'                 is also returned
+#' @return       A matrix with samples in columns and pathways in rows. In case
+#'               we run the method with permutations and the option get_nulldist
+#'               to TRUE, we will get a list with two elements. The first 
+#'               element is the matrix with the pathway activity as before. 
+#'               The second elements is the null distributions that we generate
+#'               to assess the signifance of the pathways scores. 
 #' @export
+#' @seealso \code{\link{progenyPerm}}
 #' @examples
 #' # use example gene expression matrix here, this is just for illustration
 #' gene_expression <- as.matrix(read.csv(system.file("extdata", 
@@ -47,75 +66,101 @@
 #' # calculate pathway activities
 #' pathways <- progeny(gene_expression, scale=TRUE, 
 #'     organism="Human", top = 100, perm = 1)
-progeny = function(expr, scale=TRUE, organism="Human", top = 100, perm = 1,
-                   ref=rownames(result)) {
+progeny = function(expr, scale=TRUE, organism="Human", top = 100, perm = 1, 
+    verbose = FALSE, z_scores = FALSE, get_nulldist = FALSE) {
     UseMethod("progeny")
 }
 
 #' @export
 progeny.ExpressionSet = function(expr, scale=TRUE, organism="Human", top = 100,
-    perm = 1, ref=rownames(re)) {
+    perm = 1, verbose = FALSE, z_scores = FALSE, get_nulldist = FALSE) {
     progeny(Biobase::exprs(expr), scale=scale, organism=organism, top=top, 
-          perm = perm)
+        perm = perm, verbose = verbose,  z_scores = z_scores, 
+        get_nulldist = get_nulldist)
 }
 
 #' @export
+#' @import Seurat
 progeny.Seurat = function(expr, scale=TRUE, organism="Human", top = 100,
-                          perm = 1, ref=rownames(result)) {
+    perm = 1, verbose = FALSE, z_scores = FALSE, get_nulldist = FALSE) {
     progeny(as.matrix(expr[["RNA"]]@data), scale=scale, organism=organism, 
-          top=top, perm = perm)
+        top=top, perm = perm, verbose = verbose,  z_scores = z_scores,
+        get_nulldist = get_nulldist)
 }
 
 #' @export
+#' @import SingleCellExperiment
 progeny.SingleCellExperiment = 
     function(expr, scale=TRUE, organism="Human", top = 100, perm = 1, 
-             ref=rownames(result)){
+    verbose = FALSE, z_scores = FALSE, get_nulldist = FALSE) {
     progeny(as.matrix(normcounts(expr)), scale=scale, organism=organism, 
-            top=top, perm = perm)
+        top=top, perm = perm, verbose = verbose,  z_scores = z_scores, 
+        get_nulldist = get_nulldist)
   }
 
 #' @export
 progeny.matrix = function(expr, scale=TRUE, organism="Human", top = 100, 
-                          perm = 1, ref=rownames(result)) {
+    perm = 1, verbose = FALSE,  z_scores = FALSE, get_nulldist = FALSE) {
   
-    full_model <- getFullModel(organism=organism)
-    model <- getModel(full_model, top=top)
-    common_genes <- intersect(rownames(expr), rownames(model))
-    model_unique_genes <- setdiff(rownames(model), rownames(expr))
-    
-    if (length(model_unique_genes) > 0) {
-      message("The next model genes are not in expr input data:", 
-                    list(model_unique_genes))
-      message("A number of such genes:", length(model_unique_genes))
+    if (!is.logical(scale)){
+        stop("scale should be a logical value")
     }
+    
+    if (!(is.numeric(perm)) || perm < 1){
+        stop("perm should be an integer value")
+    }
+    
+    if (!is.logical(verbose)){
+        stop("verbose should be a logical value")
+    }
+    
+    if (!is.logical(z_scores)){
+        stop("z_scores should be a logical value")
+    }
+    
+    if (!is.logical(get_nulldist)){
+        stop("get_nulldist should be a logical value")
+    }
+    
+    if (perm == 1 && (z_scores || get_nulldist)){
+        if (verbose){
+            message("z_scores and get_nulldist are only applicable when the
+                number of permutations is larger than 1.")
+        }
+    }
+    
+    model <- getModel(organism, top=top)
+    common_genes <- intersect(rownames(expr), rownames(model))
 
+    if (verbose){
+        notCommon_genes <- rownames(model)[(!unique(rownames(model)) %in% 
+            unique(rownames(expr)))]
+        message("Genes in the model but not in the expression matrices:", 
+            paste0(notCommon_genes, collapse = ", "))
+    }
+    
     if (perm==1) {
-      result <- t(expr[common_genes,,drop=FALSE]) %*% 
-        as.matrix(model[common_genes,,drop=FALSE])
+        result <- t(expr[common_genes,,drop=FALSE]) %*% 
+            as.matrix(model[common_genes,,drop=FALSE])
+        
+        if (scale && nrow(result) > 1) {
+            rn <- rownames(result)
+            result <- apply(result, 2, scale)
+            rownames(result) <- rn
+        }
+    
     } else if (perm > 1) {
       expr <- data.frame(names = row.names(expr), row.names = NULL, expr)
-      model <- data.frame(names = row.names(model), row.names = NULL, 
-                          model)
-      result <- progenyPerm(expr, model, k = perm, 
-                        z_scores = TRUE, get_nulldist = FALSE)
-    } else {
-      stop("Wrong perm parameter. Please leave 1 by default or specify another
-             value for application the permutation progeny function")
+      model <- data.frame(names = row.names(model), row.names = NULL, model)
+      result <- progenyPerm(expr, model, k = perm, z_scores = z_scores, 
+          get_nulldist = get_nulldist)
     }
-    
-    if (scale && nrow(result) > 1) {
-      rn <- ref
-      scale_wt <- scale(result[rn,])
-      other_conditions <- result[setdiff(x = rownames(result), y = rn), ]
-      result <- rbind(scale_wt, other_conditions)
-    }
-    
-    result
-  
+
+    return(result)
 }
 
 #' @export
 progeny.default = function(expr, scale=TRUE, organism="Human", top = 100, 
-                           perm = 1, ref=rownames(result)) {
-  stop("Do not know how to access the data matrix from class ", class(expr))
+    perm = 1, verbose = FALSE, z_scores = FALSE, get_nulldist = FALSE) {
+    stop("Do not know how to access the data matrix from class ", class(expr))
 }

@@ -29,20 +29,3 @@ test_that("Comparison of the results", {
   expect_equal(human_def_act, human_def_expected)
   expect_equal(mouse_def_act, mouse_def_expected)
 })
-
-
-test_that("Wrong parameters", {
-  expect_error(progeny(human_input, scale=TRUE, 
-                         organism = "Test", top = 10),
-               "Wrong organism name. Please specify 'Human' or 'Mouse'."
-               )
-  expect_error(progeny(human_input, scale=TRUE, 
-                       organism = "Human", top = 0),
-               "attempt to set 'rownames' on an object with no dimensions"
-               )
-  expect_error(progeny(human_input, scale=TRUE, 
-                       organism = "Human", top = 10, perm = 0),
-            "Wrong perm parameter. Please leave 1 by default or specify another
-           value for application the permutation progeny function"
-  )
-})

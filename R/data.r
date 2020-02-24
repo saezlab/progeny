@@ -13,7 +13,7 @@
 #' }
 #' @keywords datasets
 #' @name model_human_full
-#' @examples getFullModel("Human")
+#' @examples get("model_human_full", envir = .GlobalEnv)
 #' @source \url{https://www.nature.com/articles/s41467-017-02391-6}
 NULL
 
@@ -32,6 +32,6 @@ NULL
 #' }
 #' @keywords datasets
 #' @name model_mouse_full
-#' @examples getFullModel("Mouse")
+#' @examples get("model_mouse_full", envir = .GlobalEnv)
 #' @source \url{https://www.ncbi.nlm.nih.gov/pubmed/31525460}
 NULL

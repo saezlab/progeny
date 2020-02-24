@@ -22,13 +22,15 @@ progenyScatter(
   weight_matrix,
   dfID = 1,
   weightID = 1,
-  statName = "gene stats"
+  statName = "gene stats",
+  verbose = FALSE
 )
 }
 \arguments{
 \item{df}{an n*m data frame, where n is the number of omic features (genes). 
-m isn't really important, as long as at least one column corresponds to a sample
-or contrast statistic. One of the columns should correspond to the gene symbols.}
+m isn't really important, as long as at least one column corresponds to a 
+sample or contrast statistic. One of the columns should correspond to the gene 
+symbols.}
 
 \item{weight_matrix}{A progeny coefficient matrix. the first column should be
 the identifiers of the omic features, and should be coherent with 
@@ -41,6 +43,9 @@ the gene identifiers of df.}
 identifiers of the weight matrix.}
 
 \item{statName}{The name of the stat used, to be displayed on the plot}
+
+\item{verbose}{Logical indicating whether we want to have the messages 
+indicating the different computed weights.}
 }
 \value{
 The function returns a list of list of arrangeGrob objects.
@@ -69,11 +74,8 @@ is positive/negative.
 gene_expression <- read.csv(system.file("extdata", 
 "human_input.csv", package = "progeny"))
 
-# getting a full model matrix
-full_model <- getFullModel("Human")
-
 # getting a model matrix with 100 top significant genes and converting to df
-weight_matrix <- getModel(full_model, top=100)
+weight_matrix <- getModel("Human", top=100)
 weight_matrix <- data.frame(names = row.names(weight_matrix), 
   row.names = NULL, weight_matrix)
 

@@ -16,14 +16,14 @@ Depends:
     R (>= 3.6.0)
 Imports:
     Biobase,
+    stats, 
+    Seurat, 
+    SingleCellExperiment,
     dplyr,
-    tidyr,
+    tidyr, 
     ggplot2,
     ggrepel,
-    gridExtra,
-    Seurat,
-    SingleCellExperiment,
-    stats
+    gridExtra
 biocViews: SystemsBiology, GeneExpression, FunctionalPrediction, GeneRegulation
 License: Apache License (== 2.0) | file LICENSE
 LazyData: true

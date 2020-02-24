@@ -11,7 +11,9 @@ progeny(
   organism = "Human",
   top = 100,
   perm = 1,
-  ref = rownames(result)
+  verbose = FALSE,
+  z_scores = FALSE,
+  get_nulldist = FALSE
 )
 }
 \arguments{
@@ -20,25 +22,44 @@ in columns. In order to run PROGENy in single-cell RNAseq data,
 it also accepts Seurat and SingleCellExperiment object, taking
 the normalized counts for the computation.}
 
-\item{scale}{A logical value rnindicating whether to scale the scores of each
-pathway to have a mean of zero and a standard deviation of one}
+\item{scale}{A logical value indicating whether to scale the scores of each
+pathway to have a mean of zero and a standard deviation of one.
+It does not apply if we use permutations.}
 
 \item{organism}{The model organism - human or mouse}
 
 \item{top}{The top n genes for generating the model matrix according to
 significance (p-value)}
 
-\item{perm}{A number of permutations}
+\item{perm}{An interger detailing the number of permutations. No 
+permutations by default (1). When Permutations larger than 1,
+we compute progeny pathway scores and assesses their 
+significance using a gene sampling-based permutation strategy, 
+for a series of experimental samples/contrasts.}
+
+\item{verbose}{A logical value indicating whether to display a message
+about genes not matching between the model and the 
+provided expression set.}
+
+\item{z_scores}{Only applys if the number of permutations is greater than 1. 
+A logical value. TRUE: the z-scores will be returned for 
+the pathway activity estimations. FALSE: the function returns 
+a normalized z-score value between -1 and 1.}
+
+\item{get_nulldist}{Only applys if the number of permutations is greater 
+than 1. A logical value. TRUE: the null distributions
+generated to assess the signifance of the pathways scores 
+is also returned}
 }
 \value{
-A matrix with samples in columns and pathways in rows
+A matrix with samples in columns and pathways in rows. In case
+              we run the method with permutations and the option get_nulldist
+              to TRUE, we will get a list with two elements. The first 
+              element is the matrix with the pathway activity as before. 
+              The second elements is the null distributions that we generate
+              to assess the signifance of the pathways scores.
 }
 \description{
-This function uses the linear model of pathway-responsive genes underlying
-the PROGENy method. It transforms a gene expression matrix with HGNC gene
-symbols in rows and sample names in columns into a pathway score matrix with
-samples and in rows and pathways in columns.
-
 This function uses the linear model of pathway-responsive genes underlying
 the PROGENy method. It transforms a gene expression matrix with HGNC gene
 symbols in rows and sample names in columns into a pathway score matrix with
@@ -53,14 +74,15 @@ will, in most cases (and how we originally used it), be either normalized
 gene expression of a microarray experiment or log-transformed (and
 possible variance-stabilized) counts from an RNA-seq experiment.
 
-The human model matrix itself consists of 14 pathways and 1301 genes 
-and the mouse model matrix - 14 and 1376 respectively). Its coefficients
-are non-zero if the gene-pathway pair corresponds to the top N genes
-(100 by default) that were up-regulated upon stimulation of the pathway 
-in a wide range of experiments. The value corresponds to the fitted z-score 
-across experiments in our model fit. Only rows with at least one non-zero
-coefficient were included, as the rest is not used to infer pathway
-activity.
+The human and mouse model matrices consists of 14 pathways and large set of 
+genes with an associated p-value (p-value per gene and pathway) that accounts
+for the importance of each gene on each pathway upon perturbation. 
+Its coefficients are non-zero if the gene-pathway pair corresponds
+to the top N genes (100 by default) that were up-regulated upon stimulation
+of the pathway in a wide range of experiments. The value corresponds to the 
+fitted z-score across experiments in our model fit. 
+Only rows with at least one non-zero coefficient were included, as the rest 
+is not used to infer pathway activity.
 }
 \examples{
 # use example gene expression matrix here, this is just for illustration
@@ -70,4 +92,7 @@ gene_expression <- as.matrix(read.csv(system.file("extdata",
 # calculate pathway activities
 pathways <- progeny(gene_expression, scale=TRUE, 
     organism="Human", top = 100, perm = 1)
+}
+\seealso{
+\code{\link{progenyPerm}}
 }
