@@ -55,9 +55,8 @@ progenyPerm <-
         names(current_weights)[1] <- "ID"
     
         common_ids <- merge(current_df, current_weights, by = "ID")
-        common_ids <- common_ids$ID
-        common_ids <- as.character(common_ids)
-    
+        common_ids <- as.character(common_ids$ID)
+
         row.names(current_df) <- current_df$ID 
         current_df <- as.data.frame(current_df[common_ids,-1])
         row.names(current_weights) <- current_weights$ID

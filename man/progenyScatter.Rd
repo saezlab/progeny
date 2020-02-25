@@ -71,6 +71,7 @@ is positive/negative.
 }
 \examples{
 # use example gene expression matrix
+
 gene_expression <- read.csv(system.file("extdata", 
 "human_input.csv", package = "progeny"))
 

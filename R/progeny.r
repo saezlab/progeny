@@ -80,22 +80,26 @@ progeny.ExpressionSet = function(expr, scale=TRUE, organism="Human", top = 100,
 }
 
 #' @export
-#' @import Seurat
 progeny.Seurat = function(expr, scale=TRUE, organism="Human", top = 100,
     perm = 1, verbose = FALSE, z_scores = FALSE, get_nulldist = FALSE) {
-    progeny(as.matrix(expr[["RNA"]]@data), scale=scale, organism=organism, 
-        top=top, perm = perm, verbose = verbose,  z_scores = z_scores,
-        get_nulldist = get_nulldist)
+    
+    requireNamespace("Seurat")
+    
+    progeny(as.matrix(expr[["RNA"]]@data), scale=scale, 
+    organism=organism, top=top, perm = perm, verbose = verbose, 
+    z_scores = z_scores, get_nulldist = get_nulldist)
 }
 
 #' @export
-#' @import SingleCellExperiment
-progeny.SingleCellExperiment = 
-    function(expr, scale=TRUE, organism="Human", top = 100, perm = 1, 
-    verbose = FALSE, z_scores = FALSE, get_nulldist = FALSE) {
-    progeny(as.matrix(normcounts(expr)), scale=scale, organism=organism, 
-        top=top, perm = perm, verbose = verbose,  z_scores = z_scores, 
-        get_nulldist = get_nulldist)
+progeny.SingleCellExperiment =  function(expr, scale=TRUE, organism="Human", 
+    top = 100, perm = 1, verbose = FALSE, z_scores = FALSE, 
+    get_nulldist = FALSE) {
+    
+    requireNamespace("SingleCellExperiment")
+            
+    progeny(as.matrix(SingleCellExperiment::normcounts(expr)), scale=scale, 
+    organism=organism, top=top, perm = perm, verbose = verbose,  
+    z_scores = z_scores, get_nulldist = get_nulldist)
   }
 
 #' @export

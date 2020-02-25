@@ -12,6 +12,7 @@
 #'if the gene level stat is positive/negative. Negative weight will lead to
 #'a negative(red)/positive(green) gene contribution if the gene level stat
 #'is positive/negative.
+#'
 #'@param df an n*m data frame, where n is the number of omic features (genes). 
 #'m isn't really important, as long as at least one column corresponds to a 
 #'sample or contrast statistic. One of the columns should correspond to the gene 
@@ -26,16 +27,17 @@
 #'@param statName The name of the stat used, to be displayed on the plot
 #'@param verbose  Logical indicating whether we want to have the messages 
 #'indicating the different computed weights. 
-#'@import ggplot2 
-#'@importFrom ggrepel geom_label_repel
-#'@importFrom gridExtra arrangeGrob
 #'@importFrom stats ecdf
+#'@import ggplot2
+#'@import ggrepel
+#'@import gridExtra
 #'@return The function returns a list of list of arrangeGrob objects.
 #'The first level list elements correspond to samples/contrasts. 
 #'The second level correspond to pathways.
 #'The plots can be saved in a pdf format using the saveProgenyPlots function.
 #'@examples
 #' # use example gene expression matrix
+#' 
 #' gene_expression <- read.csv(system.file("extdata", 
 #' "human_input.csv", package = "progeny"))
 #'
@@ -123,6 +125,7 @@ progenyScatter <- function(df,weight_matrix,dfID = 1, weightID = 1,
 #'@param contrast_names a vector of the same length as the first level of 
 #'the plot list corresponding to the names of each sample/contrast
 #'@param dirpath the path to the directory where the plots should be saved
+#'@import ggplot2
 #'@examples
 #' #create plots using progneyScatter function
 #' gene_expression <- read.csv(system.file("extdata", 
@@ -144,9 +147,9 @@ progenyScatter <- function(df,weight_matrix,dfID = 1, weightID = 1,
 #' saveProgenyPlots(plots, contrast_names, dirpath)
 #' @return This function produces the pdf files of plots taken from the 
 #' progenyScatter function
-#'@import ggplot2 
 #'@export
 saveProgenyPlots <- function(plots, contrast_names, dirpath) {
+    
     i <- 1
     for (condition in plots) {
         dirname <- paste(dirpath,contrast_names[i], sep = "")

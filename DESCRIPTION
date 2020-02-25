@@ -17,10 +17,8 @@ Depends:
 Imports:
     Biobase,
     stats, 
-    Seurat, 
-    SingleCellExperiment,
     dplyr,
-    tidyr, 
+    tidyr,
     ggplot2,
     ggrepel,
     gridExtra
@@ -33,6 +31,8 @@ Suggests:
     biomaRt,
     BiocFileCache,
     broom,
+    Seurat,
+    SingleCellExperiment,
     DESeq2,
     knitr,
     readr,
