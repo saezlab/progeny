@@ -2,3 +2,6 @@
 progeny.Rproj
 .Rproj.user
 .Rbuildignore
+.Rhistory
+vignettes/.Rhistory
+vignettes/.Rhistory

@@ -1,7 +1,7 @@
-#'\code{progeny_perm}
 #'This function is designed to compute progeny pathway scores and assesses
 #'their significance using a gene sampling-based permutation strategy, for 
 #'a series of experimental samples/contrasts.
+#'
 #'@param df A data.frame of n*m+1 dimension, where n is the number of omic
 #'features to be considered and m is the number of samples/contrasts.
 #'The first column should be the identifiers of the omic features. 
