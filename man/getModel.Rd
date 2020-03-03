@@ -5,13 +5,14 @@
 \title{This function is designed for getting a model matrix with top significant
 genes for each pathway}
 \usage{
-getModel(organism, top)
+getModel(organism = "Human", top = 100)
 }
 \arguments{
-\item{organism}{"Human" or "Mouse" taken from the main function's argument}
+\item{organism}{"Human" or "Mouse" taken from the main function's argument. 
+Default to "Human"}
 
 \item{top}{Desired top number of genes for each pathway according to their
-significance(p.value)}
+significance(p.value). Default to 100}
 }
 \value{
 This function returns model matrix according to the top n significant

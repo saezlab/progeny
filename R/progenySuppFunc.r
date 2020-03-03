@@ -167,16 +167,17 @@ saveProgenyPlots <- function(plots, contrast_names, dirpath) {
 
 #'This function is designed for getting a model matrix with top significant
 #'genes for each pathway
-#'@param organism "Human" or "Mouse" taken from the main function's argument
+#'@param organism "Human" or "Mouse" taken from the main function's argument. 
+#'Default to "Human"
 #'@param top Desired top number of genes for each pathway according to their
-#'significance(p.value)
+#'significance(p.value). Default to 100
 #'@examples #getting a model matrix according to the desired top n significant 
 #'model <- getModel("Human", top=100)
 #'@return This function returns model matrix according to the top n significant
 #'@importFrom dplyr group_by top_n ungroup select 
 #'@importFrom tidyr spread %>%
 #'@export
-getModel <- function(organism, top) {
+getModel <- function(organism = "Human", top= 100) {
     
     pathway <- p.value <- weight <- NULL
 
