@@ -15,14 +15,15 @@ progeny(
   z_scores = FALSE,
   get_nulldist = FALSE,
   assay_name = "RNA",
-  return_assay = FALSE
+  return_assay = FALSE,
+  ...
 )
 }
 \arguments{
-\item{expr}{A gene expression object with HGNC symbols in rows and samples
-in columns. In order to run PROGENy in single-cell RNAseq data,
-it also accepts Seurat and SingleCellExperiment object, taking
-the normalized counts for the computation.}
+\item{expr}{A gene expression object with HGNC/MGI symbols in rows and 
+samples in columns. In order to run PROGENy in single-cell 
+RNAseq data, it also accepts Seurat and SingleCellExperiment 
+object, taking the normalized counts for the computation.}
 
 \item{scale}{A logical value indicating whether to scale the scores of each
 pathway to have a mean of zero and a standard deviation of one.
@@ -61,6 +62,8 @@ RNA, i.e. normalized expression values.}
 value indicating whether to return progeny results as a new 
 assay called Progeny in the Seurat object used as input. 
 Default to FALSE.}
+
+\item{...}{Additional arguments to be passed to the functions.}
 }
 \value{
 A matrix with samples in columns and pathways in rows. In case
@@ -72,7 +75,7 @@ A matrix with samples in columns and pathways in rows. In case
 }
 \description{
 This function uses the linear model of pathway-responsive genes underlying
-the PROGENy method. It transforms a gene expression matrix with HGNC gene
+the PROGENy method. It transforms a gene expression matrix with HGNC/MGI gene
 symbols in rows and sample names in columns into a pathway score matrix with
 samples and in rows and pathways in columns.
 }
@@ -80,7 +83,7 @@ samples and in rows and pathways in columns.
 The publication of the method is available at:
 https://www.nature.com/articles/s41467-017-02391-6
 
-The supplied expression object has to contain HGNC symbols in rows. This
+The supplied expression object has to contain HGNC/MGI symbols in rows. This
 will, in most cases (and how we originally used it), be either normalized
 gene expression of a microarray experiment or log-transformed (and
 possible variance-stabilized) counts from an RNA-seq experiment.
