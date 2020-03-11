@@ -49,7 +49,15 @@
 #' @param get_nulldist Only applys if the number of permutations is greater 
 #'                 than 1. A logical value. TRUE: the null distributions
 #'                 generated to assess the signifance of the pathways scores 
-#'                 is also returned
+#'                 is also returned. 
+#' @param assay_name Only applys if the input is a Seurat object. It select the
+#'               name of the assay on which Progeny will be run. Default to: 
+#'               RNA, i.e. normalized expression values.
+#' @param return_assay Only applys if the input is a Seurat object. A logical 
+#'               value indicating whether to return progeny results as a new 
+#'               assay called Progeny in the Seurat object used as input. 
+#'               Default to FALSE.  
+#'               
 #' @return       A matrix with samples in columns and pathways in rows. In case
 #'               we run the method with permutations and the option get_nulldist
 #'               to TRUE, we will get a list with two elements. The first 
@@ -67,44 +75,64 @@
 #' pathways <- progeny(gene_expression, scale=TRUE, 
 #'     organism="Human", top = 100, perm = 1)
 progeny = function(expr, scale=TRUE, organism="Human", top = 100, perm = 1, 
-    verbose = FALSE, z_scores = FALSE, get_nulldist = FALSE) {
+    verbose = FALSE, z_scores = FALSE, get_nulldist = FALSE, 
+    assay_name = "RNA", return_assay = FALSE) {
     UseMethod("progeny")
 }
 
 #' @export
 progeny.ExpressionSet = function(expr, scale=TRUE, organism="Human", top = 100,
-    perm = 1, verbose = FALSE, z_scores = FALSE, get_nulldist = FALSE) {
+    perm = 1, verbose = FALSE, z_scores = FALSE, get_nulldist = FALSE, 
+    assay_name = "RNA", return_assay = FALSE) {
+    
+    if(return_assay){stop("return_assay can only be TRUE for Seurat Objects")}
+
     progeny(Biobase::exprs(expr), scale=scale, organism=organism, top=top, 
         perm = perm, verbose = verbose,  z_scores = z_scores, 
-        get_nulldist = get_nulldist)
+        get_nulldist = get_nulldist, assay_name = assay_name, 
+        return_assay = return_assay)
 }
 
 #' @export
 progeny.Seurat = function(expr, scale=TRUE, organism="Human", top = 100,
-    perm = 1, verbose = FALSE, z_scores = FALSE, get_nulldist = FALSE) {
+    perm = 1, verbose = FALSE, z_scores = FALSE, get_nulldist = FALSE, 
+    assay_name = "RNA", return_assay = FALSE) {
     
     requireNamespace("Seurat")
     
-    progeny(as.matrix(expr[["RNA"]]@data), scale=scale, 
-    organism=organism, top=top, perm = perm, verbose = verbose, 
-    z_scores = z_scores, get_nulldist = get_nulldist)
+    results <- progeny(as.matrix(expr[[assay_name]]@data), scale=scale, 
+        organism=organism, top=top, perm = perm, verbose = verbose, 
+        z_scores = z_scores, get_nulldist = get_nulldist, 
+        assay_name = assay_name, return_assay = return_assay)
+    
+    if (return_assay){
+        expr[['progeny']] = Seurat::CreateAssayObject(counts = t(results))
+        return(expr)
+    } else {
+        return(results)
+    }
+    
 }
 
 #' @export
 progeny.SingleCellExperiment =  function(expr, scale=TRUE, organism="Human", 
     top = 100, perm = 1, verbose = FALSE, z_scores = FALSE, 
-    get_nulldist = FALSE) {
+    get_nulldist = FALSE, assay_name = "RNA", return_assay = FALSE) {
+    
+    if(return_assay){stop("return_assay can only be TRUE for Seurat Objects")}
     
     requireNamespace("SingleCellExperiment")
-            
+
     progeny(as.matrix(SingleCellExperiment::normcounts(expr)), scale=scale, 
-    organism=organism, top=top, perm = perm, verbose = verbose,  
-    z_scores = z_scores, get_nulldist = get_nulldist)
+        organism=organism, top=top, perm = perm, verbose = verbose,  
+        z_scores = z_scores, get_nulldist = get_nulldist, 
+        assay_name = assay_name, return_assay = return_assay)
   }
 
 #' @export
 progeny.matrix = function(expr, scale=TRUE, organism="Human", top = 100, 
-    perm = 1, verbose = FALSE,  z_scores = FALSE, get_nulldist = FALSE) {
+    perm = 1, verbose = FALSE,  z_scores = FALSE, get_nulldist = FALSE, 
+    assay_name = "RNA", return_assay = FALSE) {
   
     if (!is.logical(scale)){
         stop("scale should be a logical value")
@@ -131,6 +159,10 @@ progeny.matrix = function(expr, scale=TRUE, organism="Human", top = 100,
             message("z_scores and get_nulldist are only applicable when the
                 number of permutations is larger than 1.")
         }
+    }
+    
+    if (!is.logical(return_assay)){
+        stop("return_assay should be a logical value")
     }
     
     model <- getModel(organism, top=top)
@@ -160,11 +192,12 @@ progeny.matrix = function(expr, scale=TRUE, organism="Human", top = 100,
           get_nulldist = get_nulldist)
     }
 
-    return(result)
+    return(result)    
 }
 
 #' @export
 progeny.default = function(expr, scale=TRUE, organism="Human", top = 100, 
-    perm = 1, verbose = FALSE, z_scores = FALSE, get_nulldist = FALSE) {
+    perm = 1, verbose = FALSE, z_scores = FALSE, get_nulldist = FALSE, 
+    assay_name = "RNA", return_assay = FALSE) {
     stop("Do not know how to access the data matrix from class ", class(expr))
 }
