@@ -41,8 +41,9 @@ significance using a gene sampling-based permutation strategy,
 for a series of experimental samples/contrasts.}
 
 \item{verbose}{A logical value indicating whether to display a message
-about genes not matching between the model and the 
-provided expression set.}
+about the number of genes used per pathway to compute 
+progeny scores (i.e. number of genes present in the 
+progeny model and in the expression dataset)}
 
 \item{z_scores}{Only applys if the number of permutations is greater than 1. 
 A logical value. TRUE: the z-scores will be returned for 

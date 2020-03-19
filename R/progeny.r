@@ -40,8 +40,9 @@
 #'               significance using a gene sampling-based permutation strategy, 
 #'               for a series of experimental samples/contrasts.
 #' @param verbose    A logical value indicating whether to display a message  
-#'                   about genes not matching between the model and the 
-#'                   provided expression set.  
+#'                   about the number of genes used per pathway to compute 
+#'                   progeny scores (i.e. number of genes present in the 
+#'                   progeny model and in the expression dataset)
 #' @param z_scores Only applys if the number of permutations is greater than 1. 
 #'                 A logical value. TRUE: the z-scores will be returned for 
 #'                 the pathway activity estimations. FALSE: the function returns 
@@ -168,10 +169,12 @@ progeny.matrix = function(expr, scale=TRUE, organism="Human", top = 100,
     common_genes <- intersect(rownames(expr), rownames(model))
 
     if (verbose){
-        notCommon_genes <- rownames(model)[(!unique(rownames(model)) %in% 
-            unique(rownames(expr)))]
-        message("Genes in the model but not in the expression matrices:", 
-            paste0(notCommon_genes, collapse = ", "))
+        number_genes <- apply(model, 2, function (x) {
+            sum(rownames(model)[which (x != 0)] %in% unique(rownames(expr)))
+        })
+        message("Number of genes used per pathway to compute progeny scores:")
+        message(paste(names(number_genes),": ", number_genes, " (", 
+            (number_genes/top)*100,"%)",sep = "","\n"))
     }
     
     if (perm==1) {

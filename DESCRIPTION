@@ -5,7 +5,7 @@ Author: Michael Schubert <mschu.dev@gmail.com>
 	 Igor Bulanov
 	 Alberto Valdeolivas	
 	 Christian Holland
-Maintainer: Michael Schubert <mschu.dev@gmail.com>
+Maintainer: Alberto Valdeolivas <alvaldeolivas@gmail.com>
 Description: This package provides a function to infer pathway activity
     from gene expression using PROGENy. It contains the linear model we
     inferred in the publication "Perturbation-response genes reveal signaling
