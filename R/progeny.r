@@ -30,7 +30,7 @@
 #' @param scale  A logical value indicating whether to scale the scores of each
 #'               pathway to have a mean of zero and a standard deviation of one.
 #'               It does not apply if we use permutations. 
-#' @param organism The model organism - human or mouse
+#' @param organism The model organism - "Human" or "Mouse"
 
 #' @param top    The top n genes for generating the model matrix according to
 #'               significance (p-value)
@@ -51,7 +51,7 @@
 #'                 than 1. A logical value. TRUE: the null distributions
 #'                 generated to assess the signifance of the pathways scores 
 #'                 is also returned. 
-#' @param assay_name Only applys if the input is a Seurat object. It select the
+#' @param assay_name Only applys if the input is a Seurat object. It selects the
 #'               name of the assay on which Progeny will be run. Default to: 
 #'               RNA, i.e. normalized expression values.
 #' @param return_assay Only applys if the input is a Seurat object. A logical 
