@@ -3,7 +3,7 @@
 #' This function uses the linear model of pathway-responsive genes underlying
 #' the PROGENy method. It transforms a gene expression matrix with HGNC/MGI gene
 #' symbols in rows and sample names in columns into a pathway score matrix with
-#' samples and in rows and pathways in columns.
+#' samples in rows and pathways in columns.
 #'
 #' The publication of the method is available at:
 #' https://www.nature.com/articles/s41467-017-02391-6
@@ -92,7 +92,7 @@ progeny.ExpressionSet = function(expr, scale=TRUE, organism="Human", top = 100,
 }
 
 #' @export
-progeny.Seurat = function(expr, scale=FALSE, organism="Human", top = 100,
+progeny.Seurat = function(expr, scale=TRUE, organism="Human", top = 100,
     perm = 1, verbose = FALSE, z_scores = FALSE, get_nulldist = FALSE, 
     assay_name = "RNA", return_assay = FALSE,...) {
     
@@ -104,8 +104,9 @@ progeny.Seurat = function(expr, scale=FALSE, organism="Human", top = 100,
     
     if (scale & return_assay){
         warning("Scale and return_assay should not be both true. 
-        Please use the function Seurat::ScaleData(object, assay = \"progeny) 
-        to scale PROGENy scores")
+        Please use the function Seurat::ScaleData(object, assay = \"progeny\") 
+        to scale PROGENy scores. Scale is set to FALSE")
+        scale = FALSE
     }
     
     results <- progeny(as.matrix(expr[[assay_name]]@data), scale=scale, 
@@ -115,6 +116,7 @@ progeny.Seurat = function(expr, scale=FALSE, organism="Human", top = 100,
     
     if (return_assay){
         expr[['progeny']] = Seurat::CreateAssayObject(data = t(results))
+        Seurat::Key(object = expr[['progeny']]) <- 'progeny_'
         return(expr)
     } else {
         return(results)

@@ -29,7 +29,7 @@ object, taking the normalized counts for the computation.}
 pathway to have a mean of zero and a standard deviation of one.
 It does not apply if we use permutations.}
 
-\item{organism}{The model organism - human or mouse}
+\item{organism}{The model organism - "Human" or "Mouse"}
 
 \item{top}{The top n genes for generating the model matrix according to
 significance (p-value)}
@@ -55,7 +55,7 @@ than 1. A logical value. TRUE: the null distributions
 generated to assess the signifance of the pathways scores 
 is also returned.}
 
-\item{assay_name}{Only applys if the input is a Seurat object. It select the
+\item{assay_name}{Only applys if the input is a Seurat object. It selects the
 name of the assay on which Progeny will be run. Default to: 
 RNA, i.e. normalized expression values.}
 
@@ -78,7 +78,7 @@ A matrix with samples in columns and pathways in rows. In case
 This function uses the linear model of pathway-responsive genes underlying
 the PROGENy method. It transforms a gene expression matrix with HGNC/MGI gene
 symbols in rows and sample names in columns into a pathway score matrix with
-samples and in rows and pathways in columns.
+samples in rows and pathways in columns.
 }
 \details{
 The publication of the method is available at:

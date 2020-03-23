@@ -60,7 +60,7 @@ if (!requireNamespace("BiocManager", quietly = TRUE))
 BiocManager::install("progeny")
 
 ## To install the new version until it is submited to Bioconductor use:
-devtools::install_github("saezlab/progeny", ref = "bioc_update")
+devtools::install_github("saezlab/progeny")
 ```
 
 We also load here the packages required to run this script. 
@@ -191,13 +191,19 @@ Finally, we compute **PROGENy** pathway activity scores on the scRNA-seq data,
 and we then characterice the different cell populations based on these scores. 
 
 ```{r, message = FALSE}
-## We compute the Progeny activity scores. 
-progeny_scores = progeny(pbmc, scale=TRUE, organism="Human", top=500, perm=1)
+## We compute the Progeny activity scores and add them to our Seurat object
+## as a new assay called Progeny. 
+pbmc <- progeny(pbmc, scale=FALSE, organism="Human", top=500, perm=1, 
+    return_assay = TRUE)
+
+## We can now directly apply Seurat functions in our Progeny scores. 
+## For instance, we scale the pathway activity scores. 
+pbmc <- Seurat::ScaleData(pbmc, assay = "progeny") 
 
 ## We transform Progeny scores into a data frame to better handling the results
-progeny_scores_df <- as.data.frame(progeny_scores)  %>%
+progeny_scores_df <- as.data.frame(t(pbmc[["progeny"]]@scale.data))  %>%
     rownames_to_column("Cell") %>%
-    gather(Pathway, Activity, -Cell)
+    gather(Pathway, Activity, -Cell) 
 
 ## We match Progeny scores with the cell clusters.
 progeny_scores_df <- inner_join(progeny_scores_df, CellsClusters)

@@ -2,8 +2,7 @@
 % Please edit documentation in R/progenySuppFunc.r
 \name{getModel}
 \alias{getModel}
-\title{This function is designed for getting a model matrix with top significant
-genes for each pathway}
+\title{Returns the Progeny Model}
 \usage{
 getModel(organism = "Human", top = 100)
 }

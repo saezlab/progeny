@@ -2,7 +2,7 @@
 % Please edit documentation in R/progenySuppFunc.r
 \name{saveProgenyPlots}
 \alias{saveProgenyPlots}
-\title{\code{saveProgenyPlots}}
+\title{Function to save Progeny plots}
 \usage{
 saveProgenyPlots(plots, contrast_names, dirpath)
 }

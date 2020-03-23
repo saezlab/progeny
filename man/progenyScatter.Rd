@@ -2,20 +2,7 @@
 % Please edit documentation in R/progenySuppFunc.r
 \name{progenyScatter}
 \alias{progenyScatter}
-\title{This function generate a series of scatter plot with marginal distribution
-(in the form of an arrangeGrob object), for each progeny pathway and
-sample/contrast. Each scatter plot has progeny weights as x-axis and the gene
-level stat used to compute progeny score as the y-axis. The marginal
-distribution of the gene level stats is displayed on the right of the plot
-to give visual support of the significance of each gene contributing to
-the progeny pathway score. The green and red colors represent the positive
-and negative contribution of genes to the progeny pathway, respectively.
-For each gene contribution, 4 cases are possible, as the combinations of
-the sign of the gene level stat and the sign of the gene level weight.
-Positive weight will lead to a positive(green)/negative(red) gene contribution
-if the gene level stat is positive/negative. Negative weight will lead to
-a negative(red)/positive(green) gene contribution if the gene level stat
-is positive/negative.}
+\title{Calculate Progeny Scores with Permutations}
 \usage{
 progenyScatter(
   df,

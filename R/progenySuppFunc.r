@@ -1,3 +1,5 @@
+#' Calculate Progeny Scores with Permutations
+#'
 #'This function generate a series of scatter plot with marginal distribution
 #'(in the form of an arrangeGrob object), for each progeny pathway and
 #'sample/contrast. Each scatter plot has progeny weights as x-axis and the gene
@@ -112,7 +114,7 @@ progenyScatter <- function(df,weight_matrix,dfID = 1, weightID = 1,
     return(plot_list_contrasts)
 }
 
-#'\code{saveProgenyPlots}
+#'Function to save Progeny plots
 #'
 #'This function is designed to save the plots (in pdf format) of a nested 
 #'(2 level) list of arrangeGrob objects, such as the one returned by 
@@ -165,8 +167,11 @@ saveProgenyPlots <- function(plots, contrast_names, dirpath) {
     }
 }
 
+#'Returns the Progeny Model
+#'
 #'This function is designed for getting a model matrix with top significant
 #'genes for each pathway
+#'
 #'@param organism "Human" or "Mouse" taken from the main function's argument. 
 #'Default to "Human"
 #'@param top Desired top number of genes for each pathway according to their

@@ -158,7 +158,8 @@ this without worrying about the order of genes in the expression matrix using:
 
 ```{r}
 library(progeny)
-pathways <- progeny(gene_expr)
+pathways <- progeny(gene_expr,scale = TRUE, organism = "Human", top = 100,
+    perm = 1, verbose = FALSE)
 ```
 
 To visualize the progeny result
