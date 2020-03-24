@@ -1,8 +1,11 @@
 Package: progeny
 Title: Pathway RespOnsive GENes for activity inference from gene expression
-Version: 1.5.1
+Version: 2.0.0
 Author: Michael Schubert <mschu.dev@gmail.com>
-Maintainer: Michael Schubert <mschu.dev@gmail.com>
+	 Igor Bulanov
+	 Alberto Valdeolivas	
+	 Christian Holland
+Maintainer: Alberto Valdeolivas <alvaldeolivas@gmail.com>
 Description: This package provides a function to infer pathway activity
     from gene expression using PROGENy. It contains the linear model we
     inferred in the publication "Perturbation-response genes reveal signaling
@@ -10,9 +13,15 @@ Description: This package provides a function to infer pathway activity
 URL: https://github.com/saezlab/progeny
 BugReports: https://github.com/saezlab/progeny/issues
 Depends:
-    R (>= 3.4.0)
+    R (>= 3.6.0)
 Imports:
-    Biobase
+    Biobase,
+    stats, 
+    dplyr,
+    tidyr,
+    ggplot2,
+    ggrepel,
+    gridExtra
 biocViews: SystemsBiology, GeneExpression, FunctionalPrediction, GeneRegulation
 License: Apache License (== 2.0) | file LICENSE
 LazyData: true
@@ -22,10 +31,14 @@ Suggests:
     biomaRt,
     BiocFileCache,
     broom,
+    Seurat,
+    SingleCellExperiment,
     DESeq2,
-    dplyr,
     knitr,
     readr,
-    readxl
+    readxl,
+    pheatmap,
+    tibble,
+    testthat (>= 2.1.0)
 VignetteBuilder: knitr
-RoxygenNote: 6.0.1
+RoxygenNote: 7.0.2

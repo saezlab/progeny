@@ -85,7 +85,7 @@ library(dplyr)
 result = apply(pathways, 1, function(x) {
     broom::tidy(lm(x ~ !controls)) %>%
         filter(term == "!controlsTRUE") %>%
-        select(-term)
+        dplyr::select(-term)
 })
 mutate(bind_rows(result), pathway=names(result))
 ```
@@ -137,17 +137,18 @@ perform the analysis:
 
 ```{r}
 # load the downloaded files
-drug_table = readxl::read_excel(paths[1], skip=5)
-gene_table = readr::read_tsv(paths[2])
+drug_table <- readxl::read_excel(paths[1], skip=5, na="NA")
+drug_table <- replace(drug_table, is.na(drug_table), 0)
+gene_table <- readr::read_tsv(paths[2])
 
 # we need drug response with COSMIC IDs
-drug_response = data.matrix(drug_table[,3:ncol(drug_table)])
-rownames(drug_response) = drug_table[[1]]
+drug_response <- data.matrix(drug_table[,3:ncol(drug_table)])
+rownames(drug_response) <- drug_table[[1]]
 
 # we need genes in rows and samples in columns
-gene_expr = data.matrix(gene_table[,3:ncol(gene_table)])
-colnames(gene_expr) = sub("DATA.", "", colnames(gene_expr), fixed=TRUE)
-rownames(gene_expr) = gene_table$GENE_SYMBOLS
+gene_expr <- data.matrix(gene_table[,3:ncol(gene_table)])
+colnames(gene_expr) <- sub("DATA.", "", colnames(gene_expr), fixed=TRUE)
+rownames(gene_expr) <- gene_table$GENE_SYMBOLS
 ```
 
 ### Running PROGENy to get pathway activity scores
@@ -157,8 +158,19 @@ this without worrying about the order of genes in the expression matrix using:
 
 ```{r}
 library(progeny)
-pathways = progeny(gene_expr)
+pathways <- progeny(gene_expr,scale = TRUE, organism = "Human", top = 100,
+    perm = 1, verbose = FALSE)
 ```
+
+To visualize the progeny result
+```{r, fig.width=6, fig.height= 6}
+library(pheatmap)
+myColor = colorRampPalette(c("Darkblue", "white","red"))(100)
+pheatmap(pathways,fontsize=14, show_rownames = FALSE,
+    color=myColor, main = "PROGENy", angle_col = 45, treeheight_col = 0,  
+    border_color = NA)
+```
+
 
 We now have the pathway activity scores for the pathways defined in PROGENy:
 
@@ -176,6 +188,7 @@ We can test this the following way:
 ```{r}
 cell_lines = intersect(rownames(pathways), rownames(drug_response))
 trametinib = drug_response[cell_lines, "Trametinib"]
+
 mapk = pathways[cell_lines, "MAPK"]
 
 associations = lm(trametinib ~ mapk)
