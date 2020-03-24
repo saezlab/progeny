@@ -163,14 +163,12 @@ pathways <- progeny(gene_expr,scale = TRUE, organism = "Human", top = 100,
 ```
 
 To visualize the progeny result
-```{r}
+```{r, fig.width=6, fig.height= 6}
 library(pheatmap)
 myColor = colorRampPalette(c("Darkblue", "white","red"))(100)
-progeny_hmap <- pheatmap(pathways,fontsize=14, 
-                        fontsize_row = 10, 
-                        color=myColor, 
-                        main = "PROGENy", angle_col = 45,
-                        treeheight_col = 0,  border_color = NA)
+pheatmap(pathways,fontsize=14, show_rownames = FALSE,
+    color=myColor, main = "PROGENy", angle_col = 45, treeheight_col = 0,  
+    border_color = NA)
 ```
 
 
