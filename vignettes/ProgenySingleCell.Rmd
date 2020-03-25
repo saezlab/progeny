@@ -201,7 +201,9 @@ pbmc <- progeny(pbmc, scale=FALSE, organism="Human", top=500, perm=1,
 pbmc <- Seurat::ScaleData(pbmc, assay = "progeny") 
 
 ## We transform Progeny scores into a data frame to better handling the results
-progeny_scores_df <- as.data.frame(t(pbmc[["progeny"]]@scale.data))  %>%
+progeny_scores_df <- 
+    as.data.frame(t(GetAssayData(pbmc, slot = "scale.data", 
+        assay = "progeny"))) %>%
     rownames_to_column("Cell") %>%
     gather(Pathway, Activity, -Cell) 
 

@@ -45,21 +45,21 @@ about the number of genes used per pathway to compute
 progeny scores (i.e. number of genes present in the 
 progeny model and in the expression dataset)}
 
-\item{z_scores}{Only applys if the number of permutations is greater than 1. 
+\item{z_scores}{Only applies if the number of permutations is greater than 1. 
 A logical value. TRUE: the z-scores will be returned for 
 the pathway activity estimations. FALSE: the function returns 
 a normalized z-score value between -1 and 1.}
 
-\item{get_nulldist}{Only applys if the number of permutations is greater 
+\item{get_nulldist}{Only applies if the number of permutations is greater 
 than 1. A logical value. TRUE: the null distributions
 generated to assess the signifance of the pathways scores 
 is also returned.}
 
-\item{assay_name}{Only applys if the input is a Seurat object. It selects the
+\item{assay_name}{Only applies if the input is a Seurat object. It selects the
 name of the assay on which Progeny will be run. Default to: 
 RNA, i.e. normalized expression values.}
 
-\item{return_assay}{Only applys if the input is a Seurat object. A logical 
+\item{return_assay}{Only applies if the input is a Seurat object. A logical 
 value indicating whether to return progeny results as a new 
 assay called Progeny in the Seurat object used as input. 
 Default to FALSE.}

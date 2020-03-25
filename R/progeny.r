@@ -43,18 +43,18 @@
 #'                   about the number of genes used per pathway to compute 
 #'                   progeny scores (i.e. number of genes present in the 
 #'                   progeny model and in the expression dataset)
-#' @param z_scores Only applys if the number of permutations is greater than 1. 
+#' @param z_scores Only applies if the number of permutations is greater than 1. 
 #'                 A logical value. TRUE: the z-scores will be returned for 
 #'                 the pathway activity estimations. FALSE: the function returns 
 #'                 a normalized z-score value between -1 and 1.  
-#' @param get_nulldist Only applys if the number of permutations is greater 
+#' @param get_nulldist Only applies if the number of permutations is greater 
 #'                 than 1. A logical value. TRUE: the null distributions
 #'                 generated to assess the signifance of the pathways scores 
 #'                 is also returned. 
-#' @param assay_name Only applys if the input is a Seurat object. It selects the
+#' @param assay_name Only applies if the input is a Seurat object. It selects the
 #'               name of the assay on which Progeny will be run. Default to: 
 #'               RNA, i.e. normalized expression values.
-#' @param return_assay Only applys if the input is a Seurat object. A logical 
+#' @param return_assay Only applies if the input is a Seurat object. A logical 
 #'               value indicating whether to return progeny results as a new 
 #'               assay called Progeny in the Seurat object used as input. 
 #'               Default to FALSE. 
@@ -109,10 +109,11 @@ progeny.Seurat = function(expr, scale=TRUE, organism="Human", top = 100,
         scale = FALSE
     }
     
-    results <- progeny(as.matrix(expr[[assay_name]]@data), scale=scale, 
-        organism=organism, top=top, perm = perm, verbose = verbose, 
-        z_scores = z_scores, get_nulldist = get_nulldist, 
-        assay_name = assay_name, return_assay = return_assay)
+    results <- progeny(as.matrix(Seurat::GetAssayData(expr, slot = "data", 
+        assay = assay_name)), scale=scale, organism=organism, top=top, 
+        perm = perm, verbose = verbose, z_scores = z_scores, 
+        get_nulldist = get_nulldist, assay_name = assay_name, 
+        return_assay = return_assay)
     
     if (return_assay){
         expr[['progeny']] = Seurat::CreateAssayObject(data = t(results))
