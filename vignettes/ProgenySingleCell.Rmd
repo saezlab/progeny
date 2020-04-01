@@ -184,7 +184,7 @@ CellsClusters <- data.frame(Cell = names(Idents(pbmc)),
 We plot again the clusters along with their cell type labels
 
 ```{r, message = FALSE, warning = FALSE}
-#DimPlot(pbmc, reduction = "umap", label = TRUE, pt.size = 0.5) + NoLegend()
+DimPlot(pbmc, reduction = "umap", label = TRUE, pt.size = 0.5) + NoLegend()
 ```
 
 Finally, we compute **PROGENy** pathway activity scores on the scRNA-seq data, 
