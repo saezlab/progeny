@@ -2,9 +2,7 @@
 % Please edit documentation in R/progenyPermutations.r
 \name{progenyPerm}
 \alias{progenyPerm}
-\title{This function is designed to compute progeny pathway scores and assesses
-their significance using a gene sampling-based permutation strategy, for 
-a series of experimental samples/contrasts.}
+\title{Compute progeny pathway scores and assesses significance based on permutations}
 \usage{
 progenyPerm(
   df,
@@ -49,9 +47,7 @@ indicating the direction of the regulation. The second element is the null
 distribution list (a null distribution is generated for each sample/contrast).
 }
 \description{
-This function is designed to compute progeny pathway scores and assesses
-their significance using a gene sampling-based permutation strategy, for 
-a series of experimental samples/contrasts.
+Compute progeny pathway scores and assesses significance based on permutations
 }
 \examples{
 # use example gene expression matrix

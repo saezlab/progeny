@@ -3,14 +3,16 @@
 \name{model_mouse_full}
 \alias{model_mouse_full}
 \title{The full mouse linear model underlying PROGENy}
-\format{The full mouse model contains 17426 genes, associated pathways,
+\format{
+The full mouse model contains 17426 genes, associated pathways,
 weight and the p-value.         
 \describe{
     \item{gene}{gene names in HGNC symbols}
     \item{pathway}{names of PROGENy pathways}
     \item{weight}{z-scores for a given gene}
     \item{p.value}{significance of gene in a pathway}
-}}
+}
+}
 \source{
 \url{https://www.ncbi.nlm.nih.gov/pubmed/31525460}
 }

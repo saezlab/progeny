@@ -145,8 +145,8 @@ progenyScatter <- function(df,weight_matrix,dfID = 1, weightID = 1,
 #' #assign a path to store your plots
 #' dirpath <- "./progeny_plots/"
 #' 
-#' #save it
-#' saveProgenyPlots(plots, contrast_names, dirpath)
+#' # save it
+#' # saveProgenyPlots(plots, contrast_names, dirpath)
 #' @return This function produces the pdf files of plots taken from the 
 #' progenyScatter function
 #'@export

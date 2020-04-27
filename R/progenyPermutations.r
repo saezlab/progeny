@@ -1,6 +1,4 @@
-#'This function is designed to compute progeny pathway scores and assesses
-#'their significance using a gene sampling-based permutation strategy, for 
-#'a series of experimental samples/contrasts.
+#'Compute progeny pathway scores and assesses significance based on permutations
 #'
 #'@param df A data.frame of n*m+1 dimension, where n is the number of omic
 #'features to be considered and m is the number of samples/contrasts.

@@ -43,6 +43,6 @@ contrast_names <- names(gene_expression[2:ncol(gene_expression)])
 #assign a path to store your plots
 dirpath <- "./progeny_plots/"
 
-#save it
-saveProgenyPlots(plots, contrast_names, dirpath)
+# save it
+# saveProgenyPlots(plots, contrast_names, dirpath)
 }

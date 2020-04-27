@@ -1,0 +1,11 @@
+pandoc: 2.8.0.1
+pkgdown: 1.5.1
+pkgdown_sha: ~
+articles:
+  ProgenySingleCell: ProgenySingleCell.html
+  progenyBulk: progenyBulk.html
+last_built: 2020-04-27T13:28Z
+urls:
+  reference: https://saezlab.github.io/progeny/reference
+  article: https://saezlab.github.io/progeny/articles
+

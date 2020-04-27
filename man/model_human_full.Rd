@@ -3,14 +3,16 @@
 \name{model_human_full}
 \alias{model_human_full}
 \title{The full human linear model underlying PROGENy}
-\format{The full human model contains 22479 genes, associated pathways,
+\format{
+The full human model contains 22479 genes, associated pathways,
 weight and the p-value.         
 \describe{
     \item{gene}{gene names in HGNC symbols}
     \item{pathway}{names of PROGENy pathways}
     \item{weight}{z-scores for a given gene}
     \item{p.value}{significance of gene in pathway}
-}}
+}
+}
 \source{
 \url{https://www.nature.com/articles/s41467-017-02391-6}
 }

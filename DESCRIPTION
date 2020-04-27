@@ -1,11 +1,27 @@
 Package: progeny
 Title: Pathway RespOnsive GENes for activity inference from gene expression
-Version: 1.9.6
-Author: Michael Schubert <mschu.dev@gmail.com>,
-	 Igor Bulanov,
-	 Alberto Valdeolivas,	
-	 Christian Holland
-Maintainer: Alberto Valdeolivas <alvaldeolivas@gmail.com>
+Version: 1.9.7
+Authors@R: c(
+    person(given = "Michael",
+           family = "Schubert",
+           role = "aut"),
+    person(given = "Alberto",
+           family = "Valdeolivas",
+           role = c("cre","ctb"),
+           email = "alvaldeolivas@gmail.com",
+           comment = c(ORCID = "0000-0001-5482-9023")),
+    person(given = "Christian H.",
+           family = "Holland",
+           role = "ctb",
+           email = "cholland2408@gmail.com",
+           comment = c(ORCID = "0000-0002-3060-5786")),
+    person(given = "Igor",
+           family = "Bulanov",
+           role = "ctb"),
+    person(given = "Aurélien",
+           family = "Dugourd",
+           role = "ctb")
+           )
 Description: This package provides a function to infer pathway activity
     from gene expression using PROGENy. It contains the linear model we
     inferred in the publication "Perturbation-response genes reveal signaling
@@ -41,4 +57,4 @@ Suggests:
     tibble,
     testthat (>= 2.1.0)
 VignetteBuilder: knitr
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.0

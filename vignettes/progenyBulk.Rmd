@@ -1,11 +1,11 @@
 ---
-title: "PROGENy pathway signatures"
+title: "PROGENy pathway signatures: Application to Bulk transcriptomics"
 author: "Michael Schubert"
 date: "`r Sys.Date()`"
 output:
   rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{PROGENy pathway signatures: Application in Bulk}
+  %\VignetteIndexEntry{PROGENy pathway signatures: Application to Bulk transcriptomics}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

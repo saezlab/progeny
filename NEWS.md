@@ -1,7 +1,10 @@
-progeny v2.0.0 (Release date: 2020-03-25)
-==============
+## Progeny v1.9.7 (Release date: 2020-04-27)
 
-Changes:
+* PROGENy website development
+
+## Progeny v1.9.6 (Release date: 2020-04-27) 
+
+Major update with the following main points:
 
 * Added the mouse model matrix containing 14 pathways
 

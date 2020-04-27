@@ -1,5 +1,9 @@
-PROGENy: Pathway RespOnsive GENes for activity inference
-========================================================
+<img src="man/Figures/tool_logo.png" align="left" height="100">
+
+# PROGENy: Pathway RespOnsive GENes for activity inference  
+
+
+## Overview
 
 Aberrant cell signaling is known to cause cancer and many other diseases, as
 well as a focus of treatment. A common approach is to infer its activity on the
@@ -33,13 +37,34 @@ This is an R package for using the method described in
 }
 ```
 
+## Installation
+
+Progeny is available in [Bioconductor](https://www.bioconductor.org/packages/release/bioc/html/progeny.html). In addition, one can install the development version from the Github
+repository: 
+
+```r
+## To install the package from Bioconductor
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("progeny")
+
+## To install the development version from the Github repo:
+devtools::install_github("saezlab/progeny")
+```
+
+## Updates
+
+Since the original release, we have implemented some extensions in PROGENy:
+
 ### Update #1 - Extension to mouse
 
 Originally PROGENy was developed for the application to human data. 
 In a benchmark study we showed that PROGENy is also applicable to mouse data, 
-as described in Holland et al., 2019. Accordingly, we included new parameters to 
-run mouse version of PROGENy by transforming the human genes to their mouse 
-orthologs.
+as described in 
+[Holland et al., 2019](https://doi.org/10.1016/j.bbagrm.2019.194431). 
+Accordingly, we included new parameters to run mouse version of PROGENy by 
+transforming the human genes to their mouse orthologs.
 
 ### Update #2 - Expanding Pathway Collection
 
@@ -50,22 +75,22 @@ WNT.
 
 Recent technological advances in single-cell RNA-seq enable the profiling of 
 gene expression at the individual cell level. We showed that PROGENy can be 
-applied to scRNA-seq data, as described in Holland et al., 2020.
+applied to scRNA-seq data, as described in [Holland et al., 2020](https://doi.org/10.1186/s13059-020-1949-z)
 
-### Citing PROGENy
+## Citing PROGENy
 
-Besides the original paper, there are additional publication expanding the 
-usage of PROGENy.
+Besides the original paper, there are two additional publication 
+describing expansions of PROGENy usage.
 
 - If you use PROGENy for your research please cite the original publication:
 
-Schubert M, Klinger B, Klünemann M, Sieber A, Uhlitz F, Sauer S, Garnett MJ, Blüthgen N, Saez-Rodriguez J. “Perturbation-response genes reveal signaling footprints in cancer gene expression.” Nature Communications. DOI: 10.1038/s41467-017-02391-6.
+> Schubert M, Klinger B, Klünemann M, Sieber A, Uhlitz F, Sauer S, Garnett MJ, Blüthgen N, Saez-Rodriguez J. “Perturbation-response genes reveal signaling footprints in cancer gene expression.” _Nature Communications_: [10.1038/s41467-017-02391-6](https://doi.org/10.1038/s41467-017-02391-6)
 
 - If you use for mouse or you use the expanded version containing 14 pathways, 
 please cite additionally:
 
-Holland CH, Szalai B, Saez-Rodriguez J. “Transfer of regulatory knowledge from human to mouse for functional genomics analysis.” Biochimica et Biophysica Acta (BBA) - Gene Regulatory Mechanisms. 2019. DOI: 10.1016/j.bbagrm.2019.194431.
+> Holland CH, Szalai B, Saez-Rodriguez J. "Transfer of regulatory knowledge from human to mouse for functional genomics analysis." _Biochimica et Biophysica Acta (BBA) - Gene Regulatory Mechanisms._ 2019. DOI: [10.1016/j.bbagrm.2019.194431](https://doi.org/10.1016/j.bbagrm.2019.194431).
 
 - If you apply PROGENy on single-cell RNA-seq data please cite additionally:
 
-Holland CH, Tanevski J, Perales-Patón J, Gleixner J, Kumar MP, Mereu E, Joughin BA, Stegle O, Lauffenburger DA, Heyn H, Szalai B, Saez-Rodriguez, J. “Robustness and applicability of transcription factor and pathway analysis tools on single-cell RNA-seq data.” Genome Biology. 2020. DOI: 10.1186/s13059-020-1949-z.
+> Holland CH, Tanevski J, Perales-Patón J, Gleixner J, Kumar MP, Mereu E, Joughin BA, Stegle O, Lauffenburger DA, Heyn H, Szalai B, Saez-Rodriguez, J. "Robustness and applicability of transcription factor and pathway analysis tools on single-cell RNA-seq data." _Genome Biology._ 2020. DOI: [10.1186/s13059-020-1949-z](https://doi.org/10.1186/s13059-020-1949-z).
