@@ -1,3 +1,7 @@
+## Progeny v1.11.1 (Release date: 2020-06-09)
+
+* Website: Google Analytics 
+
 ## Progeny v1.9.7 (Release date: 2020-04-27)
 
 * PROGENy website development

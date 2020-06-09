@@ -58,6 +58,16 @@ samples in rows and pathways in columns." />
 <![endif]-->
 
 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119440867-8"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-119440867-8');
+</script>
+
 
   </head>
 
@@ -75,7 +85,7 @@ samples in rows and pathways in columns." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">progeny</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.9.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.11.1</span>
       </span>
     </div>
 
@@ -270,13 +280,13 @@ is not used to infer pathway activity.</p>
     <div class='dont-index'><p><code><a href='progenyPerm.html'>progenyPerm</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># use example gene expression matrix here, this is just for illustration</span>
+    <pre class="examples"><div class='input'><span class='co'># use example gene expression matrix here, this is just for illustration</span>
 <span class='no'>gene_expression</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>,
 <span class='st'>"human_input.csv"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"progeny"</span>), <span class='kw'>row.names</span> <span class='kw'>=</span> <span class='fl'>1</span>))
 
 <span class='co'># calculate pathway activities</span>
 <span class='no'>pathways</span> <span class='kw'>&lt;-</span> <span class='fu'>progeny</span>(<span class='no'>gene_expression</span>, <span class='kw'>scale</span><span class='kw'>=</span><span class='fl'>TRUE</span>,
-    <span class='kw'>organism</span><span class='kw'>=</span><span class='st'>"Human"</span>, <span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>perm</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
+    <span class='kw'>organism</span><span class='kw'>=</span><span class='st'>"Human"</span>, <span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>perm</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -55,6 +55,16 @@
 <![endif]-->
 
 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119440867-8"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-119440867-8');
+</script>
+
 
   </head>
 
@@ -72,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">progeny</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.9.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.11.1</span>
       </span>
     </div>
 
@@ -205,12 +215,29 @@ indicating the direction of the regulation. The second element is the null
 distribution list (a null distribution is generated for each sample/contrast).</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># use example gene expression matrix</span>
+    <pre class="examples"><div class='input'><span class='co'># use example gene expression matrix</span>
 <span class='no'>gene_expression</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>,
 <span class='st'>"human_input.csv"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"progeny"</span>), <span class='kw'>row.names</span> <span class='kw'>=</span> <span class='fl'>1</span>))
 
 <span class='co'># calculate pathway activities</span>
-<span class='fu'><a href='progeny.html'>progeny</a></span>(<span class='no'>gene_expression</span>, <span class='kw'>scale</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>organism</span><span class='kw'>=</span><span class='st'>"Human"</span>, <span class='kw'>top</span><span class='kw'>=</span><span class='fl'>100</span>, <span class='kw'>perm</span><span class='kw'>=</span><span class='fl'>10000</span>)</pre>
+<span class='fu'><a href='progeny.html'>progeny</a></span>(<span class='no'>gene_expression</span>, <span class='kw'>scale</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>organism</span><span class='kw'>=</span><span class='st'>"Human"</span>, <span class='kw'>top</span><span class='kw'>=</span><span class='fl'>100</span>, <span class='kw'>perm</span><span class='kw'>=</span><span class='fl'>10000</span>)</div><div class='output co'>#&gt;            Androgen   EGFR Estrogen Hypoxia JAK.STAT   MAPK    NFkB    p53
+#&gt; SRR1039508  -0.8362 0.1964  -0.3524  0.9996   0.7756 0.4110 -0.5528 0.9310
+#&gt; SRR1039509  -0.4944 0.0444  -0.6588  0.9996   0.4928 0.3220 -0.4226 0.8852
+#&gt; SRR1039512  -0.7920 0.2006  -0.4054  0.9994   0.7016 0.4058 -0.4318 0.9166
+#&gt; SRR1039513  -0.4322 0.0888  -0.6774  1.0000   0.6672 0.4530 -0.4654 0.7770
+#&gt; SRR1039516  -0.7806 0.2562  -0.3104  0.9996   0.6286 0.4166 -0.3336 0.9198
+#&gt; SRR1039517  -0.5116 0.5476  -0.6676  1.0000   0.4808 0.7268 -0.3894 0.8104
+#&gt; SRR1039520  -0.8042 0.3280  -0.3976  0.9994   0.6168 0.5570 -0.6398 0.9012
+#&gt; SRR1039521  -0.3400 0.1316  -0.6660  1.0000   0.4992 0.5676 -0.6298 0.7804
+#&gt;               PI3K   TGFb    TNFa   Trail    VEGF     WNT
+#&gt; SRR1039508  0.1656 0.5390 -0.5962 -0.3624  0.0566 -0.1118
+#&gt; SRR1039509  0.0828 0.7702 -0.4380 -0.3110  0.0660 -0.1766
+#&gt; SRR1039512  0.1604 0.6970 -0.4774 -0.3114  0.0546 -0.1698
+#&gt; SRR1039513 -0.0630 0.8022 -0.4954 -0.2414  0.0772 -0.2848
+#&gt; SRR1039516  0.1522 0.6836 -0.3830 -0.3382  0.2762 -0.3244
+#&gt; SRR1039517  0.3704 0.8758 -0.4358 -0.3612  0.2562 -0.3990
+#&gt; SRR1039520  0.1596 0.7016 -0.6738 -0.2768 -0.0808 -0.1116
+#&gt; SRR1039521  0.0416 0.8198 -0.6466 -0.2534 -0.0634 -0.3198</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
