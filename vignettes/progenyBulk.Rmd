@@ -3,8 +3,8 @@ title: "PROGENy pathway signatures: Application to Bulk transcriptomics"
 author: "Michael Schubert"
 date: "`r Sys.Date()`"
 output:
-  rmarkdown::html_vignette
-vignette: >
+  BiocStyle::html_document
+vignette: |
   %\VignetteIndexEntry{PROGENy pathway signatures: Application to Bulk transcriptomics}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}

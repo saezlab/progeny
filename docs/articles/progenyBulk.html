@@ -37,7 +37,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">progeny</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.11.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.11.2</span>
       </span>
     </div>
 
@@ -100,13 +100,13 @@
 
       
 
-      </header><div class="row">
+      </header><script src="progenyBulk_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>PROGENy pathway signatures: Application to Bulk transcriptomics</h1>
                         <h4 class="author">Michael Schubert</h4>
             
-            <h4 class="date">2020-06-09</h4>
+            <h4 class="date">2020-09-01</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/saezlab/progeny/blob/master/vignettes/progenyBulk.Rmd"><code>vignettes/progenyBulk.Rmd</code></a></small>
       <div class="hidden name"><code>progenyBulk.Rmd</code></div>
@@ -163,7 +163,7 @@
 <p>So now we might be interested how the treatment with dexamethasone affects signaling pathways. To do this, we check if the control is different to the perturbed condition using a linear model:</p>
 <div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">dplyr</span>)
 <span class="no">result</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span>(<span class="no">pathways</span>, <span class="fl">1</span>, <span class="kw">function</span>(<span class="no">x</span>) {
-    <span class="kw pkg">broom</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/broom/man/reexports.html">tidy</a></span>(<span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="no">x</span> ~ !<span class="no">controls</span>)) <span class="kw">%&gt;%</span>
+    <span class="kw pkg">broom</span><span class="kw ns">::</span><span class="fu"><a href="https://broom.tidymodels.org/reference/reexports.html">tidy</a></span>(<span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="no">x</span> ~ !<span class="no">controls</span>)) <span class="kw">%&gt;%</span>
         <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="no">term</span> <span class="kw">==</span> <span class="st">"!controlsTRUE"</span>) <span class="kw">%&gt;%</span>
         <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(-<span class="no">term</span>)
 })
@@ -173,7 +173,7 @@
 ##       &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;   
 ##  1    8.89      0.830    10.7   0.0000392 Androgen
 ##  2    1.25      3.22      0.389 0.711     EGFR    
-##  3   -7.05      0.835    -8.44  0.000151  Estrogen
+##  3   -6.90      0.830    -8.31  0.000165  Estrogen
 ##  4    0.783     1.92      0.408 0.698     Hypoxia 
 ##  5   -0.972     0.657    -1.48  0.190     JAK-STAT
 ##  6    1.04      1.34      0.774 0.469     MAPK    
@@ -183,7 +183,7 @@
 ## 10    2.34      1.09      2.15  0.0756    TGFb    
 ## 11    0.715     0.681     1.05  0.335     TNFa    
 ## 12    0.279     0.785     0.356 0.734     Trail   
-## 13    0.728     0.700     1.04  0.338     VEGF    
+## 13    0.703     0.705     0.996 0.358     VEGF    
 ## 14   -1.75      0.566    -3.10  0.0211    WNT</code></pre>
 <p>What we see is that indeed the p53/DNA damage response pathway is less active after treatment than before.</p>
 </div>
@@ -305,13 +305,13 @@
 <div id="r-version-information" class="section level2">
 <h2 class="hasAnchor">
 <a href="#r-version-information" class="anchor"></a>R version information</h2>
-<pre><code>## R version 4.0.0 (2020-04-24)
+<pre><code>## R version 4.0.2 (2020-06-22)
 ## Platform: x86_64-pc-linux-gnu (64-bit)
-## Running under: Ubuntu 19.10
+## Running under: Ubuntu 20.04.1 LTS
 ## 
 ## Matrix products: default
-## BLAS:   /usr/lib/x86_64-linux-gnu/openblas/libblas.so.3
-## LAPACK: /usr/lib/x86_64-linux-gnu/libopenblasp-r0.3.7.so
+## BLAS:   /usr/lib/x86_64-linux-gnu/blas/libblas.so.3.9.0
+## LAPACK: /usr/lib/x86_64-linux-gnu/lapack/liblapack.so.3.9.0
 ## 
 ## locale:
 ##  [1] LC_CTYPE=en_GB.UTF-8       LC_NUMERIC=C              
@@ -326,45 +326,46 @@
 ## [8] methods   base     
 ## 
 ## other attached packages:
-##  [1] pheatmap_1.0.12             BiocFileCache_1.12.0       
-##  [3] dbplyr_1.4.4                dplyr_1.0.0                
-##  [5] progeny_1.11.1              biomaRt_2.44.0             
+##  [1] pheatmap_1.0.12             BiocFileCache_1.12.1       
+##  [3] dbplyr_1.4.4                dplyr_1.0.2                
+##  [5] progeny_1.11.2              biomaRt_2.44.1             
 ##  [7] DESeq2_1.28.1               airway_1.8.0               
-##  [9] SummarizedExperiment_1.18.1 DelayedArray_0.14.0        
+##  [9] SummarizedExperiment_1.18.2 DelayedArray_0.14.1        
 ## [11] matrixStats_0.56.0          Biobase_2.48.0             
-## [13] GenomicRanges_1.40.0        GenomeInfoDb_1.24.0        
+## [13] GenomicRanges_1.40.0        GenomeInfoDb_1.24.2        
 ## [15] IRanges_2.22.2              S4Vectors_0.26.1           
-## [17] BiocGenerics_0.34.0         knitr_1.28                 
+## [17] BiocGenerics_0.34.0         knitr_1.29                 
+## [19] BiocStyle_2.16.0           
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] nlme_3.1-147           bitops_1.0-6           fs_1.4.1              
-##  [4] bit64_0.9-7            RColorBrewer_1.1-2     progress_1.2.2        
-##  [7] httr_1.4.1             rprojroot_1.3-2        tools_4.0.0           
-## [10] backports_1.1.7        utf8_1.1.4             R6_2.4.1              
-## [13] DBI_1.1.0              colorspace_1.4-1       tidyselect_1.1.0      
-## [16] gridExtra_2.3          prettyunits_1.1.1      bit_1.1-15.2          
-## [19] curl_4.3               compiler_4.0.0         cli_2.0.2             
-## [22] desc_1.2.0             scales_1.1.1           readr_1.3.1           
+##  [1] bitops_1.0-6           fs_1.5.0               bit64_4.0.5           
+##  [4] RColorBrewer_1.1-2     progress_1.2.2         httr_1.4.2            
+##  [7] rprojroot_1.3-2        tools_4.0.2            backports_1.1.9       
+## [10] utf8_1.1.4             R6_2.4.1               DBI_1.1.0             
+## [13] colorspace_1.4-1       gridExtra_2.3          tidyselect_1.1.0      
+## [16] prettyunits_1.1.1      curl_4.3               bit_4.0.4             
+## [19] compiler_4.0.2         cli_2.0.2              desc_1.2.0            
+## [22] bookdown_0.20          scales_1.1.1           readr_1.3.1           
 ## [25] genefilter_1.70.0      askpass_1.1            rappdirs_0.3.1        
 ## [28] pkgdown_1.5.1          stringr_1.4.0          digest_0.6.25         
-## [31] rmarkdown_2.2          XVector_0.28.0         pkgconfig_2.0.3       
-## [34] htmltools_0.4.0        readxl_1.3.1           rlang_0.4.6           
+## [31] rmarkdown_2.3          XVector_0.28.0         pkgconfig_2.0.3       
+## [34] htmltools_0.5.0        readxl_1.3.1           rlang_0.4.7           
 ## [37] rstudioapi_0.11        RSQLite_2.2.0          generics_0.0.2        
 ## [40] BiocParallel_1.22.0    RCurl_1.98-1.2         magrittr_1.5          
 ## [43] GenomeInfoDbData_1.2.3 Matrix_1.2-18          fansi_0.4.1           
-## [46] Rcpp_1.0.4.6           munsell_0.5.0          lifecycle_0.2.0       
-## [49] stringi_1.4.6          yaml_2.2.1             MASS_7.3-51.6         
-## [52] zlibbioc_1.34.0        grid_4.0.0             blob_1.2.1            
+## [46] Rcpp_1.0.5             munsell_0.5.0          lifecycle_0.2.0       
+## [49] stringi_1.4.6          yaml_2.2.1             MASS_7.3-52           
+## [52] zlibbioc_1.34.0        grid_4.0.2             blob_1.2.1            
 ## [55] ggrepel_0.8.2          crayon_1.3.4           lattice_0.20-41       
-## [58] splines_4.0.0          annotate_1.66.0        hms_0.5.3             
-## [61] locfit_1.5-9.4         pillar_1.4.4           geneplotter_1.66.0    
-## [64] XML_3.99-0.3           glue_1.4.1             evaluate_0.14         
-## [67] vctrs_0.3.1            cellranger_1.1.0       gtable_0.3.0          
-## [70] openssl_1.4.1          purrr_0.3.4            tidyr_1.1.0           
-## [73] assertthat_0.2.1       ggplot2_3.3.1          xfun_0.14             
-## [76] xtable_1.8-4           broom_0.5.6            survival_3.1-12       
-## [79] tibble_3.0.1           AnnotationDbi_1.50.0   memoise_1.1.0         
-## [82] ellipsis_0.3.1</code></pre>
+## [58] splines_4.0.2          annotate_1.66.0        hms_0.5.3             
+## [61] locfit_1.5-9.4         pillar_1.4.6           geneplotter_1.66.0    
+## [64] XML_3.99-0.5           glue_1.4.2             evaluate_0.14         
+## [67] BiocManager_1.30.10    vctrs_0.3.4            cellranger_1.1.0      
+## [70] tidyr_1.1.2            gtable_0.3.0           openssl_1.4.2         
+## [73] purrr_0.3.4            assertthat_0.2.1       ggplot2_3.3.2         
+## [76] xfun_0.16              broom_0.7.0            xtable_1.8-4          
+## [79] survival_3.1-12        tibble_3.0.3           AnnotationDbi_1.50.3  
+## [82] memoise_1.1.0          ellipsis_0.3.1</code></pre>
 </div>
 </div>
   </div>

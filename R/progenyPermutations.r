@@ -88,7 +88,7 @@ progenyPerm <-
         resList[[i-1]] <- resListCurrent
         }
     }
-    names(resList) <- names(df[,-1])
+    names(resList) <- colnames(df)[-1]
     resDf <- as.data.frame(resList)
     if(get_nulldist) {
         names(nullDist_list) <- names(df[,-1])

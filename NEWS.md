@@ -1,3 +1,7 @@
+## Progeny v1.11.2 (Release date: 2020-09-01)
+
+* Fixed issue with rownames when using Progeny with Permutations function
+
 ## Progeny v1.11.1 (Release date: 2020-06-09)
 
 * Website: Google Analytics 

@@ -59,7 +59,7 @@ if (!requireNamespace("BiocManager", quietly = TRUE))
 
 BiocManager::install("progeny")
 
-## To install the new version until it is submited to Bioconductor use:
+## To install the new version until it is submitted to Bioconductor use:
 devtools::install_github("saezlab/progeny")
 ```
 
