@@ -1,3 +1,7 @@
+## Progeny v1.11.3 (Release date: 2020-10-14)
+
+* Model matrices are not accessed in the local and not in the global enviroment
+
 ## Progeny v1.11.2 (Release date: 2020-09-01)
 
 * Fixed issue with rownames when using Progeny with Permutations function
