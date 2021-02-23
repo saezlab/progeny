@@ -187,9 +187,9 @@ getModel <- function(organism = "Human", top= 100) {
     pathway <- p.value <- weight <- NULL
 
     if (organism == "Human") {
-        full_model <- model_human_full
+        full_model <- progeny::model_human_full
     } else if (organism == "Mouse") {
-        full_model <- model_mouse_full
+        full_model <- progeny::model_mouse_full
     } else {
         stop("Wrong organism name. Please specify 'Human' or 'Mouse'.")
     }
