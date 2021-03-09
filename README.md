@@ -56,6 +56,9 @@ BiocManager::install("progeny")
 ## To install the development version from the Github repo:
 devtools::install_github("saezlab/progeny")
 ```
+## Installation
+
+For a detailed tutorial of how to use progeny in the context of of RNAseq data analysis, check out our [Transcriptutorial](https://github.com/saezlab/transcriptutorial)
 
 ## Updates
 
