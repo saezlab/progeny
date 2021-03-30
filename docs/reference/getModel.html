@@ -83,7 +83,7 @@ genes for each pathway" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">progeny</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.11.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.13.2</span>
       </span>
     </div>
 
@@ -91,7 +91,7 @@ genes for each pathway" />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -106,10 +106,10 @@ genes for each pathway" />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/ProgenySingleCell.html">Applying PROGENy on single-cell RNA-seq data</a>
+      <a href="../articles/progenyBulk.html">PROGENy pathway signatures: Application to Bulk transcriptomics</a>
     </li>
     <li>
-      <a href="../articles/progenyBulk.html">PROGENy pathway signatures: Application to Bulk transcriptomics</a>
+      <a href="../articles/ProgenySingleCell.html">Applying PROGENy on single-cell RNA-seq data</a>
     </li>
   </ul>
 </li>
@@ -120,19 +120,19 @@ genes for each pathway" />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/saezlab/progeny/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
 <li>
   <a href="https://twitter.com/saezlab">
-    <span class="fab fa fab fa-twitter fa-lg"></span>
+    <span class="fab fa-twitter fa-lg"></span>
      
   </a>
 </li>
 <li>
   <a href="http://www.saezlab.org">
-    <span class="fas fa fas fa-university"></span>
+    <span class="fas fa-university"></span>
      
   </a>
 </li>
@@ -159,7 +159,7 @@ genes for each pathway" />
 genes for each pathway</p>
     </div>
 
-    <pre class="usage"><span class='fu'>getModel</span>(<span class='kw'>organism</span> <span class='kw'>=</span> <span class='st'>"Human"</span>, <span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>100</span>)</pre>
+    <pre class="usage"><span class='fu'>getModel</span><span class='op'>(</span>organism <span class='op'>=</span> <span class='st'>"Human"</span>, top <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -182,7 +182,8 @@ significance(p.value). Default to 100</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>#getting a model matrix according to the desired top n significant </span>
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'>getModel</span>(<span class='st'>"Human"</span>, <span class='kw'>top</span><span class='kw'>=</span><span class='fl'>100</span>)</div></pre>
+<span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'>getModel</span><span class='op'>(</span><span class='st'>"Human"</span>, top<span class='op'>=</span><span class='fl'>100</span><span class='op'>)</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -194,11 +195,11 @@ significance(p.value). Default to 100</p></td>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Michael Schubert, Alberto Valdeolivas.</p>
+  <p>Developed by Michael Schubert, Aurélien Dugourd.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

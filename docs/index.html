@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">progeny</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.11.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.13.2</span>
       </span>
     </div>
 
@@ -48,7 +48,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -63,10 +63,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="articles/ProgenySingleCell.html">Applying PROGENy on single-cell RNA-seq data</a>
+      <a href="articles/progenyBulk.html">PROGENy pathway signatures: Application to Bulk transcriptomics</a>
     </li>
     <li>
-      <a href="articles/progenyBulk.html">PROGENy pathway signatures: Application to Bulk transcriptomics</a>
+      <a href="articles/ProgenySingleCell.html">Applying PROGENy on single-cell RNA-seq data</a>
     </li>
   </ul>
 </li>
@@ -77,19 +77,19 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/saezlab/progeny/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
 <li>
   <a href="https://twitter.com/saezlab">
-    <span class="fab fa fab fa-twitter fa-lg"></span>
+    <span class="fab fa-twitter fa-lg"></span>
      
   </a>
 </li>
 <li>
   <a href="http://www.saezlab.org">
-    <span class="fas fa fas fa-university"></span>
+    <span class="fas fa-university"></span>
      
   </a>
 </li>
@@ -135,14 +135,20 @@
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>Progeny is available in <a href="https://www.bioconductor.org/packages/release/bioc/html/progeny.html">Bioconductor</a>. In addition, one can install the development version from the Github repository:</p>
-<div class="sourceCode" id="cb2"><pre class="r"><span class="co">## To install the package from Bioconductor</span>
-<span class="kw">if</span> (!<span class="fu"><a href="https://rdrr.io/r/base/ns-load.html">requireNamespace</a></span>(<span class="st">"BiocManager"</span>, <span class="kw">quietly</span> <span class="kw">=</span> <span class="fl">TRUE</span>))
-    <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"BiocManager"</span>)
+<div class="sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">## To install the package from Bioconductor</span>
+<span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html">requireNamespace</a></span><span class="op">(</span><span class="st">"BiocManager"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
+    <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span>
 
-<span class="kw pkg">BiocManager</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocManager/man/install.html">install</a></span>(<span class="st">"progeny"</span>)
+<span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocManager/man/install.html">install</a></span><span class="op">(</span><span class="st">"progeny"</span><span class="op">)</span>
 
 <span class="co">## To install the development version from the Github repo:</span>
-<span class="kw pkg">devtools</span><span class="kw ns">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span>(<span class="st">"saezlab/progeny"</span>)</pre></div>
+<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">"saezlab/progeny"</span><span class="op">)</span></code></pre></div>
+</div>
+<div id="installation-1" class="section level2">
+<h2 class="hasAnchor">
+<a href="#installation-1" class="anchor"></a>Installation</h2>
+<p>For a detailed tutorial of how to use progeny in the context of of RNAseq data analysis, check out our <a href="https://github.com/saezlab/transcriptutorial">Transcriptutorial</a></p>
 </div>
 <div id="updates" class="section level2">
 <h2 class="hasAnchor">
@@ -220,7 +226,7 @@
 <h2>Developers</h2>
 <ul class="list-unstyled">
 <li>Michael Schubert <br><small class="roles"> Author </small>  </li>
-<li>Alberto Valdeolivas <br><small class="roles"> Maintainer, contributor </small> <a href="https://orcid.org/0000-0001-5482-9023" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Aurélien Dugourd <br><small class="roles"> Maintainer, contributor </small>  </li>
 <li><a href="authors.html">All authors...</a></li>
 </ul>
 </div>
@@ -230,11 +236,11 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Michael Schubert, Alberto Valdeolivas.</p>
+  <p>Developed by Michael Schubert, Aurélien Dugourd.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

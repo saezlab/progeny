@@ -37,7 +37,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">progeny</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.11.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.13.2</span>
       </span>
     </div>
 
@@ -45,7 +45,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -60,10 +60,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/ProgenySingleCell.html">Applying PROGENy on single-cell RNA-seq data</a>
+      <a href="../articles/progenyBulk.html">PROGENy pathway signatures: Application to Bulk transcriptomics</a>
     </li>
     <li>
-      <a href="../articles/progenyBulk.html">PROGENy pathway signatures: Application to Bulk transcriptomics</a>
+      <a href="../articles/ProgenySingleCell.html">Applying PROGENy on single-cell RNA-seq data</a>
     </li>
   </ul>
 </li>
@@ -74,19 +74,19 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/saezlab/progeny/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
 <li>
   <a href="https://twitter.com/saezlab">
-    <span class="fab fa fab fa-twitter fa-lg"></span>
+    <span class="fab fa-twitter fa-lg"></span>
      
   </a>
 </li>
 <li>
   <a href="http://www.saezlab.org">
-    <span class="fas fa fas fa-university"></span>
+    <span class="fas fa-university"></span>
      
   </a>
 </li>
@@ -100,13 +100,13 @@
 
       
 
-      </header><script src="progenyBulk_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>PROGENy pathway signatures: Application to Bulk transcriptomics</h1>
                         <h4 class="author">Michael Schubert</h4>
             
-            <h4 class="date">2020-09-01</h4>
+            <h4 class="date">2021-03-30</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/saezlab/progeny/blob/master/vignettes/progenyBulk.Rmd"><code>vignettes/progenyBulk.Rmd</code></a></small>
       <div class="hidden name"><code>progenyBulk.Rmd</code></div>
@@ -118,7 +118,7 @@
 <div id="progeny-pathway-signatures" class="section level1">
 <h1 class="hasAnchor">
 <a href="#progeny-pathway-signatures" class="anchor"></a>PROGENy pathway signatures</h1>
-<p>This R package provides the model we inferred in the publication “Perturbation-response genes reveal signaling footprints in cancer gene expression” and a function to obtain pathway scores from a gene expression matrix. It is <a href="http://www.biorxiv.org/content/early/2016/08/28/065672">available on bioRxiv</a>.</p>
+<p>This R package provides the model we inferred in the publication "Perturbation-response genes reveal signaling footprints in cancer gene expression" and a function to obtain pathway scores from a gene expression matrix. It is <a href="http://www.biorxiv.org/content/early/2016/08/28/065672">available on bioRxiv</a>.</p>
 <div id="scoring-the-airway-package-data-for-pathway-scores" class="section level2">
 <h2 class="hasAnchor">
 <a href="#scoring-the-airway-package-data-for-pathway-scores" class="anchor"></a>Scoring the <code>airway</code> package data for pathway scores</h2>
@@ -126,48 +126,51 @@
 <div id="preparing-the-gene-expression-matrix" class="section level3">
 <h3 class="hasAnchor">
 <a href="#preparing-the-gene-expression-matrix" class="anchor"></a>Preparing the gene expression matrix</h3>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">airway</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">DESeq2</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="no">airway</span>)
+<div class="sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">airway</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/mikelove/DESeq2">DESeq2</a></span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">airway</span><span class="op">)</span>
 
 <span class="co"># import data to DESeq2 and variance stabilize</span>
-<span class="no">dset</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/pkg/DESeq2/man/DESeqDataSet.html">DESeqDataSetFromMatrix</a></span>(<span class="fu">assay</span>(<span class="no">airway</span>),
-    <span class="kw">colData</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(<span class="fu">colData</span>(<span class="no">airway</span>)), <span class="kw">design</span><span class="kw">=</span>~<span class="no">dex</span>)
-<span class="no">dset</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/pkg/DESeq2/man/estimateSizeFactors.html">estimateSizeFactors</a></span>(<span class="no">dset</span>)
-<span class="no">dset</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/pkg/DESeq2/man/estimateDispersions.html">estimateDispersions</a></span>(<span class="no">dset</span>)
-<span class="no">gene_expr</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/pkg/DESeq2/man/varianceStabilizingTransformation.html">getVarianceStabilizedData</a></span>(<span class="no">dset</span>)
+<span class="va">dset</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/DESeq2/man/DESeqDataSet.html">DESeqDataSetFromMatrix</a></span><span class="op">(</span><span class="fu">assay</span><span class="op">(</span><span class="va">airway</span><span class="op">)</span>,
+    colData<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="fu">colData</span><span class="op">(</span><span class="va">airway</span><span class="op">)</span><span class="op">)</span>, design<span class="op">=</span><span class="op">~</span><span class="va">dex</span><span class="op">)</span>
+<span class="va">dset</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/DESeq2/man/estimateSizeFactors.html">estimateSizeFactors</a></span><span class="op">(</span><span class="va">dset</span><span class="op">)</span>
+<span class="va">dset</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/DESeq2/man/estimateDispersions.html">estimateDispersions</a></span><span class="op">(</span><span class="va">dset</span><span class="op">)</span>
+<span class="va">gene_expr</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/DESeq2/man/varianceStabilizingTransformation.html">getVarianceStabilizedData</a></span><span class="op">(</span><span class="va">dset</span><span class="op">)</span>
 
 <span class="co"># annotate matrix with HGNC symbols</span>
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">biomaRt</span>)
-<span class="no">mart</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/pkg/biomaRt/man/useDataset.html">useDataset</a></span>(<span class="st">"hsapiens_gene_ensembl"</span>, <span class="fu"><a href="https://rdrr.io/pkg/biomaRt/man/useMart.html">useMart</a></span>(<span class="st">"ensembl"</span>))
-<span class="no">genes</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/pkg/biomaRt/man/getBM.html">getBM</a></span>(<span class="kw">attributes</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"ensembl_gene_id"</span>,<span class="st">"hgnc_symbol"</span>),
-              <span class="kw">values</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(<span class="no">gene_expr</span>), <span class="kw">mart</span><span class="kw">=</span><span class="no">mart</span>)
-<span class="no">matched</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/match.html">match</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(<span class="no">gene_expr</span>), <span class="no">genes</span>$<span class="no">ensembl_gene_id</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(<span class="no">gene_expr</span>) <span class="kw">=</span> <span class="no">genes</span>$<span class="no">hgnc_symbol</span>[<span class="no">matched</span>]</pre></body></html></div>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">biomaRt</span><span class="op">)</span>
+<span class="va">mart</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/biomaRt/man/useDataset.html">useDataset</a></span><span class="op">(</span><span class="st">"hsapiens_gene_ensembl"</span>, <span class="fu"><a href="https://rdrr.io/pkg/biomaRt/man/useMart.html">useMart</a></span><span class="op">(</span><span class="st">"ensembl"</span><span class="op">)</span><span class="op">)</span>
+<span class="va">genes</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/biomaRt/man/getBM.html">getBM</a></span><span class="op">(</span>attributes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"ensembl_gene_id"</span>,<span class="st">"hgnc_symbol"</span><span class="op">)</span>,
+              values<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">gene_expr</span><span class="op">)</span>, mart<span class="op">=</span><span class="va">mart</span><span class="op">)</span>
+<span class="va">matched</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/match.html">match</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">gene_expr</span><span class="op">)</span>, <span class="va">genes</span><span class="op">$</span><span class="va">ensembl_gene_id</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">gene_expr</span><span class="op">)</span> <span class="op">=</span> <span class="va">genes</span><span class="op">$</span><span class="va">hgnc_symbol</span><span class="op">[</span><span class="va">matched</span><span class="op">]</span></code></pre></div>
 </div>
 <div id="obtaining-pathway-scores" class="section level3">
 <h3 class="hasAnchor">
 <a href="#obtaining-pathway-scores" class="anchor"></a>Obtaining pathway scores</h3>
 <p>We can then use the <code>progeny</code> function to score the expression matrix. Note that we are scaling the pathway scores with respect to the controls only.</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">progeny</span>)
-<span class="no">pathways</span> <span class="kw">=</span> <span class="fu"><a href="../reference/progeny.html">progeny</a></span>(<span class="no">gene_expr</span>, <span class="kw">scale</span><span class="kw">=</span><span class="fl">FALSE</span>)
-<span class="no">controls</span> <span class="kw">=</span> <span class="no">airway</span>$<span class="no">dex</span> <span class="kw">==</span> <span class="st">"untrt"</span>
-<span class="no">ctl_mean</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span>(<span class="no">pathways</span>[<span class="no">controls</span>,], <span class="fl">2</span>, <span class="no">mean</span>)
-<span class="no">ctl_sd</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span>(<span class="no">pathways</span>[<span class="no">controls</span>,], <span class="fl">2</span>, <span class="no">sd</span>)
-<span class="no">pathways</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span>(<span class="no">pathways</span>, <span class="fl">1</span>, <span class="kw">function</span>(<span class="no">x</span>) <span class="no">x</span> - <span class="no">ctl_mean</span>))
-<span class="no">pathways</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span>(<span class="no">pathways</span>, <span class="fl">1</span>, <span class="kw">function</span>(<span class="no">x</span>) <span class="no">x</span> / <span class="no">ctl_sd</span>)</pre></body></html></div>
+<div class="sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/saezlab/progeny">progeny</a></span><span class="op">)</span>
+<span class="va">pathways</span> <span class="op">=</span> <span class="fu"><a href="../reference/progeny.html">progeny</a></span><span class="op">(</span><span class="va">gene_expr</span>, scale<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span>
+<span class="va">controls</span> <span class="op">=</span> <span class="va">airway</span><span class="op">$</span><span class="va">dex</span> <span class="op">==</span> <span class="st">"untrt"</span>
+<span class="va">ctl_mean</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">pathways</span><span class="op">[</span><span class="va">controls</span>,<span class="op">]</span>, <span class="fl">2</span>, <span class="va">mean</span><span class="op">)</span>
+<span class="va">ctl_sd</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">pathways</span><span class="op">[</span><span class="va">controls</span>,<span class="op">]</span>, <span class="fl">2</span>, <span class="va">sd</span><span class="op">)</span>
+<span class="va">pathways</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">pathways</span>, <span class="fl">1</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span> <span class="op">-</span> <span class="va">ctl_mean</span><span class="op">)</span><span class="op">)</span>
+<span class="va">pathways</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">pathways</span>, <span class="fl">1</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span> <span class="op">/</span> <span class="va">ctl_sd</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="checking-for-differences-between-the-groups" class="section level3">
 <h3 class="hasAnchor">
 <a href="#checking-for-differences-between-the-groups" class="anchor"></a>Checking for differences between the groups</h3>
 <p>So now we might be interested how the treatment with dexamethasone affects signaling pathways. To do this, we check if the control is different to the perturbed condition using a linear model:</p>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">dplyr</span>)
-<span class="no">result</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span>(<span class="no">pathways</span>, <span class="fl">1</span>, <span class="kw">function</span>(<span class="no">x</span>) {
-    <span class="kw pkg">broom</span><span class="kw ns">::</span><span class="fu"><a href="https://broom.tidymodels.org/reference/reexports.html">tidy</a></span>(<span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="no">x</span> ~ !<span class="no">controls</span>)) <span class="kw">%&gt;%</span>
-        <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="no">term</span> <span class="kw">==</span> <span class="st">"!controlsTRUE"</span>) <span class="kw">%&gt;%</span>
-        <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(-<span class="no">term</span>)
-})
-<span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_rows</a></span>(<span class="no">result</span>), <span class="kw">pathway</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span>(<span class="no">result</span>))</pre></body></html></div>
+<div class="sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
+<span class="va">result</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">pathways</span>, <span class="fl">1</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span>
+    <span class="fu">broom</span><span class="fu">::</span><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">x</span> <span class="op">~</span> <span class="op">!</span><span class="va">controls</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+        <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">term</span> <span class="op">==</span> <span class="st">"!controlsTRUE"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+        <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">term</span><span class="op">)</span>
+<span class="op">}</span><span class="op">)</span>
+<span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_rows</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span>, pathway<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## # A tibble: 14 x 5
 ##    estimate std.error statistic   p.value pathway 
 ##       &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;   
@@ -178,8 +181,8 @@
 ##  5   -0.972     0.657    -1.48  0.190     JAK-STAT
 ##  6    1.04      1.34      0.774 0.469     MAPK    
 ##  7    0.456     0.697     0.655 0.537     NFkB    
-##  8   -4.42      0.787    -5.61  0.00137   p53     
-##  9   -0.618     1.94     -0.319 0.761     PI3K    
+##  8   -4.16      0.774    -5.37  0.00171   p53     
+##  9   -0.635     1.89     -0.337 0.748     PI3K    
 ## 10    2.34      1.09      2.15  0.0756    TGFb    
 ## 11    0.715     0.681     1.05  0.335     TNFa    
 ## 12    0.279     0.785     0.356 0.734     Trail   
@@ -198,13 +201,14 @@
 <a href="#getting-the-data" class="anchor"></a>Getting the data</h3>
 <p>This example shows how to use the GDSC gene expression data of multiple cell lines together with PROGENy to calculate pathway activity and then to check for associations with drug sensitivity.</p>
 <p>First, we need the GDSC data for both gene expression and drug response. They are available on the <a href="http://www.cancerrxgene.org/gdsc1000/GDSC1000_WebResources/Home.html">GDSC1000 web site</a>:</p>
-<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="co"># set up a file cache so we download only once</span>
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">BiocFileCache</span>)
-<span class="no">bfc</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocFileCache/man/BiocFileCache-class.html">BiocFileCache</a></span>(<span class="st">"."</span>)
+<div class="sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># set up a file cache so we download only once</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">BiocFileCache</span><span class="op">)</span>
+<span class="va">bfc</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocFileCache/man/BiocFileCache-class.html">BiocFileCache</a></span><span class="op">(</span><span class="st">"."</span><span class="op">)</span>
 <span class="co"># gene expression and drug response</span>
-<span class="no">base</span> <span class="kw">=</span> <span class="st">"http://www.cancerrxgene.org/gdsc1000/GDSC1000_WebResources/Data/"</span>
-<span class="no">paths</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocFileCache/man/BiocFileCache-class.html">bfcrpath</a></span>(<span class="no">bfc</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="no">base</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"suppData/TableS4A.xlsx"</span>,
-            <span class="st">"preprocessed/Cell_line_RMA_proc_basalExp.txt.zip"</span>)))</pre></body></html></div>
+<span class="va">base</span> <span class="op">=</span> <span class="st">"http://www.cancerrxgene.org/gdsc1000/GDSC1000_WebResources/Data/"</span>
+<span class="va">paths</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocFileCache/man/BiocFileCache-class.html">bfcrpath</a></span><span class="op">(</span><span class="va">bfc</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">base</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"suppData/TableS4A.xlsx"</span>,
+            <span class="st">"preprocessed/Cell_line_RMA_proc_basalExp.txt.zip"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>You can also download the files manually (adjust the file names when loading):</p>
 <ul>
 <li><a href="http://www.cancerrxgene.org/gdsc1000/GDSC1000_WebResources/Data/preprocessed/Cell_line_RMA_proc_basalExp.txt.zip">Processed gene expression matrix</a></li>
@@ -215,36 +219,40 @@
 <h3 class="hasAnchor">
 <a href="#creating-the-right-objects-to-work-with" class="anchor"></a>Creating the right objects to work with</h3>
 <p>First, we need to load the files we just downloaded into R to be able to perform the analysis:</p>
-<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="co"># load the downloaded files</span>
-<span class="no">drug_table</span> <span class="kw">&lt;-</span> <span class="kw pkg">readxl</span><span class="kw ns">::</span><span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span>(<span class="no">paths</span>[<span class="fl">1</span>], <span class="kw">skip</span><span class="kw">=</span><span class="fl">5</span>, <span class="kw">na</span><span class="kw">=</span><span class="st">"NA"</span>)
-<span class="no">drug_table</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/replace.html">replace</a></span>(<span class="no">drug_table</span>, <span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span>(<span class="no">drug_table</span>), <span class="fl">0</span>)
-<span class="no">gene_table</span> <span class="kw">&lt;-</span> <span class="kw pkg">readr</span><span class="kw ns">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_tsv</a></span>(<span class="no">paths</span>[<span class="fl">2</span>])
+<div class="sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># load the downloaded files</span>
+<span class="va">drug_table</span> <span class="op">&lt;-</span> <span class="fu">readxl</span><span class="fu">::</span><span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="va">paths</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, skip<span class="op">=</span><span class="fl">5</span>, na<span class="op">=</span><span class="st">"NA"</span><span class="op">)</span>
+<span class="va">drug_table</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/replace.html">replace</a></span><span class="op">(</span><span class="va">drug_table</span>, <span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">drug_table</span><span class="op">)</span>, <span class="fl">0</span><span class="op">)</span>
+<span class="va">gene_table</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_tsv</a></span><span class="op">(</span><span class="va">paths</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span>
 
 <span class="co"># we need drug response with COSMIC IDs</span>
-<span class="no">drug_response</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.matrix.html">data.matrix</a></span>(<span class="no">drug_table</span>[,<span class="fl">3</span>:<span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(<span class="no">drug_table</span>)])
-<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(<span class="no">drug_response</span>) <span class="kw">&lt;-</span> <span class="no">drug_table</span><span class="kw">[[</span><span class="fl">1</span>]]
+<span class="va">drug_response</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.matrix.html">data.matrix</a></span><span class="op">(</span><span class="va">drug_table</span><span class="op">[</span>,<span class="fl">3</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">drug_table</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">drug_response</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">drug_table</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
 
 <span class="co"># we need genes in rows and samples in columns</span>
-<span class="no">gene_expr</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.matrix.html">data.matrix</a></span>(<span class="no">gene_table</span>[,<span class="fl">3</span>:<span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(<span class="no">gene_table</span>)])
-<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(<span class="no">gene_expr</span>) <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html">sub</a></span>(<span class="st">"DATA."</span>, <span class="st">""</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(<span class="no">gene_expr</span>), <span class="kw">fixed</span><span class="kw">=</span><span class="fl">TRUE</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(<span class="no">gene_expr</span>) <span class="kw">&lt;-</span> <span class="no">gene_table</span>$<span class="no">GENE_SYMBOLS</span></pre></body></html></div>
+<span class="va">gene_expr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.matrix.html">data.matrix</a></span><span class="op">(</span><span class="va">gene_table</span><span class="op">[</span>,<span class="fl">3</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">gene_table</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">gene_expr</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html">sub</a></span><span class="op">(</span><span class="st">"DATA."</span>, <span class="st">""</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">gene_expr</span><span class="op">)</span>, fixed<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">gene_expr</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">gene_table</span><span class="op">$</span><span class="va">GENE_SYMBOLS</span></code></pre></div>
 </div>
 <div id="running-progeny-to-get-pathway-activity-scores" class="section level3">
 <h3 class="hasAnchor">
 <a href="#running-progeny-to-get-pathway-activity-scores" class="anchor"></a>Running PROGENy to get pathway activity scores</h3>
 <p>Activity inference is done using a weighted sum of the model genes. We can run this without worrying about the order of genes in the expression matrix using:</p>
-<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">progeny</span>)
-<span class="no">pathways</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/progeny.html">progeny</a></span>(<span class="no">gene_expr</span>,<span class="kw">scale</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">organism</span> <span class="kw">=</span> <span class="st">"Human"</span>, <span class="kw">top</span> <span class="kw">=</span> <span class="fl">100</span>,
-    <span class="kw">perm</span> <span class="kw">=</span> <span class="fl">1</span>, <span class="kw">verbose</span> <span class="kw">=</span> <span class="fl">FALSE</span>)</pre></body></html></div>
+<div class="sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/saezlab/progeny">progeny</a></span><span class="op">)</span>
+<span class="va">pathways</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/progeny.html">progeny</a></span><span class="op">(</span><span class="va">gene_expr</span>,scale <span class="op">=</span> <span class="cn">TRUE</span>, organism <span class="op">=</span> <span class="st">"Human"</span>, top <span class="op">=</span> <span class="fl">100</span>,
+    perm <span class="op">=</span> <span class="fl">1</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <p>To visualize the progeny result</p>
-<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">pheatmap</span>)
-<span class="no">myColor</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/colorRamp.html">colorRampPalette</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Darkblue"</span>, <span class="st">"white"</span>,<span class="st">"red"</span>))(<span class="fl">100</span>)
-<span class="fu"><a href="https://rdrr.io/pkg/pheatmap/man/pheatmap.html">pheatmap</a></span>(<span class="no">pathways</span>,<span class="kw">fontsize</span><span class="kw">=</span><span class="fl">14</span>, <span class="kw">show_rownames</span> <span class="kw">=</span> <span class="fl">FALSE</span>,
-    <span class="kw">color</span><span class="kw">=</span><span class="no">myColor</span>, <span class="kw">main</span> <span class="kw">=</span> <span class="st">"PROGENy"</span>, <span class="kw">angle_col</span> <span class="kw">=</span> <span class="fl">45</span>, <span class="kw">treeheight_col</span> <span class="kw">=</span> <span class="fl">0</span>,
-    <span class="kw">border_color</span> <span class="kw">=</span> <span class="fl">NA</span>)</pre></body></html></div>
+<div class="sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">pheatmap</span><span class="op">)</span>
+<span class="va">myColor</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/colorRamp.html">colorRampPalette</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Darkblue"</span>, <span class="st">"white"</span>,<span class="st">"red"</span><span class="op">)</span><span class="op">)</span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/pkg/pheatmap/man/pheatmap.html">pheatmap</a></span><span class="op">(</span><span class="va">pathways</span>,fontsize<span class="op">=</span><span class="fl">14</span>, show_rownames <span class="op">=</span> <span class="cn">FALSE</span>,
+    color<span class="op">=</span><span class="va">myColor</span>, main <span class="op">=</span> <span class="st">"PROGENy"</span>, angle_col <span class="op">=</span> <span class="fl">45</span>, treeheight_col <span class="op">=</span> <span class="fl">0</span>,  
+    border_color <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></code></pre></div>
 <p><img src="progenyBulk_files/figure-html/unnamed-chunk-7-1.png" width="576"></p>
 <p>We now have the pathway activity scores for the pathways defined in PROGENy:</p>
-<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">pathways</span>)</pre></body></html></div>
+<div class="sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">pathways</span><span class="op">)</span></code></pre></div>
 <pre><code>##           Androgen       EGFR     Estrogen     Hypoxia    JAK-STAT        MAPK
 ## 906826  -0.4241254  0.1385179 -0.269674710 -0.06875973 -0.37598907  0.41134699
 ## 687983  -1.7393225 -0.9213671 -0.763490640 -1.32374232 -0.94662180 -0.90704066
@@ -272,13 +280,14 @@
 <a href="#testing-if-mapk-activity-is-significantly-associated-with-trametinib" class="anchor"></a>Testing if MAPK activity is significantly associated with Trametinib</h3>
 <p>Trametinib is a MEK inhibitor, so we would assume that cell lines that have a higher MAPK activity are more sensitive to MEK inhibition.</p>
 <p>We can test this the following way:</p>
-<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="no">cell_lines</span> <span class="kw">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/reexports.html">intersect</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(<span class="no">pathways</span>), <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(<span class="no">drug_response</span>))
-<span class="no">trametinib</span> <span class="kw">=</span> <span class="no">drug_response</span>[<span class="no">cell_lines</span>, <span class="st">"Trametinib"</span>]
+<div class="sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">cell_lines</span> <span class="op">=</span> <span class="fu"><a href="https://generics.r-lib.org/reference/setops.html">intersect</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">pathways</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">drug_response</span><span class="op">)</span><span class="op">)</span>
+<span class="va">trametinib</span> <span class="op">=</span> <span class="va">drug_response</span><span class="op">[</span><span class="va">cell_lines</span>, <span class="st">"Trametinib"</span><span class="op">]</span>
 
-<span class="no">mapk</span> <span class="kw">=</span> <span class="no">pathways</span>[<span class="no">cell_lines</span>, <span class="st">"MAPK"</span>]
+<span class="va">mapk</span> <span class="op">=</span> <span class="va">pathways</span><span class="op">[</span><span class="va">cell_lines</span>, <span class="st">"MAPK"</span><span class="op">]</span>
 
-<span class="no">associations</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="no">trametinib</span> ~ <span class="no">mapk</span>)
-<span class="fu"><a href="https://rdrr.io/pkg/DESeq2/man/summary.html">summary</a></span>(<span class="no">associations</span>)</pre></body></html></div>
+<span class="va">associations</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">trametinib</span> <span class="op">~</span> <span class="va">mapk</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/pkg/DESeq2/man/summary.html">summary</a></span><span class="op">(</span><span class="va">associations</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = trametinib ~ mapk)
@@ -298,74 +307,73 @@
 ## Multiple R-squared:  0.3165, Adjusted R-squared:  0.3158 
 ## F-statistic: 444.6 on 1 and 960 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>And indeed we find that MAPK activity is strongly associated with sensitivity to Trametinib: the <code>Pr(&gt;|t|)</code> is much smaller than the conventional threshold of <code>0.05</code>.</p>
-<p>The intercept is significant as well, but we’re not really interested if the mean drug response is above or below <code>0</code> in this case.</p>
+<p>The intercept is significant as well, but we're not really interested if the mean drug response is above or below <code>0</code> in this case.</p>
 <p>Note, however, that we tested all cell lines at once and did not adjust for the effect different tissues may have.</p>
 </div>
 </div>
 <div id="r-version-information" class="section level2">
 <h2 class="hasAnchor">
 <a href="#r-version-information" class="anchor"></a>R version information</h2>
-<pre><code>## R version 4.0.2 (2020-06-22)
-## Platform: x86_64-pc-linux-gnu (64-bit)
-## Running under: Ubuntu 20.04.1 LTS
+<pre><code>## R version 4.0.4 (2021-02-15)
+## Platform: x86_64-w64-mingw32/x64 (64-bit)
+## Running under: Windows 10 x64 (build 18363)
 ## 
 ## Matrix products: default
-## BLAS:   /usr/lib/x86_64-linux-gnu/blas/libblas.so.3.9.0
-## LAPACK: /usr/lib/x86_64-linux-gnu/lapack/liblapack.so.3.9.0
 ## 
 ## locale:
-##  [1] LC_CTYPE=en_GB.UTF-8       LC_NUMERIC=C              
-##  [3] LC_TIME=en_GB.UTF-8        LC_COLLATE=en_GB.UTF-8    
-##  [5] LC_MONETARY=en_GB.UTF-8    LC_MESSAGES=en_GB.UTF-8   
-##  [7] LC_PAPER=en_GB.UTF-8       LC_NAME=C                 
-##  [9] LC_ADDRESS=C               LC_TELEPHONE=C            
-## [11] LC_MEASUREMENT=en_GB.UTF-8 LC_IDENTIFICATION=C       
+## [1] LC_COLLATE=English_Germany.1252  LC_CTYPE=English_Germany.1252   
+## [3] LC_MONETARY=English_Germany.1252 LC_NUMERIC=C                    
+## [5] LC_TIME=English_Germany.1252    
 ## 
 ## attached base packages:
 ## [1] parallel  stats4    stats     graphics  grDevices utils     datasets 
 ## [8] methods   base     
 ## 
 ## other attached packages:
-##  [1] pheatmap_1.0.12             BiocFileCache_1.12.1       
-##  [3] dbplyr_1.4.4                dplyr_1.0.2                
-##  [5] progeny_1.11.2              biomaRt_2.44.1             
-##  [7] DESeq2_1.28.1               airway_1.8.0               
-##  [9] SummarizedExperiment_1.18.2 DelayedArray_0.14.1        
-## [11] matrixStats_0.56.0          Biobase_2.48.0             
-## [13] GenomicRanges_1.40.0        GenomeInfoDb_1.24.2        
-## [15] IRanges_2.22.2              S4Vectors_0.26.1           
-## [17] BiocGenerics_0.34.0         knitr_1.29                 
-## [19] BiocStyle_2.16.0           
+##  [1] pheatmap_1.0.12             BiocFileCache_1.14.0       
+##  [3] dbplyr_2.1.0                dplyr_1.0.5                
+##  [5] progeny_1.13.2              biomaRt_2.46.3             
+##  [7] DESeq2_1.30.1               airway_1.10.0              
+##  [9] SummarizedExperiment_1.20.0 Biobase_2.50.0             
+## [11] GenomicRanges_1.42.0        GenomeInfoDb_1.26.4        
+## [13] IRanges_2.24.1              S4Vectors_0.28.1           
+## [15] BiocGenerics_0.36.0         MatrixGenerics_1.2.1       
+## [17] matrixStats_0.58.0          knitr_1.31                 
+## [19] BiocStyle_2.18.1           
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] bitops_1.0-6           fs_1.5.0               bit64_4.0.5           
-##  [4] RColorBrewer_1.1-2     progress_1.2.2         httr_1.4.2            
-##  [7] rprojroot_1.3-2        tools_4.0.2            backports_1.1.9       
-## [10] utf8_1.1.4             R6_2.4.1               DBI_1.1.0             
-## [13] colorspace_1.4-1       gridExtra_2.3          tidyselect_1.1.0      
-## [16] prettyunits_1.1.1      curl_4.3               bit_4.0.4             
-## [19] compiler_4.0.2         cli_2.0.2              desc_1.2.0            
-## [22] bookdown_0.20          scales_1.1.1           readr_1.3.1           
-## [25] genefilter_1.70.0      askpass_1.1            rappdirs_0.3.1        
-## [28] pkgdown_1.5.1          stringr_1.4.0          digest_0.6.25         
-## [31] rmarkdown_2.3          XVector_0.28.0         pkgconfig_2.0.3       
-## [34] htmltools_0.5.0        readxl_1.3.1           rlang_0.4.7           
-## [37] rstudioapi_0.11        RSQLite_2.2.0          generics_0.0.2        
-## [40] BiocParallel_1.22.0    RCurl_1.98-1.2         magrittr_1.5          
-## [43] GenomeInfoDbData_1.2.3 Matrix_1.2-18          fansi_0.4.1           
-## [46] Rcpp_1.0.5             munsell_0.5.0          lifecycle_0.2.0       
-## [49] stringi_1.4.6          yaml_2.2.1             MASS_7.3-52           
-## [52] zlibbioc_1.34.0        grid_4.0.2             blob_1.2.1            
-## [55] ggrepel_0.8.2          crayon_1.3.4           lattice_0.20-41       
-## [58] splines_4.0.2          annotate_1.66.0        hms_0.5.3             
-## [61] locfit_1.5-9.4         pillar_1.4.6           geneplotter_1.66.0    
-## [64] XML_3.99-0.5           glue_1.4.2             evaluate_0.14         
-## [67] BiocManager_1.30.10    vctrs_0.3.4            cellranger_1.1.0      
-## [70] tidyr_1.1.2            gtable_0.3.0           openssl_1.4.2         
-## [73] purrr_0.3.4            assertthat_0.2.1       ggplot2_3.3.2         
-## [76] xfun_0.16              broom_0.7.0            xtable_1.8-4          
-## [79] survival_3.1-12        tibble_3.0.3           AnnotationDbi_1.50.3  
-## [82] memoise_1.1.0          ellipsis_0.3.1</code></pre>
+##  [1] colorspace_2.0-0       ellipsis_0.3.1         rprojroot_2.0.2       
+##  [4] XVector_0.30.0         fs_1.5.0               rstudioapi_0.13       
+##  [7] ggrepel_0.9.1          bit64_4.0.5            AnnotationDbi_1.52.0  
+## [10] fansi_0.4.2            xml2_1.3.2             splines_4.0.4         
+## [13] cachem_1.0.4           geneplotter_1.68.0     jsonlite_1.7.2        
+## [16] broom_0.7.5            annotate_1.68.0        readr_1.4.0           
+## [19] BiocManager_1.30.12    compiler_4.0.4         httr_1.4.2            
+## [22] backports_1.2.1        assertthat_0.2.1       Matrix_1.3-2          
+## [25] fastmap_1.1.0          cli_2.3.1              htmltools_0.5.1.1     
+## [28] prettyunits_1.1.1      tools_4.0.4            gtable_0.3.0          
+## [31] glue_1.4.2             GenomeInfoDbData_1.2.4 rappdirs_0.3.3        
+## [34] Rcpp_1.0.6             cellranger_1.1.0       jquerylib_0.1.3       
+## [37] pkgdown_1.6.1          vctrs_0.3.7            xfun_0.22             
+## [40] stringr_1.4.0          ps_1.6.0               lifecycle_1.0.0       
+## [43] XML_3.99-0.6           zlibbioc_1.36.0        scales_1.1.1          
+## [46] ragg_1.1.2             hms_1.0.0              RColorBrewer_1.1-2    
+## [49] yaml_2.2.1             curl_4.3               memoise_2.0.0         
+## [52] gridExtra_2.3          ggplot2_3.3.3          sass_0.3.1            
+## [55] stringi_1.5.3          RSQLite_2.2.5          highr_0.8             
+## [58] genefilter_1.72.1      desc_1.3.0             BiocParallel_1.24.1   
+## [61] rlang_0.4.10           pkgconfig_2.0.3        systemfonts_1.0.1     
+## [64] bitops_1.0-6           evaluate_0.14          lattice_0.20-41       
+## [67] purrr_0.3.4            bit_4.0.4              tidyselect_1.1.0      
+## [70] magrittr_2.0.1         bookdown_0.21          R6_2.5.0              
+## [73] generics_0.1.0         DelayedArray_0.16.3    DBI_1.1.1             
+## [76] pillar_1.5.1           withr_2.4.1            survival_3.2-10       
+## [79] RCurl_1.98-1.3         tibble_3.1.0           crayon_1.4.1          
+## [82] utf8_1.2.1             rmarkdown_2.7          progress_1.2.2        
+## [85] locfit_1.5-9.4         grid_4.0.4             readxl_1.3.1          
+## [88] blob_1.2.1             digest_0.6.27          xtable_1.8-4          
+## [91] tidyr_1.1.3            textshaping_0.3.3      openssl_1.4.3         
+## [94] munsell_0.5.0          bslib_0.2.4            askpass_1.1</code></pre>
 </div>
 </div>
   </div>
@@ -381,11 +389,11 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Michael Schubert, Alberto Valdeolivas.</p>
+  <p>Developed by Michael Schubert, Aurélien Dugourd.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
