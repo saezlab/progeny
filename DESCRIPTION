@@ -57,6 +57,7 @@ Suggests:
     readxl,
     pheatmap,
     tibble,
+    rmarkdown,
     testthat (>= 2.1.0)
 VignetteBuilder: knitr
 RoxygenNote: 7.1.1
