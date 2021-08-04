@@ -26,6 +26,7 @@ Suggests:
     dplyr,
     knitr,
     readr,
+    rmarkdown,
     readxl
 VignetteBuilder: knitr
 RoxygenNote: 6.0.1
