@@ -43,8 +43,8 @@ This is an R package for using the method described in
 
 ## Installation
 
-Progeny is available in [Bioconductor](https://www.bioconductor.org/packages/release/bioc/html/progeny.html). In addition, one can install the development version from the Github
-repository: 
+Progeny is available in [Bioconductor](https://www.bioconductor.org/packages/release/bioc/html/progeny.html). 
+In addition, one can install the development version from the Github repository: 
 
 ```r
 ## To install the package from Bioconductor
@@ -56,6 +56,9 @@ BiocManager::install("progeny")
 ## To install the development version from the Github repo:
 devtools::install_github("saezlab/progeny")
 ```
+
+For a detailed tutorial of how to use progeny in the context of of RNAseq data analysis, 
+check out our [Transcriptutorial](https://github.com/saezlab/transcriptutorial)
 
 ## Updates
 

@@ -83,7 +83,7 @@ works by matrix multiplication of gene expression with the model." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">progeny</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.11.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.15.1</span>
       </span>
     </div>
 
@@ -91,7 +91,7 @@ works by matrix multiplication of gene expression with the model." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -106,10 +106,10 @@ works by matrix multiplication of gene expression with the model." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/ProgenySingleCell.html">Applying PROGENy on single-cell RNA-seq data</a>
+      <a href="../articles/progenyBulk.html">PROGENy pathway signatures: Application to Bulk transcriptomics</a>
     </li>
     <li>
-      <a href="../articles/progenyBulk.html">PROGENy pathway signatures: Application to Bulk transcriptomics</a>
+      <a href="../articles/ProgenySingleCell.html">Applying PROGENy on single-cell RNA-seq data</a>
     </li>
   </ul>
 </li>
@@ -120,19 +120,19 @@ works by matrix multiplication of gene expression with the model." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/saezlab/progeny/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
 <li>
   <a href="https://twitter.com/saezlab">
-    <span class="fab fa fab fa-twitter fa-lg"></span>
+    <span class="fab fa-twitter fa-lg"></span>
      
   </a>
 </li>
 <li>
   <a href="http://www.saezlab.org">
-    <span class="fas fa fas fa-university"></span>
+    <span class="fas fa-university"></span>
      
   </a>
 </li>
@@ -164,7 +164,7 @@ works by matrix multiplication of gene expression with the model.</p>
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
     <p>The full mouse model contains 17426 genes, associated pathways,
-weight and the p-value.</p><dl'>
+weight and the p-value.</p><dl>
     <dt>gene</dt><dd><p>gene names in HGNC symbols</p></dd>
     <dt>pathway</dt><dd><p>names of PROGENy pathways</p></dd>
     <dt>weight</dt><dd><p>z-scores for a given gene</p></dd>
@@ -177,7 +177,8 @@ weight and the p-value.</p><dl'>
     <p><a href='https://www.ncbi.nlm.nih.gov/pubmed/31525460'>https://www.ncbi.nlm.nih.gov/pubmed/31525460</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/get.html'>get</a></span>(<span class='st'>"model_mouse_full"</span>, <span class='kw'>envir</span> <span class='kw'>=</span> <span class='no'>.GlobalEnv</span>)</div><div class='output co'>#&gt;                gene  pathway        weight      p.value
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/get.html'>get</a></span><span class='op'>(</span><span class='st'>"model_mouse_full"</span>, envir <span class='op'>=</span> <span class='va'>.GlobalEnv</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;                gene  pathway        weight      p.value
 #&gt; 1     0610040J01Rik Androgen -1.194935e+00 5.600387e-02
 #&gt; 2     1110004F10Rik Androgen -3.195118e-01 1.734435e-01
 #&gt; 3     1110008L16Rik Androgen -2.834730e-01 2.699947e-01
@@ -25189,11 +25190,11 @@ weight and the p-value.</p><dl'>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Michael Schubert, Alberto Valdeolivas.</p>
+  <p>Developed by Michael Schubert, Aurélien Dugourd.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

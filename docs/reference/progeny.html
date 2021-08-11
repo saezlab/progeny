@@ -85,7 +85,7 @@ samples in rows and pathways in columns." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">progeny</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.11.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.15.1</span>
       </span>
     </div>
 
@@ -93,7 +93,7 @@ samples in rows and pathways in columns." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -108,10 +108,10 @@ samples in rows and pathways in columns." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/ProgenySingleCell.html">Applying PROGENy on single-cell RNA-seq data</a>
+      <a href="../articles/progenyBulk.html">PROGENy pathway signatures: Application to Bulk transcriptomics</a>
     </li>
     <li>
-      <a href="../articles/progenyBulk.html">PROGENy pathway signatures: Application to Bulk transcriptomics</a>
+      <a href="../articles/ProgenySingleCell.html">Applying PROGENy on single-cell RNA-seq data</a>
     </li>
   </ul>
 </li>
@@ -122,19 +122,19 @@ samples in rows and pathways in columns." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/saezlab/progeny/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
 <li>
   <a href="https://twitter.com/saezlab">
-    <span class="fab fa fab fa-twitter fa-lg"></span>
+    <span class="fab fa-twitter fa-lg"></span>
      
   </a>
 </li>
 <li>
   <a href="http://www.saezlab.org">
-    <span class="fas fa fas fa-university"></span>
+    <span class="fas fa-university"></span>
      
   </a>
 </li>
@@ -163,19 +163,19 @@ symbols in rows and sample names in columns into a pathway score matrix with
 samples in rows and pathways in columns.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>progeny</span>(
-  <span class='no'>expr</span>,
-  <span class='kw'>scale</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>organism</span> <span class='kw'>=</span> <span class='st'>"Human"</span>,
-  <span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>100</span>,
-  <span class='kw'>perm</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>z_scores</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>get_nulldist</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>assay_name</span> <span class='kw'>=</span> <span class='st'>"RNA"</span>,
-  <span class='kw'>return_assay</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>...</span>
-)</pre>
+    <pre class="usage"><span class='fu'>progeny</span><span class='op'>(</span>
+  <span class='va'>expr</span>,
+  scale <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  organism <span class='op'>=</span> <span class='st'>"Human"</span>,
+  top <span class='op'>=</span> <span class='fl'>100</span>,
+  perm <span class='op'>=</span> <span class='fl'>1</span>,
+  verbose <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  z_scores <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  get_nulldist <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  assay_name <span class='op'>=</span> <span class='st'>"RNA"</span>,
+  return_assay <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -281,12 +281,13 @@ is not used to infer pathway activity.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># use example gene expression matrix here, this is just for illustration</span>
-<span class='no'>gene_expression</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>,
-<span class='st'>"human_input.csv"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"progeny"</span>), <span class='kw'>row.names</span> <span class='kw'>=</span> <span class='fl'>1</span>))
+<span class='va'>gene_expression</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, 
+<span class='st'>"human_input.csv"</span>, package <span class='op'>=</span> <span class='st'>"progeny"</span><span class='op'>)</span>, row.names <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='co'># calculate pathway activities</span>
-<span class='no'>pathways</span> <span class='kw'>&lt;-</span> <span class='fu'>progeny</span>(<span class='no'>gene_expression</span>, <span class='kw'>scale</span><span class='kw'>=</span><span class='fl'>TRUE</span>,
-    <span class='kw'>organism</span><span class='kw'>=</span><span class='st'>"Human"</span>, <span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>perm</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div></pre>
+<span class='va'>pathways</span> <span class='op'>&lt;-</span> <span class='fu'>progeny</span><span class='op'>(</span><span class='va'>gene_expression</span>, scale<span class='op'>=</span><span class='cn'>TRUE</span>, 
+    organism<span class='op'>=</span><span class='st'>"Human"</span>, top <span class='op'>=</span> <span class='fl'>100</span>, perm <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -298,11 +299,11 @@ is not used to infer pathway activity.</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Michael Schubert, Alberto Valdeolivas.</p>
+  <p>Developed by Michael Schubert, Aurélien Dugourd.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
