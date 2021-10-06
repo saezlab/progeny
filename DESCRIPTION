@@ -1,6 +1,6 @@
 Package: progeny
 Title: Pathway RespOnsive GENes for activity inference from gene expression
-Version: 1.15.1
+Version: 1.15.2
 Authors@R: c(
     person(given = "Michael",
            family = "Schubert",
@@ -21,7 +21,7 @@ Authors@R: c(
     person(given = "Aurélien",
            family = "Dugourd",
            role = c("cre","ctb"), 
-           email = "dugourdaurelien@gmail.com")
+           email = "aurelien.dugourd@bioquant.uni-heidelberg.de")
            )
 Description: This package provides a function to infer pathway activity
     from gene expression using PROGENy. It contains the linear model we
