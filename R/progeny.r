@@ -60,7 +60,7 @@
 #'               Default to FALSE. 
 #' @param ...    Additional arguments to be passed to the functions. 
 #'               
-#' @return       A matrix with samples in columns and pathways in rows. In case
+#' @return       A matrix with samples in rows and pathways in columns. In case
 #'               we run the method with permutations and the option get_nulldist
 #'               to TRUE, we will get a list with two elements. The first 
 #'               element is the matrix with the pathway activity as before. 
