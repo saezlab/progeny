@@ -1,6 +1,6 @@
 ---
 title: "PROGENy pathway signatures: Application to Bulk transcriptomics"
-author: "Michael Schubert"
+author: "Alberto Valdeolivas"
 date: "`r Sys.Date()`"
 output:
   BiocStyle::html_document
@@ -21,193 +21,191 @@ opts_chunk$set(
 )
 ```
 
-PROGENy pathway signatures
-==========================
+## Introduction
 
-This R package provides the model we inferred in the publication
-"Perturbation-response genes reveal signaling footprints in cancer gene
-expression" and a function to obtain pathway scores from a gene expression
-matrix. It is [available on
-bioRxiv](http://www.biorxiv.org/content/early/2016/08/28/065672).
+This is the third part in a series of transcriptomics tutorials. We present here how to estimate pathway activity from transcriptomics 
+data using **PROGENy**. 
 
-Scoring the `airway` package data for pathway scores
-----------------------------------------------------
+Conventional pathway analysis methods rely on the gene expression of the pathway 
+members. However, this approach overlooks the effect of post-translational 
+modifications and only captures very specific experimental conditions. 
+To overcome these limitations, **PROGENy** (Pathway RespOnsive GENes) estimates 
+the activity of relevant signaling pathways based on consensus gene signatures 
+obtained from perturbation experiments [(Schubert et al. 2018)](https://www.nature.com/articles/s41467-017-02391-6)
 
-This is to outline how to prepare expression data, in this case from the
-`airway` package for pathway activity analysis using PROGENy.
+**PROGENy** initially contained 11 pathways and was developed for the 
+application to human transcriptomics data. It has been recently shown that 
+**PROGENy** is also applicable to mouse data and it has been expanded to 
+14 pathways [(Holland et al., 2019)](https://doi.org/10.1016/j.bbagrm.2019.194431). 
+In addition, **PROGENy** can be applied to scRNA-seq data, as described in 
+[(Holland et al., 2020)](https://doi.org/10.1186/s13059-020-1949-z)
 
-### Preparing the gene expression matrix
+**PROGENy** is available as a [Bioconductor package](http://bioconductor.org/packages/release/bioc/html/progeny.html). 
+For additional information about the **PROGENy** method, visit its website: 
 
-```{r}
-library(airway)
-library(DESeq2)
-data(airway)
+https://saezlab.github.io/progeny/
 
-# import data to DESeq2 and variance stabilize
-dset = DESeqDataSetFromMatrix(assay(airway),
-    colData=as.data.frame(colData(airway)), design=~dex)
-dset = estimateSizeFactors(dset)
-dset = estimateDispersions(dset)
-gene_expr = getVarianceStabilizedData(dset)
+## Getting Started
 
-# annotate matrix with HGNC symbols
-library(biomaRt)
-mart = useDataset("hsapiens_gene_ensembl", useMart("ensembl"))
-genes = getBM(attributes = c("ensembl_gene_id","hgnc_symbol"),
-              values=rownames(gene_expr), mart=mart)
-matched = match(rownames(gene_expr), genes$ensembl_gene_id)
-rownames(gene_expr) = genes$hgnc_symbol[matched]
-```
+We first load the required libraries. 
 
-### Obtaining pathway scores
-
-We can then use the `progeny` function to score the expression matrix. Note
-that we are scaling the pathway scores with respect to the controls only.
-
-```{r}
+```{r libraries, message=FALSE}
 library(progeny)
-pathways = progeny(gene_expr, scale=FALSE)
-controls = airway$dex == "untrt"
-ctl_mean = apply(pathways[controls,], 2, mean)
-ctl_sd = apply(pathways[controls,], 2, sd)
-pathways = t(apply(pathways, 1, function(x) x - ctl_mean))
-pathways = apply(pathways, 1, function(x) x / ctl_sd)
-```
-
-### Checking for differences between the groups
-
-So now we might be interested how the treatment with dexamethasone affects
-signaling pathways. To do this, we check if the control is different to the
-perturbed condition using a linear model:
-
-```{r}
+library(tibble)
+library(tidyr)
 library(dplyr)
-result = apply(pathways, 1, function(x) {
-    broom::tidy(lm(x ~ !controls)) %>%
-        filter(term == "!controlsTRUE") %>%
-        dplyr::select(-term)
-})
-mutate(bind_rows(result), pathway=names(result))
-```
-
-What we see is that indeed the p53/DNA damage response pathway is less active
-after treatment than before.
-
-Reproducing drug associations on the GDSC panel
------------------------------------------------
-
-Below is an example on how to calculate pathway scores for cell lines in the
-Genomics of Drug Sensitivity in Cancer (GDSC) panel, and to check for
-associations with drug response.
-
-The code used for the analyses is [available on
-Github](https://github.com/saezlab/footprints).
-
-### Getting the data
-
-This example shows how to use the GDSC gene expression data of multiple cell
-lines together with PROGENy to calculate pathway activity and then to check for
-associations with drug sensitivity.
-
-First, we need the GDSC data for both gene expression and drug response. They
-are available on the [GDSC1000 web
-site](http://www.cancerrxgene.org/gdsc1000/GDSC1000_WebResources/Home.html):
-
-```{r}
-# set up a file cache so we download only once
-library(BiocFileCache)
-bfc = BiocFileCache(".")
-# gene expression and drug response
-base = "http://www.cancerrxgene.org/gdsc1000/GDSC1000_WebResources/Data/"
-paths = bfcrpath(bfc, paste0(base, c("suppData/TableS4A.xlsx",
-            "preprocessed/Cell_line_RMA_proc_basalExp.txt.zip")))
-```
-
-You can also download the files manually (adjust the file names when loading):
-
- * [Processed gene expression
-   matrix](http://www.cancerrxgene.org/gdsc1000/GDSC1000_WebResources/Data/preprocessed/Cell_line_RMA_proc_basalExp.txt.zip)
- * [Drug
-   sensitivities](http://www.cancerrxgene.org/gdsc1000/GDSC1000_WebResources/Data/suppData/TableS4A.xlsx)
-
-### Creating the right objects to work with
-
-First, we need to load the files we just downloaded into R to be able to
-perform the analysis:
-
-```{r}
-# load the downloaded files
-drug_table <- readxl::read_excel(paths[1], skip=5, na="NA")
-drug_table <- replace(drug_table, is.na(drug_table), 0)
-gene_table <- readr::read_tsv(paths[2])
-
-# we need drug response with COSMIC IDs
-drug_response <- data.matrix(drug_table[,3:ncol(drug_table)])
-rownames(drug_response) <- drug_table[[1]]
-
-# we need genes in rows and samples in columns
-gene_expr <- data.matrix(gene_table[,3:ncol(gene_table)])
-colnames(gene_expr) <- sub("DATA.", "", colnames(gene_expr), fixed=TRUE)
-rownames(gene_expr) <- gene_table$GENE_SYMBOLS
-```
-
-### Running PROGENy to get pathway activity scores
-
-Activity inference is done using a weighted sum of the model genes. We can run
-this without worrying about the order of genes in the expression matrix using:
-
-```{r}
-library(progeny)
-pathways <- progeny(gene_expr,scale = TRUE, organism = "Human", top = 100,
-    perm = 1, verbose = FALSE)
-```
-
-To visualize the progeny result
-```{r, fig.width=6, fig.height= 6}
 library(pheatmap)
-myColor = colorRampPalette(c("Darkblue", "white","red"))(100)
-pheatmap(pathways,fontsize=14, show_rownames = FALSE,
-    color=myColor, main = "PROGENy", angle_col = 45, treeheight_col = 0,  
-    border_color = NA)
+library(readr)
+library(ggplot2)
 ```
 
+### Import the raw count dataframe
+The data can be downloaded from: https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE119931
+The file name is: GSE119931_PANC1.FOXA2KO.genes.counts.txt.gz 
 
-We now have the pathway activity scores for the pathways defined in PROGENy:
+```{r loadInput, message=FALSE}
+## We assign the normalised counts and the experimental design 
+data("vignette_data")
+
+Normalised_counts <- vignette_data$counts
+Experimental_design <- vignette_data$design
+
+## We read the results from the differential analysis. 
+ttop_KOvsWT <- vignette_data$limma_ttop
+```
+
+We have to slightly modify the format of the input files to make it suitable
+for running Progeny. 
 
 ```{r}
-head(pathways)
+Normalised_counts_matrix <- Normalised_counts %>% 
+    dplyr::mutate_if(~ any(is.na(.x)),~ if_else(is.na(.x),0,.x)) %>% 
+    tibble::column_to_rownames(var = "gene") %>% 
+    as.matrix()
+
+ttop_KOvsWT_matrix <- ttop_KOvsWT %>% 
+    dplyr::select(ID, t) %>% 
+    dplyr::filter(!is.na(t)) %>% 
+    column_to_rownames(var = "ID") %>%
+    as.matrix()
 ```
 
-### Testing if MAPK activity is significantly associated with Trametinib
 
-Trametinib is a MEK inhibitor, so we would assume that cell lines that have a
-higher MAPK activity are more sensitive to MEK inhibition.
+## Pathway activity with Progeny
 
-We can test this the following way:
+We first compute **Progeny** scores for every sample (with the replicates) 
+using the normalised counts. It is worth noting that we are going to use the 100
+most responsive genes per pathway. This number can be increased depending on 
+the coverage of your experiments. For instance, the number of quantified genes
+for single-cell RNA-seq is smaller than for Bulk RNA-seq or microarray. In those
+cases, we suggest to increase the number of responsive genes to 200-500. 
 
-```{r}
-cell_lines = intersect(rownames(pathways), rownames(drug_response))
-trametinib = drug_response[cell_lines, "Trametinib"]
-
-mapk = pathways[cell_lines, "MAPK"]
-
-associations = lm(trametinib ~ mapk)
-summary(associations)
+```{r ProgenyCounts, message=FALSE}
+PathwayActivity_counts <- progeny(Normalised_counts_matrix, scale=TRUE, 
+    organism="Human", top = 100)
+Activity_counts <- as.vector(PathwayActivity_counts)
 ```
 
-And indeed we find that MAPK activity is strongly associated with sensitivity
-to Trametinib: the `Pr(>|t|)` is much smaller than the conventional threshold
-of `0.05`.
+We present the results in a heatmap:
 
-The intercept is significant as well, but we're not really interested if the
-mean drug response is above or below `0` in this case.
+```{r HeatmapProgeny, dpi=300}
+paletteLength <- 100
+myColor <- 
+    colorRampPalette(c("darkblue", "whitesmoke","indianred"))(paletteLength)
 
-Note, however, that we tested all cell lines at once and did not adjust for the
-effect different tissues may have.
+progenyBreaks <- c(seq(min(Activity_counts), 0, 
+    length.out=ceiling(paletteLength/2) + 1),
+    seq(max(Activity_counts)/paletteLength, 
+    max(Activity_counts), 
+    length.out=floor(paletteLength/2)))
 
-R version information
----------------------
+progeny_hmap <- pheatmap(t(PathwayActivity_counts),fontsize=14, 
+    fontsize_row = 10, fontsize_col = 10, 
+    color=myColor, breaks = progenyBreaks, 
+    main = "PROGENy (100)", angle_col = 45,
+    treeheight_col = 0,  border_color = NA)
+```
 
-```{r echo=FALSE}
+
+Now, we run an enrichment analysis using a competitive permutation approach to 
+assess the significance of the pathway activity. We end up with Normalised Enrichment Scores (NES) for each pathway.
+
+```{r ProgenyStat, message=FALSE}
+PathwayActivity_zscore <- progeny(ttop_KOvsWT_matrix, 
+    scale=TRUE, organism="Human", top = 100, perm = 1000, z_scores = TRUE) %>%
+    t()
+colnames(PathwayActivity_zscore) <- "NES"
+```
+
+```{r BarplotProgeny, dpi=300}
+PathwayActivity_zscore_df <- as.data.frame(PathwayActivity_zscore) %>% 
+    rownames_to_column(var = "Pathway") %>%
+    dplyr::arrange(NES) %>%
+    dplyr::mutate(Pathway = factor(Pathway))
+
+ggplot(PathwayActivity_zscore_df,aes(x = reorder(Pathway, NES), y = NES)) + 
+    geom_bar(aes(fill = NES), stat = "identity") +
+    scale_fill_gradient2(low = "darkblue", high = "indianred", 
+        mid = "whitesmoke", midpoint = 0) + 
+    theme_minimal() +
+    theme(axis.title = element_text(face = "bold", size = 12),
+        axis.text.x = 
+            element_text(angle = 45, hjust = 1, size =10, face= "bold"),
+        axis.text.y = element_text(size =10, face= "bold"),
+        panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank()) +
+    xlab("Pathways")
+```
+
+The MAPK pathway is the most active pathway upon the perturbation that we 
+are studying (KO of the FOXA2 gene versus the wild-type). We can therefore 
+visualise the MAPK most responsive genes (progeny weights) along with their 
+t_values to interpret the results. In the scatterplot, we can see the genes
+that are contributing the most to the pathway enrichment. 
+
+```{r ProgenySccater_1, message=FALSE, warning=FALSE}
+prog_matrix <- getModel("Human", top=100) %>% 
+    as.data.frame()  %>%
+    tibble::rownames_to_column("GeneID")
+
+ttop_KOvsWT_df <- ttop_KOvsWT_matrix %>% 
+    as.data.frame() %>% 
+    tibble::rownames_to_column("GeneID")
+
+scat_plots <- progeny::progenyScatter(df = ttop_KOvsWT_df, 
+    weight_matrix = prog_matrix, 
+    statName = "t_values", verbose = FALSE)
+```
+
+```{r ProgenySccater_2, dpi=300}
+plot(scat_plots[[1]]$`MAPK`) 
+```
+
+Progeny results can be used as an optional input for **CARNIVAL**. CARNIVAL
+sets weights based on **PROGENy** scores in each pathway-related node in order
+to find more relevant solutions. We therefore run **PROGENy** again with 
+slightly different parameters, setting `z_scores = FALSE` so that **PROGENy** returns pathway activity values between 1 and -1, rather than converting to Z-Scores.
+
+```{r ProgenyCARNIVAL}
+PathwayActivity_CARNIVALinput <- progeny(ttop_KOvsWT_matrix, 
+    scale=TRUE, organism="Human", top = 100, perm = 10000, z_scores = FALSE) %>%
+    t () %>% 
+    as.data.frame() %>% 
+    tibble::rownames_to_column(var = "Pathway") 
+colnames(PathwayActivity_CARNIVALinput)[2] <- "score"
+```
+
+PathwayActivity_CARNIVALinput can then be used as input for CARNIVAL.
+## References
+
+> Schubert M, Klinger B, Klünemann M, Sieber A, Uhlitz F, Sauer S, Garnett MJ, Blüthgen N, Saez-Rodriguez J. “Perturbation-response genes reveal signaling footprints in cancer gene expression.” _Nature Communications_: [10.1038/s41467-017-02391-6](https://doi.org/10.1038/s41467-017-02391-6)
+
+> Holland CH, Szalai B, Saez-Rodriguez J. "Transfer of regulatory knowledge from human to mouse for functional genomics analysis." _Biochimica et Biophysica Acta (BBA) - Gene Regulatory Mechanisms._ 2019. DOI: [10.1016/j.bbagrm.2019.194431](https://doi.org/10.1016/j.bbagrm.2019.194431).
+
+> Holland CH, Tanevski J, Perales-Patón J, Gleixner J, Kumar MP, Mereu E, Joughin BA, Stegle O, Lauffenburger DA, Heyn H, Szalai B, Saez-Rodriguez, J. "Robustness and applicability of transcription factor and pathway analysis tools on single-cell RNA-seq data." _Genome Biology._ 2020. DOI: [10.1186/s13059-020-1949-z](https://doi.org/10.1186/s13059-020-1949-z).
+
+## Session Info Details
+
+```{r sessionInfo, echo=FALSE, eval=TRUE}
 sessionInfo()
 ```

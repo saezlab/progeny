@@ -35,3 +35,21 @@ NULL
 #' @examples get("model_mouse_full", envir = .GlobalEnv)
 #' @source \url{https://www.ncbi.nlm.nih.gov/pubmed/31525460}
 NULL
+
+#' The RNA data used in the progeny vignette
+#'
+#' List with three elements: the gene counts, the experimental design and 
+#' the result of limma differential analysis
+#'
+#' @format List with three elements: the gene counts, the experimental design and 
+#' the result of limma differential analysis        
+#' \describe{
+#'     \item{counts}{gene counts}
+#'     \item{design}{experiemental design}
+#'     \item{limma_ttop}{differential analysis result using limma}
+#' }
+#' @keywords datasets
+#' @name vignette_data
+#' @examples data("vignette_data")
+#' @source \url{https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE119931}
+NULL
