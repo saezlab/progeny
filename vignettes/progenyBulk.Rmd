@@ -57,6 +57,9 @@ library(dplyr)
 library(pheatmap)
 library(readr)
 library(ggplot2)
+library(reshape2)
+
+library(decoupleR)
 ```
 
 ### Import the raw count dataframe
@@ -101,8 +104,15 @@ for single-cell RNA-seq is smaller than for Bulk RNA-seq or microarray. In those
 cases, we suggest to increase the number of responsive genes to 200-500. 
 
 ```{r ProgenyCounts, message=FALSE}
-PathwayActivity_counts <- progeny(Normalised_counts_matrix, scale=TRUE, 
-    organism="Human", top = 100)
+model <- getModel(organism = "Human", top = 300, decoupleR = T)
+
+PathwayActivity_counts <- run_mlm(mat = Normalised_counts_matrix, network = model, .source = variable, .target = gene)
+
+PathwayActivity_counts <- as.data.frame(PathwayActivity_counts[,c(2,3,4)])
+PathwayActivity_counts <- reshape2::dcast(PathwayActivity_counts, formula = source~condition, value.var = "score")
+row.names(PathwayActivity_counts) <- PathwayActivity_counts$source
+PathwayActivity_counts <- PathwayActivity_counts[,-which(names(PathwayActivity_counts) == "source"), drop = F]
+
 Activity_counts <- as.vector(PathwayActivity_counts)
 ```
 
@@ -131,10 +141,12 @@ Now, we run an enrichment analysis using a competitive permutation approach to
 assess the significance of the pathway activity. We end up with Normalised Enrichment Scores (NES) for each pathway.
 
 ```{r ProgenyStat, message=FALSE}
-PathwayActivity_zscore <- progeny(ttop_KOvsWT_matrix, 
-    scale=TRUE, organism="Human", top = 100, perm = 1000, z_scores = TRUE) %>%
-    t()
-colnames(PathwayActivity_zscore) <- "NES"
+PathwayActivity_zscore <- run_mlm(mat = ttop_KOvsWT_matrix, network = model, .source = variable, .target = gene)
+PathwayActivity_zscore <- as.data.frame(PathwayActivity_zscore[,c(2,3,4)])
+PathwayActivity_zscore <- reshape2::dcast(PathwayActivity_zscore, formula = source~condition, value.var = "score")
+row.names(PathwayActivity_zscore) <- PathwayActivity_zscore$source
+PathwayActivity_zscore <- PathwayActivity_zscore[,-which(names(PathwayActivity_zscore) == "source"), drop = F]#
+names(PathwayActivity_zscore) <- "NES"
 ```
 
 ```{r BarplotProgeny, dpi=300}
@@ -187,12 +199,10 @@ to find more relevant solutions. We therefore run **PROGENy** again with
 slightly different parameters, setting `z_scores = FALSE` so that **PROGENy** returns pathway activity values between 1 and -1, rather than converting to Z-Scores.
 
 ```{r ProgenyCARNIVAL}
-PathwayActivity_CARNIVALinput <- progeny(ttop_KOvsWT_matrix, 
-    scale=TRUE, organism="Human", top = 100, perm = 10000, z_scores = FALSE) %>%
-    t () %>% 
-    as.data.frame() %>% 
-    tibble::rownames_to_column(var = "Pathway") 
-colnames(PathwayActivity_CARNIVALinput)[2] <- "score"
+PathwayActivity_CARNIVALinput <- run_mlm(mat = ttop_KOvsWT_matrix, network = model, .source = variable, .target = gene)
+PathwayActivity_CARNIVALinput <- as.data.frame(PathwayActivity_CARNIVALinput[,c(2,3,4)])
+PathwayActivity_CARNIVALinput <- reshape2::dcast(PathwayActivity_CARNIVALinput, formula = source~condition, value.var = "score")
+names(PathwayActivity_CARNIVALinput) <- c("PAthway","score")
 ```
 
 PathwayActivity_CARNIVALinput can then be used as input for CARNIVAL.

@@ -33,6 +33,7 @@
 #'@import ggplot2
 #'@import ggrepel
 #'@import gridExtra
+#'@importFrom reshape2 melt
 #'@return The function returns a list of list of arrangeGrob objects.
 #'The first level list elements correspond to samples/contrasts. 
 #'The second level correspond to pathways.
@@ -182,7 +183,7 @@ saveProgenyPlots <- function(plots, contrast_names, dirpath) {
 #'@importFrom dplyr group_by top_n ungroup select 
 #'@importFrom tidyr spread %>%
 #'@export
-getModel <- function(organism = "Human", top= 100) {
+getModel <- function(organism = "Human", top= 100, decoupleR = F) {
     
     pathway <- p.value <- weight <- NULL
 
@@ -205,6 +206,17 @@ getModel <- function(organism = "Human", top= 100) {
         dplyr::select(-p.value) %>%
         tidyr::spread(pathway, weight, fill=0) %>%
         data.frame(row.names = 1, check.names = FALSE, stringsAsFactors = FALSE)
+    
+    if(decoupleR)
+    {
+      model$gene <- row.names(model)
+      model <- melt(model)
+      model <- model[model$value != 0,]
+      model$mor <- sign(model$value)
+      model$value <- abs(model$value)
+      names(model) <- gsub("value","likelihood",names(model))
+    }
   
   return(model)
 }
+
