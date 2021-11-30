@@ -97,10 +97,16 @@ ttop_KOvsWT_matrix <- ttop_KOvsWT %>%
 ## Pathway activity with Progeny
 
 We first compute **Progeny** scores for every sample (with the replicates) 
-using the normalised counts. It is worth noting that we are going to use the 100
-most responsive genes per pathway. This number can be increased depending on 
-the coverage of your experiments. For instance, the number of quantified genes
-for single-cell RNA-seq is smaller than for Bulk RNA-seq or microarray. In those
+using the normalized counts. We use the decoupleR (https://github.com/saezlab/decoupleR) 
+package to estimate the pathway scores.
+It is worth noting that the legacy version of progeny used the 100
+most responsive genes per pathway. Now that we use the mlm method of decoupleR 
+to estimate the pathway score, it seems that higher number of responsive genes 
+are more appropriate, since mlm can detangle the overlap of common targets of 
+different pathways much better than the classic normalised sum method. 
+This number can be increased depending on the coverage of your experiments. 
+For instance, the number of quantified genes for single-cell RNA-seq is smaller 
+than for Bulk RNA-seq or microarray. In those
 cases, we suggest to increase the number of responsive genes to 200-500. 
 
 ```{r ProgenyCounts, message=FALSE}
