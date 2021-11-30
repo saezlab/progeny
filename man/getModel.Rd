@@ -4,7 +4,7 @@
 \alias{getModel}
 \title{Returns the Progeny Model}
 \usage{
-getModel(organism = "Human", top = 100)
+getModel(organism = "Human", top = 100, decoupleR = F)
 }
 \arguments{
 \item{organism}{"Human" or "Mouse" taken from the main function's argument. 

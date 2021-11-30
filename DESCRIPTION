@@ -38,7 +38,9 @@ Imports:
     tidyr,
     ggplot2,
     ggrepel,
-    gridExtra
+    gridExtra,
+    decoupleR,
+    reshape2
 biocViews: SystemsBiology, GeneExpression, FunctionalPrediction, GeneRegulation
 License: Apache License (== 2.0) | file LICENSE
 LazyData: true
@@ -60,5 +62,7 @@ Suggests:
     tibble,
     rmarkdown,
     testthat (>= 2.1.0)
+Remotes:
+    saezlab/decoupleR
 VignetteBuilder: knitr
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
