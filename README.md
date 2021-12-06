@@ -60,9 +60,6 @@ devtools::install_github("saezlab/progeny")
 
 For a detailed tutorial of how to use progeny in the context of of RNAseq data analysis, check out our [Transcriptutorial](https://github.com/saezlab/transcriptutorial)
 
-For a detailed tutorial of how to use progeny in the context of of RNAseq data analysis, 
-check out our [Transcriptutorial](https://github.com/saezlab/transcriptutorial)
-
 ## Updates
 
 Since the original release, we have implemented some extensions in PROGENy:
