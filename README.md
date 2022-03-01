@@ -58,7 +58,9 @@ devtools::install_github("saezlab/progeny")
 ```
 ## Installation
 
-For a detailed tutorial of how to use progeny in the context of of RNAseq data analysis, check out our [Transcriptutorial](https://github.com/saezlab/transcriptutorial)
+For a detailed tutorial of how to use progeny in the context of of RNAseq data analysis, check out our [Transcriptutorial](https://github.com/saezlab/transcriptutorial).
+
+PROGENy scores can be computed using [decoupler](https://github.com/saezlab/decoupler-py) in [R](https://github.com/saezlab/decoupleR) or [python](https://github.com/saezlab/decoupler-py).
 
 ## Updates
 
