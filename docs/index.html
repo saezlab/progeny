@@ -28,6 +28,8 @@
 </script>
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -40,35 +42,17 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">progeny</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.15.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.15.6</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
+  <a href="articles/progeny.html">Get started</a>
 </li>
 <li>
   <a href="reference/index.html">Reference</a>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-<li>
-      <a href="articles/progenyBulk.html">PROGENy pathway signatures: Application to Bulk transcriptomics</a>
-    </li>
-    <li>
-      <a href="articles/ProgenySingleCell.html">Applying PROGENy on single-cell RNA-seq data</a>
-    </li>
-  </ul>
 </li>
 <li>
   <a href="news/index.html">Changelog</a>
@@ -76,19 +60,19 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/saezlab/progeny/">
+  <a href="https://github.com/saezlab/progeny/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://twitter.com/saezlab">
+  <a href="https://twitter.com/saezlab" class="external-link">
     <span class="fab fa-twitter fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="http://www.saezlab.org">
+  <a href="http://www.saezlab.org" class="external-link">
     <span class="fas fa-university"></span>
      
   </a>
@@ -107,86 +91,50 @@
   <div class="contents col-md-9">
 
 <p><img src="reference/figures/tool_logo.png" align="left" height="100"></p>
-<div id="progeny-pathway-responsive-genes-for-activity-inference" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#progeny-pathway-responsive-genes-for-activity-inference" class="anchor"></a>PROGENy: Pathway RespOnsive GENes for activity inference</h1></div>
+<div class="section level1">
+<div class="page-header"><h1 id="progeny-pathway-responsive-genes-for-activity-inference">PROGENy: Pathway RespOnsive GENes for activity inference<a class="anchor" aria-label="anchor" href="#progeny-pathway-responsive-genes-for-activity-inference"></a>
+</h1></div>
 <!-- badges: start -->
 <p><img src="https://img.shields.io/github/license/saezlab/progeny" alt="GitHub"><!-- badges: end --></p>
-<div id="overview" class="section level2">
-<h2 class="hasAnchor">
-<a href="#overview" class="anchor"></a>Overview</h2>
-<p>Aberrant cell signaling is known to cause cancer and many other diseases, as well as a focus of treatment. A common approach is to infer its activity on the level of pathways using gene expression. However, mapping gene expression to pathway components disregards the effect of post-translational modifications, and downstream signatures represent very specific experimental conditions. Here we present PROGENy, a method that overcomes both limitations by leveraging a large compendium of publicly available perturbation experiments to yield a common core of Pathway RespOnsive GENes. Unlike existing methods, PROGENy can</p>
-<p>(i) recover the effect of known driver mutations, (ii) provide or improve strong markers for drug indications, and (iii) distinguish between oncogenic and tumor suppressor pathways for patient survival. Collectively, these results show that PROGENy more accurately infers pathway activity from gene expression than other methods.</p>
-<p>This is an R package for using the method described in <a href="https://www.nature.com/articles/s41467-017-02391-6">Nature Communications</a>.</p>
-<pre><code>@article{Schubert2018,
-  doi = {10.1038/s41467-017-02391-6},
-  url = {https://doi.org/10.1038/s41467-017-02391-6},
-  year  = {2018},
-  month = {jan},
-  publisher = {Springer Nature},
-  volume = {9},
-  number = {1},
-  author = {Michael Schubert and Bertram Klinger and Martina Kl\"{u}nemann and Anja Sieber and Florian Uhlitz and Sascha Sauer and Mathew J. Garnett and Nils Bl\"{u}thgen and Julio Saez-Rodriguez},
-  title = {Perturbation-response genes reveal signaling footprints in cancer gene expression},
-  journal = {Nature Communications}
-}</code></pre>
+<div class="section level2">
+<h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
+</h2>
+<p>PROGENy is resource that leverages a large compendium of publicly available signaling perturbation experiments to yield a common core of pathway responsive genes. These, coupled with any statistical method, can be used to infer pathway activities from bulk or single-cell transcriptomics.</p>
+<p>This is an R package for storing the pathway signatures. To infer pathway activities, please check out <a href="https://doi.org/10.1093/bioadv/vbac016" class="external-link">decoupleR</a>, available in <a href="https://saezlab.github.io/decoupleR/" class="external-link">R</a> or <a href="https://github.com/saezlab/decoupler-py" class="external-link">python</a>.</p>
 </div>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
-<p>Progeny is available in <a href="https://www.bioconductor.org/packages/release/bioc/html/progeny.html">Bioconductor</a>. In addition, one can install the development version from the Github repository:</p>
-<div class="sourceCode"><pre class="downlit sourceCode r">
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
+<p>Progeny is available in <a href="https://www.bioconductor.org/packages/release/bioc/html/progeny.html" class="external-link">Bioconductor</a>. In addition, one can install the development version from the Github repository:</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## To install the package from Bioconductor</span>
-<span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html">requireNamespace</a></span><span class="op">(</span><span class="st">"BiocManager"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
-    <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span>
+<span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"BiocManager"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
+    <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span>
 
-<span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocManager/man/install.html">install</a></span><span class="op">(</span><span class="st">"progeny"</span><span class="op">)</span>
+<span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocManager/man/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"progeny"</span><span class="op">)</span>
 
 <span class="co">## To install the development version from the Github repo:</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">"saezlab/progeny"</span><span class="op">)</span></code></pre></div>
-<p>For a detailed tutorial of how to use progeny in the context of of RNAseq data analysis, check out our <a href="https://github.com/saezlab/transcriptutorial">Transcriptutorial</a></p>
+<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/remote-reexports.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"saezlab/progeny"</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="updates" class="section level2">
-<h2 class="hasAnchor">
-<a href="#updates" class="anchor"></a>Updates</h2>
+<div class="section level2">
+<h2 id="updates">Updates<a class="anchor" aria-label="anchor" href="#updates"></a>
+</h2>
 <p>Since the original release, we have implemented some extensions in PROGENy:</p>
-<div id="update-1---extension-to-mouse" class="section level3">
-<h3 class="hasAnchor">
-<a href="#update-1---extension-to-mouse" class="anchor"></a>Update #1 - Extension to mouse</h3>
-<p>Originally PROGENy was developed for the application to human data. In a benchmark study we showed that PROGENy is also applicable to mouse data, as described in <a href="https://doi.org/10.1016/j.bbagrm.2019.194431">Holland et al., 2019</a>. Accordingly, we included new parameters to run mouse version of PROGENy by transforming the human genes to their mouse orthologs.</p>
+<ol style="list-style-type: decimal">
+<li>
+<strong>Extension to mouse</strong>: Originally PROGENy was developed for the application to human data. In a benchmark study we showed that PROGENy is also applicable to mouse data, as described in <a href="https://doi.org/10.1016/j.bbagrm.2019.194431" class="external-link">Holland et al., 2019</a>. Accordingly, we included new parameters to run mouse version of PROGENy by transforming the human genes to their mouse orthologs.</li>
+<li>
+<strong>Expanding Pathway Collection</strong>: We expanded human and mouse PROGENy with the pathways Androgen, Estrogen and WNT.</li>
+<li>
+<strong>Extension to single-cell RNA-seq data</strong>: We showed that PROGENy can be applied to scRNA-seq data, as described in <a href="https://doi.org/10.1186/s13059-020-1949-z" class="external-link">Holland et al., 2020</a>
+</li>
+</ol>
 </div>
-<div id="update-2---expanding-pathway-collection" class="section level3">
-<h3 class="hasAnchor">
-<a href="#update-2---expanding-pathway-collection" class="anchor"></a>Update #2 - Expanding Pathway Collection</h3>
-<p>We expanded human and mouse PROGENy with the pathways Androgen, Estrogen and WNT.</p>
-</div>
-<div id="update-3---extension-to-single-cell-rna-seq-data" class="section level3">
-<h3 class="hasAnchor">
-<a href="#update-3---extension-to-single-cell-rna-seq-data" class="anchor"></a>Update #3 - Extension to single-cell RNA-seq data</h3>
-<p>Recent technological advances in single-cell RNA-seq enable the profiling of gene expression at the individual cell level. We showed that PROGENy can be applied to scRNA-seq data, as described in <a href="https://doi.org/10.1186/s13059-020-1949-z">Holland et al., 2020</a></p>
-</div>
-</div>
-<div id="citing-progeny" class="section level2">
-<h2 class="hasAnchor">
-<a href="#citing-progeny" class="anchor"></a>Citing PROGENy</h2>
-<p>Besides the original paper, there are two additional publication describing expansions of PROGENy usage.</p>
-<ul>
-<li>If you use PROGENy for your research please cite the original publication:</li>
-</ul>
+<div class="section level2">
+<h2 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
+</h2>
 <blockquote>
-<p>Schubert M, Klinger B, Klünemann M, Sieber A, Uhlitz F, Sauer S, Garnett MJ, Blüthgen N, Saez-Rodriguez J. “Perturbation-response genes reveal signaling footprints in cancer gene expression.” <em>Nature Communications</em>: <a href="https://doi.org/10.1038/s41467-017-02391-6">10.1038/s41467-017-02391-6</a></p>
-</blockquote>
-<ul>
-<li>If you use for mouse or you use the expanded version containing 14 pathways, please cite additionally:</li>
-</ul>
-<blockquote>
-<p>Holland CH, Szalai B, Saez-Rodriguez J. “Transfer of regulatory knowledge from human to mouse for functional genomics analysis.” <em>Biochimica et Biophysica Acta (BBA) - Gene Regulatory Mechanisms.</em> 2019. DOI: <a href="https://doi.org/10.1016/j.bbagrm.2019.194431">10.1016/j.bbagrm.2019.194431</a>.</p>
-</blockquote>
-<ul>
-<li>If you apply PROGENy on single-cell RNA-seq data please cite additionally:</li>
-</ul>
-<blockquote>
-<p>Holland CH, Tanevski J, Perales-Patón J, Gleixner J, Kumar MP, Mereu E, Joughin BA, Stegle O, Lauffenburger DA, Heyn H, Szalai B, Saez-Rodriguez, J. “Robustness and applicability of transcription factor and pathway analysis tools on single-cell RNA-seq data.” <em>Genome Biology.</em> 2020. DOI: <a href="https://doi.org/10.1186/s13059-020-1949-z">10.1186/s13059-020-1949-z</a>.</p>
+<p>Schubert M, Klinger B, Klünemann M, Sieber A, Uhlitz F, Sauer S, Garnett MJ, Blüthgen N, Saez-Rodriguez J. 2018. Perturbation-response genes reveal signaling footprints in cancer gene expression. <em>Nature Communications</em>: <a href="https://doi.org/10.1038/s41467-017-02391-6" class="external-link">10.1038/s41467-017-02391-6</a></p>
 </blockquote>
 </div>
 </div>
@@ -195,48 +143,53 @@
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Download from BIOC at <br><a href="https://www.bioconductor.org/packages/progeny">https://​www.bioconductor.org/​packages/​progeny</a>
-</li>
-<li>Browse source code at <br><a href="https://github.com/saezlab/progeny/">https://​github.com/​saezlab/​progeny/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/saezlab/progeny/issues">https://​github.com/​saezlab/​progeny/​issues</a>
-</li>
+<li><a href="https://www.bioconductor.org/packages/progeny" class="external-link">View on Bioconductor</a></li>
+<li><a href="https://github.com/saezlab/progeny/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/saezlab/progeny/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li>Apache License (== 2.0) | file <a href="LICENSE-text.html">LICENSE</a>
 </li>
 </ul>
 </div>
+
+
 <div class="citation">
-<h2>Citation</h2>
+<h2 data-toc-skip>Citation</h2>
 <ul class="list-unstyled">
-<li><a href="authors.html">Citing progeny</a></li>
+<li><a href="authors.html#citation">Citing progeny</a></li>
 </ul>
 </div>
+
 <div class="developers">
-<h2>Developers</h2>
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>Michael Schubert <br><small class="roles"> Author </small>  </li>
 <li>Aurélien Dugourd <br><small class="roles"> Maintainer, contributor </small>  </li>
-<li><a href="authors.html">All authors...</a></li>
+<li><a href="authors.html">More about authors...</a></li>
 </ul>
 </div>
+
+
 
   </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Michael Schubert, Aurélien Dugourd.</p>
+  <p></p>
+<p>Developed by Michael Schubert, Aurélien Dugourd.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
 </div>
 
       </footer>
@@ -244,6 +197,8 @@
 
   
 
+
+  
 
   </body>
 </html>

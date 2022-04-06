@@ -1,10 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://saezlab.github.io/progeny/404.html</loc>
+  </url>
+  <url>
+    <loc>https://saezlab.github.io/progeny/LICENSE-text.html</loc>
+  </url>
+  <url>
+    <loc>https://saezlab.github.io/progeny/articles/ProgenySingleCell.html</loc>
+  </url>
+  <url>
+    <loc>https://saezlab.github.io/progeny/articles/index.html</loc>
+  </url>
+  <url>
+    <loc>https://saezlab.github.io/progeny/articles/progeny.html</loc>
+  </url>
+  <url>
+    <loc>https://saezlab.github.io/progeny/articles/progenyBulk.html</loc>
+  </url>
+  <url>
+    <loc>https://saezlab.github.io/progeny/authors.html</loc>
+  </url>
+  <url>
     <loc>https://saezlab.github.io/progeny/index.html</loc>
   </url>
   <url>
+    <loc>https://saezlab.github.io/progeny/news/index.html</loc>
+  </url>
+  <url>
     <loc>https://saezlab.github.io/progeny/reference/getModel.html</loc>
+  </url>
+  <url>
+    <loc>https://saezlab.github.io/progeny/reference/index.html</loc>
   </url>
   <url>
     <loc>https://saezlab.github.io/progeny/reference/model_human_full.html</loc>
@@ -25,9 +52,6 @@
     <loc>https://saezlab.github.io/progeny/reference/saveProgenyPlots.html</loc>
   </url>
   <url>
-    <loc>https://saezlab.github.io/progeny/articles/progenyBulk.html</loc>
-  </url>
-  <url>
-    <loc>https://saezlab.github.io/progeny/articles/ProgenySingleCell.html</loc>
+    <loc>https://saezlab.github.io/progeny/reference/vignette_data.html</loc>
   </url>
 </urlset>
