@@ -9,8 +9,8 @@
 
 PROGENy is resource that leverages a large compendium of publicly available
 signaling perturbation experiments to yield a common core of pathway responsive
-genes. These, coupled with any statistical method, can be used to infer pathway
-activities from bulk or single-cell transcriptomics. 
+genes for human and mouse. These, coupled with any statistical method, can be
+used to infer pathway activities from bulk or single-cell transcriptomics. 
 
 This is an R package for storing the pathway signatures. To infer pathway
 activities, please check out
