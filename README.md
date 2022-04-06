@@ -1,6 +1,4 @@
-<img src="man/figures/tool_logo.png" align="left" height="100">
-
-# PROGENy: Pathway RespOnsive GENes for activity inference  
+# PROGENy: Pathway RespOnsive GENes for activity inference <img src="man/figures/tool_logo.png" align="right" width="120" />
 
 <!-- badges: start -->
 ![GitHub](https://img.shields.io/github/license/saezlab/progeny)
