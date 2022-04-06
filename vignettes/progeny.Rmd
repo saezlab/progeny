@@ -1,0 +1,106 @@
+---
+title: "PROGENy pathway signatures"
+author: "Pau Badia i Mompel"
+date: "4/4/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# Introduction
+
+PROGENy is resource that leverages a large compendium of publicly available
+signaling perturbation experiments to yield a common core of pathway responsive
+genes. For each pathway, a collection of genes are available along their
+contribution and significance to it.
+
+Inside PROGENy, one can find gene signatures for 14 different pathways:
+
+- **Androgen**: involved in the growth and development of the male reproductive organs.
+- **EGFR**: regulates growth, survival, migration, apoptosis, proliferation, and differentiation in mammalian cells
+- **Estrogen**: promotes the growth and development of the female reproductive organs.
+- **Hypoxia**: promotes angiogenesis and metabolic reprogramming when O2 levels are low.
+- **JAK-STAT**: involved in immunity, cell division, cell death, and tumor formation.
+- **MAPK**: integrates external signals and promotes cell growth and proliferation.
+- **NFkB**: regulates immune response, cytokine production and cell survival.
+- **p53**: regulates cell cycle, apoptosis, DNA repair and tumor suppression.
+- **PI3K**: promotes growth and proliferation.
+- **TGFb**: involved in development, homeostasis, and repair of most tissues.
+- **TNFa**: mediates haematopoiesis, immune surveillance, tumour regression and protection from infection.
+- **Trail**: induces apoptosis.
+- **VEGF**: mediates angiogenesis, vascular permeability, and cell migration.
+- **WNT**: regulates organ morphogenesis during development and tissue repair.
+
+These, coupled with any statistical method,
+can be used to infer pathway activities from bulk or single-cell
+transcriptomics. 
+In this vignette we show how to access these signatures and some of their
+properties. To infer pathway activities, please check out
+[decoupleR](https://doi.org/10.1093/bioadv/vbac016), available in
+[R](https://saezlab.github.io/decoupleR/) or
+[python](https://github.com/saezlab/decoupler-py).
+
+# Load
+First we load the necessary packages:
+```{r load, message=FALSE}
+library(progeny)
+library(ggplot2)
+library(dplyr)
+```
+
+Here is how to retrieve all genes from each pathway in human:
+```{r model}
+model <- progeny::model_human_full
+head(model)
+```
+
+Here we can observe how some genes behave for some pathways. For example,
+The gene CBX6 has a negative response to EGFR, meaning that when there is EGFR
+signaling this gene is down-regulated. On the other hand, the gene RFC2 has a
+positive weight for EGFR, meaning that when there is EGFR signaling it becomes
+up-regulated. We can also see the significance of each gene to each pathway. To
+better estimate pathway activities, we recommend to select the top 100
+significant genes for each pathway or filter by significance.
+
+# Exploration
+We can observe the total number of genes for each pathway:
+```{r n_genes}
+n_genes <- model %>%
+  group_by(pathway) %>%
+  summarize(n = n())
+
+ggplot(data=n_genes, aes(x=pathway, y=n)) +
+  geom_bar(stat="identity") +
+  theme_classic() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+  xlab('Number of genes')
+
+```
+
+Most pathways cover most of the genome except for Androgen, Estrogen and WNT which
+have a lower coverage.
+
+We can also visualize the distribution of weights per pathway:
+
+```{r w_dist}
+ggplot(data=model, aes(x=weight, color=pathway, fill=pathway)) +
+  geom_density() +
+  theme(text = element_text(size=12)) +
+  facet_wrap(~ pathway, scales='free') +
+  xlab('scores') +
+  ylab('densities') +
+  theme_bw() +
+  theme(legend.position = "none")
+
+```
+
+Each pathway show a different distribution of weights. Some up-regulate more genes
+than down-regulate, like NFkB or TNFa, while others do the opposite, like TGFb
+or p53.
+
+
+
+
