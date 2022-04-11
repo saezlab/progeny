@@ -1,8 +1,21 @@
 ---
 title: "PROGENy pathway signatures"
-author: "Pau Badia i Mompel"
-date: "4/4/2022"
-output: html_document
+author:
+  - name: Pau Badia-i-Mompel
+    affiliation:
+    - Heidelberg Universiy
+output: 
+  BiocStyle::html_document:
+    self_contained: true
+    toc: true
+    toc_float: true
+    toc_depth: 3
+    code_folding: show
+package: "`r pkg_ver('progeny')`"
+vignette: >
+  %\VignetteIndexEntry{PROGENy pathway signatures}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r setup, include=FALSE}

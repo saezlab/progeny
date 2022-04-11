@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">progeny</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.15.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.17.1</span>
       </span>
     </div>
 
@@ -88,20 +88,19 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>PROGENy pathway signatures</h1>
-                        <h4 data-toc-skip class="author">Pau Badia i Mompel</h4>
-            
-            <h4 data-toc-skip class="date">4/4/2022</h4>
-      
-      <small class="dont-index">Source: <a href="https://github.com/saezlab/progeny/blob/HEAD/vignettes/progeny.Rmd" class="external-link"><code>vignettes/progeny.Rmd</code></a></small>
+                        <h4 data-toc-skip class="author">Pau Badia-i-Mompel</h4>
+            <address class="author_afil">
+      Heidelberg Universiy<br><small class="dont-index">Source: <a href="https://github.com/saezlab/progeny/blob/HEAD/vignettes/progeny.Rmd" class="external-link"><code>vignettes/progeny.Rmd</code></a></small>
       <div class="hidden name"><code>progeny.Rmd</code></div>
 
-    </div>
+    </address>
+</div>
 
     
     
-<div class="section level1">
-<h1 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
-</h1>
+<div class="section level2">
+<h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
+</h2>
 <p>PROGENy is resource that leverages a large compendium of publicly available signaling perturbation experiments to yield a common core of pathway responsive genes. For each pathway, a collection of genes are available along their contribution and significance to it.</p>
 <p>Inside PROGENy, one can find gene signatures for 14 different pathways:</p>
 <ul>
@@ -136,9 +135,9 @@
 </ul>
 <p>These, coupled with any statistical method, can be used to infer pathway activities from bulk or single-cell transcriptomics. In this vignette we show how to access these signatures and some of their properties. To infer pathway activities, please check out <a href="https://doi.org/10.1093/bioadv/vbac016" class="external-link">decoupleR</a>, available in <a href="https://saezlab.github.io/decoupleR/" class="external-link">R</a> or <a href="https://github.com/saezlab/decoupler-py" class="external-link">python</a>.</p>
 </div>
-<div class="section level1">
-<h1 id="load">Load<a class="anchor" aria-label="anchor" href="#load"></a>
-</h1>
+<div class="section level2">
+<h2 id="load">Load<a class="anchor" aria-label="anchor" href="#load"></a>
+</h2>
 <p>First we load the necessary packages:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/saezlab/progeny" class="external-link">progeny</a></span><span class="op">)</span>
@@ -157,9 +156,9 @@
 <span class="co">## 6 FLJ30679    MAPK -0.06047373 0.628461747</span></code></pre>
 <p>Here we can observe how some genes behave for some pathways. For example, The gene CBX6 has a negative response to EGFR, meaning that when there is EGFR signaling this gene is down-regulated. On the other hand, the gene RFC2 has a positive weight for EGFR, meaning that when there is EGFR signaling it becomes up-regulated. We can also see the significance of each gene to each pathway. To better estimate pathway activities, we recommend to select the top 100 significant genes for each pathway or filter by significance.</p>
 </div>
-<div class="section level1">
-<h1 id="exploration">Exploration<a class="anchor" aria-label="anchor" href="#exploration"></a>
-</h1>
+<div class="section level2">
+<h2 id="exploration">Exploration<a class="anchor" aria-label="anchor" href="#exploration"></a>
+</h2>
 <p>We can observe the total number of genes for each pathway:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">n_genes</span> <span class="op">&lt;-</span> <span class="va">model</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
@@ -205,7 +204,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>

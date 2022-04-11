@@ -12,6 +12,9 @@ Default to "Human"}
 
 \item{top}{Desired top number of genes for each pathway according to their
 significance(p.value). Default to 100}
+
+\item{decoupleR}{if TRUE, the model matrix is goign to be generated with a format 
+makes it directlz compatible with the decoupleR package}
 }
 \value{
 This function returns model matrix according to the top n significant
