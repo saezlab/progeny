@@ -177,6 +177,8 @@ saveProgenyPlots <- function(plots, contrast_names, dirpath) {
 #'Default to "Human"
 #'@param top Desired top number of genes for each pathway according to their
 #'significance(p.value). Default to 100
+#'@param decoupleR if TRUE, the model matrix is goign to be generated with a format 
+#'makes it directlz compatible with the decoupleR package
 #'@examples #getting a model matrix according to the desired top n significant 
 #'model <- getModel("Human", top=100)
 #'@return This function returns model matrix according to the top n significant
