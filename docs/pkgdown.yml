@@ -3,7 +3,7 @@ pkgdown: 2.0.2
 pkgdown_sha: ~
 articles:
   progeny: progeny.html
-last_built: 2022-04-11T07:37Z
+last_built: 2022-04-14T08:56Z
 urls:
   reference: https://saezlab.github.io/progeny/reference
   article: https://saezlab.github.io/progeny/articles
