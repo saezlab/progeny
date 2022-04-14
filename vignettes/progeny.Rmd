@@ -47,10 +47,11 @@ Inside PROGENy, one can find gene signatures for 14 different pathways:
 - **VEGF**: mediates angiogenesis, vascular permeability, and cell migration.
 - **WNT**: regulates organ morphogenesis during development and tissue repair.
 
-These, coupled with any statistical method,
+# Activity estimation
+These signatures, coupled with any statistical method,
 can be used to infer pathway activities from bulk or single-cell
 transcriptomics. 
-In this vignette we show how to access these signatures and some of their
+In this vignette we just show how to access these signatures and some of their
 properties. To infer pathway activities, please check out
 [decoupleR](https://doi.org/10.1093/bioadv/vbac016), available in
 [R](https://saezlab.github.io/decoupleR/) or
@@ -79,27 +80,16 @@ better estimate pathway activities, we recommend to select the top 100
 significant genes for each pathway or filter by significance.
 
 # Exploration
-We can observe the total number of genes for each pathway:
-```{r n_genes}
-n_genes <- model %>%
-  group_by(pathway) %>%
-  summarize(n = n())
-
-ggplot(data=n_genes, aes(x=pathway, y=n)) +
-  geom_bar(stat="identity") +
-  theme_classic() +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
-  xlab('Number of genes')
-
-```
-
-Most pathways cover most of the genome except for Androgen, Estrogen and WNT which
-have a lower coverage.
-
-We can also visualize the distribution of weights per pathway:
+We can visualize the distribution of weights for the top 100 genes per pathway:
 
 ```{r w_dist}
-ggplot(data=model, aes(x=weight, color=pathway, fill=pathway)) +
+# Get top 100 significant genes per pathway
+model_100 <- model %>%
+  group_by(pathway) %>%
+  slice_min(order_by = p.value, n = 200)
+
+# Plot
+ggplot(data=model_100, aes(x=weight, color=pathway, fill=pathway)) +
   geom_density() +
   theme(text = element_text(size=12)) +
   facet_wrap(~ pathway, scales='free') +
@@ -111,8 +101,8 @@ ggplot(data=model, aes(x=weight, color=pathway, fill=pathway)) +
 ```
 
 Each pathway show a different distribution of weights. Some up-regulate more genes
-than down-regulate, like NFkB or TNFa, while others do the opposite, like TGFb
-or p53.
+than down-regulate, like NFkB or TNFa, while others do the opposite, like PI3K
+or VEGF.
 
 
 
