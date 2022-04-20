@@ -23,7 +23,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">progeny</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.17.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.17.2</span>
       </span>
     </div>
 
@@ -130,23 +130,23 @@ distribution list (a null distribution is generated for each sample/contrast).</
 <span class="r-in"><span class="co"># calculate pathway activities</span></span>
 <span class="r-in"><span class="fu"><a href="progeny.html">progeny</a></span><span class="op">(</span><span class="va">gene_expression</span>, scale<span class="op">=</span><span class="cn">TRUE</span>, organism<span class="op">=</span><span class="st">"Human"</span>, top<span class="op">=</span><span class="fl">100</span>, perm<span class="op">=</span><span class="fl">10000</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            Androgen   EGFR Estrogen Hypoxia JAK.STAT   MAPK    NFkB    p53</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SRR1039508  -0.8412 0.2064  -0.3442  0.9994   0.7700 0.4070 -0.5382 0.9232</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SRR1039509  -0.4930 0.0374  -0.6328  0.9996   0.4822 0.2972 -0.4338 0.8818</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SRR1039512  -0.8022 0.1886  -0.3920  0.9994   0.7106 0.3902 -0.4434 0.9222</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SRR1039513  -0.4356 0.0878  -0.6798  0.9996   0.6732 0.4426 -0.4468 0.7784</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SRR1039516  -0.7758 0.2784  -0.3126  0.9994   0.6344 0.4304 -0.3212 0.9114</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SRR1039517  -0.5188 0.5700  -0.6758  1.0000   0.4632 0.7394 -0.3818 0.8082</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SRR1039520  -0.8124 0.3226  -0.4110  0.9996   0.6066 0.5554 -0.6348 0.9078</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SRR1039521  -0.3458 0.1280  -0.6520  1.0000   0.4836 0.5584 -0.6270 0.7832</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SRR1039508  -0.8380 0.1994  -0.3632  0.9994   0.7562 0.4108 -0.5428 0.9344</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SRR1039509  -0.5078 0.0510  -0.6436  0.9996   0.5028 0.3068 -0.4258 0.8784</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SRR1039512  -0.7988 0.2040  -0.3968  0.9998   0.6932 0.4088 -0.4614 0.9250</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SRR1039513  -0.4384 0.0728  -0.6726  0.9992   0.6776 0.4352 -0.4568 0.7868</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SRR1039516  -0.7622 0.2472  -0.3008  0.9986   0.6210 0.4088 -0.3124 0.9222</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SRR1039517  -0.5140 0.5624  -0.6534  0.9996   0.4608 0.7348 -0.3882 0.8178</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SRR1039520  -0.7954 0.3328  -0.3962  0.9992   0.6154 0.5726 -0.6466 0.8950</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SRR1039521  -0.3466 0.1212  -0.6706  1.0000   0.5062 0.5662 -0.6434 0.7852</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               PI3K   TGFb    TNFa   Trail    VEGF     WNT</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SRR1039508  0.1698 0.5482 -0.5788 -0.3624  0.0620 -0.1226</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SRR1039509  0.0772 0.7700 -0.4538 -0.2914  0.0610 -0.1614</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SRR1039512  0.1372 0.6962 -0.4806 -0.3280  0.0770 -0.1552</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SRR1039513 -0.0732 0.8192 -0.4734 -0.2546  0.0914 -0.2920</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SRR1039516  0.1538 0.6814 -0.3700 -0.3474  0.2816 -0.3176</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SRR1039517  0.3682 0.8648 -0.4320 -0.3690  0.2496 -0.4030</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SRR1039520  0.1616 0.6904 -0.6738 -0.2770 -0.0986 -0.1266</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SRR1039521  0.0306 0.8302 -0.6552 -0.2330 -0.0618 -0.3282</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SRR1039508  0.1572 0.5490 -0.5838 -0.3484  0.0604 -0.1254</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SRR1039509  0.0768 0.7586 -0.4470 -0.3064  0.0574 -0.1594</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SRR1039512  0.1290 0.6908 -0.5008 -0.3168  0.0702 -0.1606</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SRR1039513 -0.0564 0.8180 -0.4858 -0.2602  0.0998 -0.3030</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SRR1039516  0.1696 0.6908 -0.3614 -0.3482  0.2786 -0.3296</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SRR1039517  0.3548 0.8730 -0.4330 -0.3578  0.2548 -0.4140</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SRR1039520  0.1614 0.6986 -0.6788 -0.2666 -0.0842 -0.1290</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SRR1039521  0.0348 0.8114 -0.6586 -0.2440 -0.0754 -0.3134</span>
 </code></pre></div>
     </div>
   </div>

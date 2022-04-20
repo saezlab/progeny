@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">progeny</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.17.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.17.2</span>
       </span>
     </div>
 
@@ -150,21 +150,21 @@
 <p>Here is how to retrieve all genes from each pathway in human:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu">progeny</span><span class="fu">::</span><span class="va"><a href="../reference/model_human_full.html">model_human_full</a></span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">##       gene pathway      weight     p.value</span>
-<span class="co">## 1     RFC2    EGFR  1.47064662 0.001655275</span>
-<span class="co">## 2    ESRRA    EGFR  0.17858956 0.211837604</span>
-<span class="co">## 3   HNRNPK    EGFR  0.30669860 0.084560061</span>
-<span class="co">## 4     CBX6    EGFR -0.67550734 0.017641119</span>
-<span class="co">## 5   ASRGL1    EGFR -0.25232814 0.295429969</span>
-<span class="co">## 6 FLJ30679    MAPK -0.06047373 0.628461747</span></code></pre>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
+<span class="co">#&gt;       gene pathway      weight     p.value</span>
+<span class="co">#&gt; 1     RFC2    EGFR  1.47064662 0.001655275</span>
+<span class="co">#&gt; 2    ESRRA    EGFR  0.17858956 0.211837604</span>
+<span class="co">#&gt; 3   HNRNPK    EGFR  0.30669860 0.084560061</span>
+<span class="co">#&gt; 4     CBX6    EGFR -0.67550734 0.017641119</span>
+<span class="co">#&gt; 5   ASRGL1    EGFR -0.25232814 0.295429969</span>
+<span class="co">#&gt; 6 FLJ30679    MAPK -0.06047373 0.628461747</span></code></pre></div>
 <p>Here we can observe how some genes behave for some pathways. For example, The gene CBX6 has a negative response to EGFR, meaning that when there is EGFR signaling this gene is down-regulated. On the other hand, the gene RFC2 has a positive weight for EGFR, meaning that when there is EGFR signaling it becomes up-regulated. We can also see the significance of each gene to each pathway. To better estimate pathway activities, we recommend to select the top 100 significant genes for each pathway or filter by significance.</p>
 </div>
 <div class="section level2">
 <h2 id="exploration">Exploration<a class="anchor" aria-label="anchor" href="#exploration"></a>
 </h2>
 <p>We can visualize the distribution of weights for the top 100 genes per pathway:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Get top 100 significant genes per pathway</span>
 <span class="va">model_100</span> <span class="op">&lt;-</span> <span class="va">model</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">pathway</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
