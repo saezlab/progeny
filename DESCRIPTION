@@ -1,6 +1,6 @@
 Package: progeny
 Title: Pathway RespOnsive GENes for activity inference from gene expression
-Version: 1.17.2
+Version: 1.17.3
 Authors@R: c(
     person(given = "Michael",
            family = "Schubert",
@@ -59,7 +59,5 @@ Suggests:
     tibble,
     rmarkdown,
     testthat (>= 2.1.0)
-Remotes:
-    saezlab/decoupleR
 VignetteBuilder: knitr
 RoxygenNote: 7.1.2
