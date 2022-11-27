@@ -21,4 +21,4 @@ template:
   bootstrap: 5
   bootswatch: cosmo
   bslib:
-    primary: "#34628"
+    primary: "#34628F"

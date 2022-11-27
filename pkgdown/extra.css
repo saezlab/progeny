@@ -12,7 +12,7 @@ body {
 }
 
 .bg-primary {
-    background-color: #B41F24!important;
+    background-color: #34628F!important;
 }
 
 .navbar-brand {
@@ -143,7 +143,7 @@ code span.ss, code span.ss a:any-link {
 
  .nav-item.active > .nav-link {
      background-color: #e9ecef!important;
-     color: #B41F24!important;
+     color: #133676!important;
  }
 
  .navbar-dark input[type="search"] {
