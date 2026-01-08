@@ -109,7 +109,7 @@ progeny.Seurat = function(expr, scale=TRUE, organism="Human", top = 100,
         scale = FALSE
     }
     
-    results <- progeny(as.matrix(Seurat::GetAssayData(expr, slot = "data", 
+    results <- progeny(as.matrix(Seurat::GetAssayData(expr, layer = "data", 
         assay = assay_name)), scale=scale, organism=organism, top=top, 
         perm = perm, verbose = verbose, z_scores = z_scores, 
         get_nulldist = get_nulldist, assay_name = assay_name, 
